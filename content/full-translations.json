@@ -2197,5 +2197,138 @@
       "Stores a keyboard button that can be used by a user within a Mini App."
     ],
     "text": "## savePreparedKeyboardButton\n\n保存一个预备键盘按钮，供用户在 Mini App 中使用。成功时返回 `PreparedKeyboardButton` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 有权使用该按钮的目标用户的唯一标识符。 |\n| `button` | KeyboardButton | 是 | 要保存的按钮对象，以 JSON 序列化。按钮类型必须为 `request_users`、`request_chat` 或 `request_managed_bot`。 |\n"
+  },
+  "deleteAllMessageReactions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to remove up to 10000 recent reactions in a group or a supergroup chat added by a given user or chat."
+    ],
+    "text": "## deleteAllMessageReactions\n\n删除群组或超级群组聊天中由指定用户或聊天添加的最近最多 **10,000** 个反应。机器人必须拥有该聊天中的 `can_delete_messages` 管理员权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名，格式为 `@username`。 |\n| `user_id` | Integer | 否 | 如果要删除的反应由某个用户添加，则传入该用户的标识符。 |\n| `actor_chat_id` | Integer | 否 | 如果要删除的反应由某个聊天添加，则传入该聊天的标识符。 |\n"
+  },
+  "getStickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to get a sticker set."
+    ],
+    "text": "## getStickerSet\n\n获取指定贴纸包。成功时返回 [StickerSet](#stickerset) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 是 | 贴纸包的名称。 |\n"
+  },
+  "getCustomEmojiStickers": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to get information about custom emoji stickers by their identifiers."
+    ],
+    "text": "## getCustomEmojiStickers\n\n根据自定义表情标识符获取对应的自定义表情贴纸信息。返回由 [Sticker](#sticker) 对象组成的数组。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `custom_emoji_ids` | Array of String | 是 | 自定义表情标识符列表，以 JSON 序列化。最多可以指定 **200** 个自定义表情标识符。 |\n"
+  },
+  "uploadStickerFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to upload a file with a sticker for later use in the"
+    ],
+    "text": "## uploadStickerFile\n\n上传一个贴纸文件，以便之后在 [createNewStickerSet](#createnewstickerset)、[addStickerToSet](#addstickertoset) 或 [replaceStickerInSet](#replacestickerinset) 方法中使用。该文件可以重复使用。成功时返回上传后的 [File](#file) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 贴纸文件所有者的用户标识符。 |\n| `sticker` | InputFile | 是 | 贴纸文件，格式必须为 `.WEBP`、`.PNG`、`.TGS` 或 `.WEBM`。技术要求请参阅 [Telegram 贴纸规范](https://core.telegram.org/stickers)。有关文件发送方式的更多信息，请参阅[发送文件](#sending-files)。 |\n| `sticker_format` | String | 是 | 贴纸格式，必须为 `static`（静态）、`animated`（动画）或 `video`（视频）之一。 |\n"
+  },
+  "createNewStickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to create a new sticker set owned by a user."
+    ],
+    "text": "## createNewStickerSet\n\n创建一个由指定用户拥有的新贴纸包。机器人可以编辑通过此方法创建的贴纸包。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 新贴纸包所有者的用户标识符。 |\n| `name` | String | 是 | 贴纸包的短名称，用于 `t.me/addstickers/` 链接（例如 `animals`）。只能包含英文字母、数字和下划线；必须以字母开头，不能包含连续下划线，并且必须以 `\"_by_<bot_username>\"` 结尾，其中 `<bot_username>` 不区分大小写。长度为 **1–64** 个字符。 |\n| `title` | String | 是 | 贴纸包标题，长度为 **1–64** 个字符。 |\n| `stickers` | Array of InputSticker | 是 | 要添加到贴纸包中的初始贴纸列表，以 JSON 序列化，数量必须为 **1–50**。 |\n| `sticker_type` | String | 否 | 贴纸包类型，可传入 `regular`（普通贴纸）、`mask`（面具贴纸）或 `custom_emoji`（自定义表情）。默认创建普通贴纸包。 |\n| `needs_repainting` | Boolean | 否 | 仅适用于自定义表情贴纸包。传入 `True`，表示贴纸在消息中使用时应重新着色为文字颜色；作为表情状态使用时应采用强调色；用于聊天头像时应采用白色；其他场景则根据上下文使用合适的颜色。 |\n"
+  },
+  "addStickerToSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to add a new sticker to a set created by the bot."
+    ],
+    "text": "## addStickerToSet\n\n向机器人创建的贴纸包中添加一张新贴纸。自定义表情贴纸包最多可包含 **200** 张贴纸，其他类型的贴纸包最多可包含 **120** 张。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 贴纸包所有者的用户标识符。 |\n| `name` | String | 是 | 贴纸包名称。 |\n| `sticker` | InputSticker | 是 | 要添加的贴纸信息对象，以 JSON 序列化。如果贴纸包中已经存在完全相同的贴纸，则不会对贴纸包进行任何更改。 |\n"
+  },
+  "setStickerPositionInSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to move a sticker in a set created by the bot to a specific position."
+    ],
+    "text": "## setStickerPositionInSet\n\n将机器人创建的贴纸包中的某张贴纸移动到指定位置。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `sticker` | String | 是 | 贴纸的文件标识符。 |\n| `position` | Integer | 是 | 贴纸在贴纸包中的新位置，从 **0** 开始计数。 |\n"
+  },
+  "deleteStickerFromSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to delete a sticker from a set created by the bot."
+    ],
+    "text": "## deleteStickerFromSet\n\n从机器人创建的贴纸包中删除指定贴纸。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `sticker` | String | 是 | 贴纸的文件标识符。 |\n"
+  },
+  "replaceStickerInSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to replace an existing sticker in a sticker set with a new one."
+    ],
+    "text": "## replaceStickerInSet\n\n用一张新贴纸替换贴纸包中的现有贴纸。此方法等效于依次调用 [deleteStickerFromSet](#deletestickerfromset)、[addStickerToSet](#addstickertoset) 和 [setStickerPositionInSet](#setstickerpositioninset)。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 贴纸包所有者的用户标识符。 |\n| `name` | String | 是 | 贴纸包名称。 |\n| `old_sticker` | String | 是 | 要替换的旧贴纸的文件标识符。 |\n| `sticker` | InputSticker | 是 | 新贴纸的信息对象，以 JSON 序列化。如果贴纸包中已经存在完全相同的贴纸，则贴纸包保持不变。 |\n"
+  },
+  "setStickerEmojiList": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to change the list of emoji assigned to a regular or custom emoji sticker."
+    ],
+    "text": "## setStickerEmojiList\n\n修改分配给普通贴纸或自定义表情贴纸的 Emoji 列表。该贴纸必须属于机器人创建的贴纸包。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `sticker` | String | 是 | 贴纸的文件标识符。 |\n| `emoji_list` | Array of String | 是 | 与该贴纸关联的 Emoji 列表，以 JSON 序列化，数量必须为 **1–20**。 |\n"
+  },
+  "setStickerKeywords": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to change search keywords assigned to a regular or custom emoji sticker."
+    ],
+    "text": "## setStickerKeywords\n\n修改分配给普通贴纸或自定义表情贴纸的搜索关键词。该贴纸必须属于机器人创建的贴纸包。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `sticker` | String | 是 | 贴纸的文件标识符。 |\n| `keywords` | Array of String | 否 | 该贴纸的搜索关键词列表，以 JSON 序列化。数量为 **0–20** 个，所有关键词的总长度最多为 **64** 个字符。 |\n"
+  },
+  "setStickerMaskPosition": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to change the"
+    ],
+    "text": "## setStickerMaskPosition\n\n修改面具贴纸的 [mask position](#maskposition)（面具位置）。该贴纸必须属于机器人创建的贴纸包。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `sticker` | String | 是 | 贴纸的文件标识符。 |\n| `mask_position` | MaskPosition | 否 | 面具应放置在人脸上的位置对象，以 JSON 序列化。不传入此参数即可移除当前面具位置。 |\n"
+  },
+  "setStickerSetTitle": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to set the title of a created sticker set."
+    ],
+    "text": "## setStickerSetTitle\n\n设置机器人创建的贴纸包的标题。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 是 | 贴纸包名称。 |\n| `title` | String | 是 | 贴纸包标题，长度为 **1–64** 个字符。 |\n"
+  },
+  "setStickerSetThumbnail": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to set the thumbnail of a regular or mask sticker set."
+    ],
+    "text": "## setStickerSetThumbnail\n\n设置普通贴纸包或面具贴纸包的缩略图。缩略图文件的格式必须与贴纸包中贴纸的格式一致。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 是 | 贴纸包名称。 |\n| `user_id` | Integer | 是 | 贴纸包所有者的用户标识符。 |\n| `thumbnail` | InputFile or String | 否 | 缩略图文件。可以使用 `.WEBP` 或 `.PNG` 图片，文件大小最多 **128 KB**，宽度和高度必须均为 **100 px**；也可以使用缩略图不超过 **32 KB** 的 `.TGS` 动画（动画贴纸技术要求见 [动画要求](https://core.telegram.org/stickers#animation-requirements)），或缩略图不超过 **32 KB** 的 `.WEBM` 视频（视频贴纸技术要求见 [视频要求](https://core.telegram.org/stickers#video-requirements)）。传入字符串形式的 `file_id` 可使用 Telegram 服务器上已有的文件；传入 HTTP URL 可让 Telegram 从互联网获取文件；也可以通过 `multipart/form-data` 上传新文件。更多信息请参阅[发送文件](#sending-files)。动画和视频贴纸包的缩略图不能通过 HTTP URL 上传。如果省略此参数，现有缩略图将被移除，并使用贴纸包中的第一张贴纸作为缩略图。 |\n| `format` | String | 是 | 缩略图格式，必须为以下值之一：`static`（`.WEBP` 或 `.PNG` 图片）、`animated`（`.TGS` 动画）或 `video`（`.WEBM` 视频）。 |\n"
+  },
+  "setCustomEmojiStickerSetThumbnail": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to set the thumbnail of a custom emoji sticker set."
+    ],
+    "text": "## setCustomEmojiStickerSetThumbnail\n\n设置自定义表情贴纸包的缩略图。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 是 | 贴纸包名称。 |\n| `custom_emoji_id` | String | 否 | 贴纸包中某张贴纸的自定义表情标识符。传入空字符串即可移除缩略图，并使用贴纸包中的第一张贴纸作为缩略图。 |\n"
+  },
+  "deleteStickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to delete a sticker set that was created by the bot."
+    ],
+    "text": "## deleteStickerSet\n\n删除由机器人创建的贴纸包。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 是 | 贴纸包名称。 |\n"
+  },
+  "setPassportDataErrors": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Informs a user that some of the Telegram Passport elements they provided contains errors."
+    ],
+    "text": "## setPassportDataErrors\n\n告知用户其提交的部分 Telegram Passport 信息存在错误。在这些错误得到修正之前，用户无法再次向你提交 Passport 数据；对于你报告错误的字段，用户必须修改其内容后才能重新提交。成功时返回 `True`。\n\n如果用户提交的数据因任何原因不符合你的服务要求，就应使用此方法。例如：生日日期看起来无效、提交的文件模糊不清，或扫描件存在被篡改的迹象。请在错误消息中提供足够的说明，确保用户知道如何修正问题。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 用户的唯一标识符。 |\n| `errors` | Array of PassportElementError | 是 | 描述错误信息的数组，以 JSON 序列化。 |\n"
+  },
+  "setGameScore": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to set the score of the specified user in a game message."
+    ],
+    "text": "## setGameScore\n\n设置游戏消息中指定用户的分数。成功时，如果该消息不是内联消息，则返回 [Message](#message) 对象；如果是内联消息，则返回 `True`。如果新分数不高于该用户在聊天中的当前分数，且 `force` 为 `False`，则会返回错误。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 用户的唯一标识符。 |\n| `score` | Integer | 是 | 新的分数，必须为非负数。 |\n| `force` | Boolean | 否 | 传入 `True`，允许降低用户的最高分数。可用于修正错误或处理作弊用户。 |\n| `disable_edit_message` | Boolean | 否 | 传入 `True`，表示不自动编辑游戏消息以更新当前排行榜。 |\n| `chat_id` | Integer | 否 | 如果未指定 `inline_message_id`，则必须提供此参数。目标聊天的唯一标识符。 |\n| `message_id` | Integer | 否 | 如果未指定 `inline_message_id`，则必须提供此参数。已发送消息的标识符。 |\n| `inline_message_id` | String | 否 | 如果未指定 `chat_id` 和 `message_id`，则必须提供此参数。内联消息的标识符。 |\n"
+  },
+  "getGameHighScores": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to get data for high score tables."
+    ],
+    "text": "## getGameHighScores\n\n获取游戏排行榜数据。返回指定用户及其在排行榜中若干相邻用户的分数。返回由 [GameHighScore](#gamehighscore) 对象组成的数组。\n\n> 当前此方法会返回目标用户及其左右两侧各两名最接近的用户的分数。如果目标用户及其相邻用户不在前三名中，还会额外返回排名前三的用户。请注意，此行为未来可能发生变化。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `chat_id` | Integer | 否 | 如果未指定 `inline_message_id`，则必须提供此参数。目标聊天的唯一标识符。 |\n| `message_id` | Integer | 否 | 如果未指定 `inline_message_id`，则必须提供此参数。已发送消息的标识符。 |\n| `inline_message_id` | String | 否 | 如果未指定 `chat_id` 和 `message_id`，则必须提供此参数。内联消息的标识符。 |\n"
   }
 }

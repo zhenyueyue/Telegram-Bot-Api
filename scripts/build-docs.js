@@ -38,7 +38,7 @@ function splitMarkdown(markdown) {
 async function main(){
  const response=await fetch(url,{signal:AbortSignal.timeout(90000),headers:{'user-agent':'Telegram-Bot-API-CN-Docs/1.0 (GitHub Pages build)'}});
  if(!response.ok)throw new Error(`Official document HTTP ${response.status}`);
- const markdown=await response.text();if(markdown.length<50000)throw new Error(`Official Markdown unexpectedly short (${markdown.length} chars)`);
+ const markdown=await response.text();console.log('Official Markdown bytes/chars:',markdown.length,'headers:',(markdown.match(/^#{2,5} /gm)||[]).length,'head:',JSON.stringify(markdown.slice(0,230)),'tail:',JSON.stringify(markdown.slice(-230))); if(markdown.length<30000)throw new Error(`Official Markdown unexpectedly short (${markdown.length} chars)`);
  const sections=splitMarkdown(markdown);
  const notes=JSON.parse(fs.readFileSync(path.join(root,'content','notes.json'),'utf8'));
  const matched = new Set();

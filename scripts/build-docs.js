@@ -58,7 +58,7 @@ function guideSections(md){
     // Paid Broadcasts note. It is navigation for the API methods, not part
     // of the Paid Broadcasts guide; those methods are indexed separately.
     if(h.title==='Paid Broadcasts'){
-      const catalogStart=body.search(/^\s*-\s+\[[a-z][A-Za-z0-9]*\]\(#/m);
+      const catalogStart=body.search(/^\s*-\s+\[[a-z][A-Za-z0-9]*\]\(/m);
       if(catalogStart>=0)body=body.slice(0,catalogStart).trim();
     }
     if(body.length>45)sections.push({title:h.title,kind:kindOf(h.title),level:h.level,body});

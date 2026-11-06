@@ -4307,5 +4307,78 @@
       "Channel direct messages chats and channel chats aren't supported."
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖指定群组或超级群组聊天中的某个成员。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `chat_member`。 |\n| `chat_id` | Integer or String | 目标聊天的唯一标识符，或目标超级群组的用户名，格式为 `@username`。不支持频道私信聊天和频道聊天。 |\n| `user_id` | Integer | 目标用户的唯一标识符。 |"
+  },
+  "BotCommandScopeDefault": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the default scope of bot commands.",
+      "Default commands are used if no commands with a narrower scope are specified for the user.",
+      "Scope type, must be *default*"
+    ],
+    "text": "此对象表示机器人命令的默认适用范围。如果没有为用户指定适用范围更窄的命令，则使用默认命令。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `default`。 |"
+  },
+  "BotName": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the bot's name.",
+      "The bot's name"
+    ],
+    "text": "此对象表示机器人的名称。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `name` | String | 机器人的名称。 |"
+  },
+  "BotDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the bot's description.",
+      "The bot's description"
+    ],
+    "text": "此对象表示机器人的描述。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `description` | String | 机器人的描述。 |"
+  },
+  "BotShortDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the bot's short description.",
+      "The bot's short description"
+    ],
+    "text": "此对象表示机器人的简短描述。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `short_description` | String | 机器人的简短描述。 |"
+  },
+  "BusinessBotRights": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the rights of a business bot.",
+      "can_manage_stories",
+      "can_transfer_stars",
+      "can_view_gifts_and_stars"
+    ],
+    "text": "此对象表示 Business 机器人的权限。以下字段均为可选；传入 `True` 表示授予相应权限。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `can_reply` | True | 允许机器人在过去 24 小时内收到过消息的私聊中发送和编辑消息。 |\n| `can_read_messages` | True | 允许机器人将收到的私聊消息标记为已读。 |\n| `can_delete_sent_messages` | True | 允许机器人删除自己发送的消息。 |\n| `can_delete_all_messages` | True | 允许机器人删除受管理聊天中的所有私聊消息。 |\n| `can_edit_name` | True | 允许机器人修改 Business 账号的名字和姓氏。 |\n| `can_edit_bio` | True | 允许机器人修改 Business 账号的个人简介。 |\n| `can_edit_profile_photo` | True | 允许机器人修改 Business 账号的个人资料照片。 |\n| `can_edit_username` | True | 允许机器人修改 Business 账号的用户名。 |\n| `can_change_gift_settings` | True | 允许机器人修改 Business 账号有关礼物的隐私设置。 |\n| `can_view_gifts_and_stars` | True | 允许机器人查看 Business 账号拥有的礼物及 Telegram Stars 数量。 |\n| `can_convert_gifts_to_stars` | True | 允许机器人将 Business 账号拥有的普通礼物兑换为 Telegram Stars。 |\n| `can_transfer_and_upgrade_gifts` | True | 允许机器人转让和升级 Business 账号拥有的礼物。 |\n| `can_transfer_stars` | True | 允许机器人将 Business 账号收到的 Telegram Stars 转入自己的账号，或使用这些 Stars 升级和转让礼物。 |\n| `can_manage_stories` | True | 允许机器人代表 Business 账号发布、编辑和删除故事。 |"
+  },
+  "BusinessConnection": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the connection of the bot with a business account.",
+      "Identifier of a private chat with the user who created the business connection",
+      "at most 52 significant bits",
+      "True, if the connection is active"
+    ],
+    "text": "此对象描述机器人与 Business 账号之间的连接。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | String | Business 连接的唯一标识符。 |\n| `user` | [User](#user) | 创建此 Business 连接的 Business 账号所属用户。 |\n| `user_chat_id` | Integer | 创建此 Business 连接的用户的私聊标识符。此数字可能超过 32 个有效位，某些编程语言在解析时可能出现困难或静默错误。但它最多只有 52 个有效位，因此使用 64 位整数或双精度浮点数即可安全存储此标识符。 |\n| `date` | Integer | 建立连接的日期，以 Unix 时间表示。 |\n| `rights` | [BusinessBotRights](#businessbotrights) | 可选。Business 机器人的权限。 |\n| `is_enabled` | Boolean | 如果连接处于活动状态，则为 `True`。 |"
+  },
+  "BusinessMessagesDeleted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object is received when messages are deleted from a connected business account.",
+      "Unique identifier of the business connection",
+      "The bot may not have access to the chat or the corresponding user.",
+      "The list of identifiers of deleted messages"
+    ],
+    "text": "当已连接的 Business 账号中的消息被删除时，机器人会收到此对象。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `business_connection_id` | String | Business 连接的唯一标识符。 |\n| `chat` | [Chat](#chat) | Business 账号中某个聊天的信息。机器人可能无权访问该聊天或对应的用户。 |\n| `message_ids` | Array of Integer | Business 账号聊天中已删除消息的标识符列表。 |"
+  },
+  "ChatBoost": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about a chat boost.",
+      "Unique identifier of the boost",
+      "Point in time (Unix timestamp) when the boost will automatically expire",
+      "Source of the added boost"
+    ],
+    "text": "此对象包含聊天加速（boost）的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `boost_id` | String | 此次加速的唯一标识符。 |\n| `add_date` | Integer | 聊天获得加速的时间点，以 Unix 时间戳表示。 |\n| `expiration_date` | Integer | 加速自动到期的时间点，以 Unix 时间戳表示；如果提供加速的用户延长了 Telegram Premium 订阅，则加速不会在该时间点自动到期。 |\n| `source` | [ChatBoostSource](#chatboostsource) | 此次新增加速的来源。 |"
   }
 }

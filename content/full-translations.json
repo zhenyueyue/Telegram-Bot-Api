@@ -4665,5 +4665,76 @@
       "paid"
     ],
     "text": "## 付费反应\n\n表示付费消息反应。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 反应类型，固定为 `paid`。 |\n"
+  },
+  "ReactionCount": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a reaction added to a message",
+      "Number of times the reaction was added"
+    ],
+    "text": "## 消息反应计数\n\n表示添加到某条消息上的一种反应，以及该反应被添加的次数。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | [`ReactionType`](#reactiontype) | 反应类型。 |\n| `total_count` | `Integer` | 该反应被添加的次数。 |"
+  },
+  "MessageReactionUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "change of a reaction on a message performed by a user",
+      "old_reaction",
+      "new_reaction"
+    ],
+    "text": "## 消息反应变更\n\n表示用户对某条消息的反应发生变化。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `chat` | [`Chat`](#chat) | 包含用户所回应消息的聊天。 |\n| `message_id` | `Integer` | 该消息在聊天中的唯一标识符。 |\n| `user` | [`User`](#user) | 可选。更改反应的用户；仅当该用户不是匿名用户时提供。 |\n| `actor_chat` | [`Chat`](#chat) | 可选。若用户以匿名身份更改反应，则表示其代表的聊天。 |\n| `date` | `Integer` | 反应变更的日期，以 Unix 时间表示。 |\n| `old_reaction` | `Array of ReactionType` | 用户此前设置的反应类型列表。 |\n| `new_reaction` | `Array of ReactionType` | 用户更改后设置的反应类型列表。 |"
+  },
+  "MessageReactionCountUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "reaction changes on a message with anonymous reactions",
+      "List of reactions that are present on the message"
+    ],
+    "text": "## 匿名反应计数变更\n\n表示某条消息的匿名反应发生了变化。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `chat` | [`Chat`](#chat) | 包含该消息的聊天。 |\n| `message_id` | `Integer` | 该消息在聊天中的唯一标识符。 |\n| `date` | `Integer` | 变更日期，以 Unix 时间表示。 |\n| `reactions` | `Array of ReactionCount` | 当前存在于该消息上的反应及其计数列表。 |"
+  },
+  "ForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Color of the topic icon in RGB format",
+      "is_name_implicit"
+    ],
+    "text": "## 论坛话题\n\n表示一个论坛话题。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `message_thread_id` | `Integer` | 论坛话题的唯一标识符。 |\n| `name` | `String` | 话题名称。 |\n| `icon_color` | `Integer` | 话题图标的颜色，以 RGB 格式表示。 |\n| `icon_custom_emoji_id` | `String` | 可选。用作话题图标的自定义表情符号的唯一标识符。 |\n| `is_name_implicit` | `True` | 可选。若话题名称并非由创建者明确指定，而是可能需要由机器人修改，则为 `True`。 |"
+  },
+  "GiftBackground": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "background of a gift",
+      "center_color",
+      "edge_color",
+      "text_color"
+    ],
+    "text": "## 礼物背景\n\n描述礼物的背景。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `center_color` | `Integer` | 背景中心的颜色，以 RGB 格式表示。 |\n| `edge_color` | `Integer` | 背景边缘的颜色，以 RGB 格式表示。 |\n| `text_color` | `Integer` | 背景文字的颜色，以 RGB 格式表示。 |"
+  },
+  "UniqueGiftModel": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "model of a unique gift",
+      "Always 0 for crafted gifts",
+      "legendary"
+    ],
+    "text": "## 独特礼物模型\n\n描述独特礼物的模型。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `name` | `String` | 模型名称。 |\n| `sticker` | [`Sticker`](#sticker) | 用于表示该独特礼物的贴纸。 |\n| `rarity_per_mille` | `Integer` | 每 **1000 次礼物升级**中，获得此模型的独特礼物数量。对于合成礼物，此值**始终为 0**。 |\n| `rarity` | `String` | 可选。若该模型为合成模型，其稀有度。当前可为 `uncommon`、`rare`、`epic` 或 `legendary`。 |"
+  },
+  "UniqueGiftSymbol": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "symbol shown on the pattern of a unique gift",
+      "every 1000 gifts upgraded"
+    ],
+    "text": "## 独特礼物图案符号\n\n描述独特礼物图案上显示的符号。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `name` | `String` | 符号名称。 |\n| `sticker` | [`Sticker`](#sticker) | 用于表示该独特礼物的贴纸。 |\n| `rarity_per_mille` | `Integer` | 每 **1000 件升级的礼物**中，获得此模型的独特礼物数量。 |"
+  },
+  "UniqueGiftBackdropColors": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "colors of the backdrop of a unique gift",
+      "center_color",
+      "edge_color",
+      "symbol_color",
+      "text_color"
+    ],
+    "text": "## 独特礼物背景色\n\n描述独特礼物背景的颜色配置。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `center_color` | `Integer` | 背景中心的颜色，以 RGB 格式表示。 |\n| `edge_color` | `Integer` | 背景边缘的颜色，以 RGB 格式表示。 |\n| `symbol_color` | `Integer` | 应用于图案符号的颜色，以 RGB 格式表示。 |\n| `text_color` | `Integer` | 背景文字的颜色，以 RGB 格式表示。 |"
   }
 }

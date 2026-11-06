@@ -1014,5 +1014,187 @@
       "Games can't be sent to channel direct messages chats"
     ],
     "text": "## 发送游戏\n\n向聊天发送一个 HTML5 游戏。游戏需要先通过 @BotFather 的 `/newgame` 命令创建。成功时返回发送后的 [`Message`](#message) 对象。**不能发送到频道聊天或频道私信聊天**。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接发送消息的唯一标识符。 |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题（消息线程）的唯一 ID；仅适用于论坛超级群组和启用了话题模式的机器人私聊。 |\n| `game_short_name` | String | 是 | 游戏的短名称，也是游戏的唯一标识符。请先通过 @BotFather 配置游戏。 |\n| `disable_notification` | Boolean | 否 | 静默发送：用户会收到通知，但不会播放提示音。 |\n| `protect_content` | Boolean | 否 | 保护消息内容，阻止转发和保存。 |\n| `allow_paid_broadcast` | Boolean | 否 | 设为 `True` 后可忽略普通广播速率限制，每秒最多发送 **1000 条消息**；每条成功发送的消息收费 **0.1 Telegram Stars**。 |\n| `message_effect_id` | String | 否 | 要附加到消息上的特效 ID；仅适用于私聊。 |\n| `reply_parameters` | ReplyParameters | 否 | 描述需要回复的消息及回复方式。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | 附加到游戏消息的内联键盘。如果为空，Telegram 会自动显示一个“Play [游戏名称]”按钮；如果提供键盘，**第一行的第一个按钮必须用于启动游戏**。 |\n"
+  },
+  "sendInvoice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to send invoices"
+    ],
+    "text": "## 发送付款账单\n\n向聊天发送一条付款账单。成功时返回发送后的 [`Message`](#message) 对象。可以使用第三方支付服务商处理实物商品和服务的付款，也可以使用 Telegram Stars（货币代码 `XTR`）处理数字商品和服务的付款。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题（消息线程）的唯一 ID；仅适用于论坛超级群组和启用了话题模式的机器人私聊。 |\n| `direct_messages_topic_id` | Integer | 否 | 目标频道私信话题的 ID。向频道私信聊天发送消息时，此参数必填。 |\n| `title` | String | 是 | 商品或服务名称，长度 **1–32 个字符**。 |\n| `description` | String | 是 | 商品或服务说明，长度 **1–255 个字符**。 |\n| `payload` | String | 是 | 由机器人定义的订单载荷，长度 **1–128 字节**。此内容不会展示给用户，可用于机器人内部的订单识别和业务处理。 |\n| `provider_token` | String | 否 | 通过 @BotFather 获取的支付服务商令牌。使用 Telegram Stars 付款时，传入空字符串。 |\n| `currency` | String | 是 | 三位字母的 ISO 4217 货币代码。使用 Telegram Stars 付款时必须传入 `XTR`。 |\n| `prices` | Array of LabeledPrice | 是 | 价格明细数组，使用 JSON 序列化的 `LabeledPrice` 对象表示商品价格、税费、折扣、运费等组成部分。使用 Telegram Stars 付款时，**数组必须且只能包含一项**。 |\n| `max_tip_amount` | Integer | 否 | 用户可支付的小费最高金额，单位为该货币的最小单位，必须使用整数而非浮点数。例如最高小费为 1.45 美元时传入 `145`。默认值为 `0`。**Telegram Stars 付款不支持此参数**。 |\n| `suggested_tip_amounts` | Array of Integer | 否 | 建议用户选择的小费金额数组，单位为货币的最小单位。最多 **4 项**；每项必须为正数，严格递增，且不得超过 `max_tip_amount`。 |\n| `start_parameter` | String | 否 | 唯一的深层链接参数。留空时，转发的账单副本仍会显示 Pay 按钮，其他用户也可以直接通过该副本付款；非空时，转发副本会显示跳转到机器人的 URL 按钮，并使用该值作为启动参数。 |\n| `provider_data` | String | 否 | 需要传给支付服务商的账单附加数据，使用 JSON 序列化。具体字段要求由支付服务商提供。 |\n| `photo_url` | String | 否 | 账单商品图片的 URL，可以是实物商品照片或服务宣传图。 |\n| `photo_size` | Integer | 否 | 商品图片大小，单位为字节。 |\n| `photo_width` | Integer | 否 | 商品图片宽度。 |\n| `photo_height` | Integer | 否 | 商品图片高度。 |\n| `need_name` | Boolean | 否 | 设为 `True` 时，要求用户提供完整姓名才能完成订单。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_phone_number` | Boolean | 否 | 设为 `True` 时，要求用户提供电话号码。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_email` | Boolean | 否 | 设为 `True` 时，要求用户提供电子邮箱。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_shipping_address` | Boolean | 否 | 设为 `True` 时，要求用户提供收货地址。**Telegram Stars 付款时会忽略此参数**。 |\n| `send_phone_number_to_provider` | Boolean | 否 | 设为 `True` 时，将用户提供的电话号码发送给支付服务商。**Telegram Stars 付款时会忽略此参数**。 |\n| `send_email_to_provider` | Boolean | 否 | 设为 `True` 时，将用户提供的电子邮箱发送给支付服务商。**Telegram Stars 付款时会忽略此参数**。 |\n| `is_flexible` | Boolean | 否 | 设为 `True` 时，表示最终价格会根据配送方式变化。**Telegram Stars 付款时会忽略此参数**。 |\n| `disable_notification` | Boolean | 否 | 静默发送账单：用户仍会收到通知，但不会播放提示音。 |\n| `protect_content` | Boolean | 否 | 保护账单消息内容，阻止转发和保存。 |\n| `allow_paid_broadcast` | Boolean | 否 | 设为 `True` 时允许忽略普通广播速率限制，每秒最多发送 **1000 条消息**，费用为每条成功发送的消息 **0.1 Telegram Stars**，从机器人的 Stars 余额扣除。 |\n| `message_effect_id` | String | 否 | 要附加到消息上的特效 ID；仅适用于私聊。 |\n| `suggested_post_parameters` | SuggestedPostParameters | 否 | 频道私信聊天中的建议投稿参数，使用 JSON 序列化对象。如果账单作为回复发送给另一条建议投稿，该投稿会被自动拒绝。 |\n| `reply_parameters` | ReplyParameters | 否 | 描述需要回复的消息及回复方式。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | 账单消息的内联键盘，使用 JSON 序列化对象。如果省略或为空，Telegram 会自动显示一个标有总价的 Pay 按钮；如果提供键盘，**第一行第一个按钮必须是 Pay 按钮**。 |\n\n> **Telegram Stars 付款规则**：`currency` 必须为 `XTR`，`prices` 必须且只能有一个项目；`provider_token` 应传空字符串。姓名、电话、邮箱和收货地址等信息收集参数不会生效。\n\n> **订单安全**：收到 `pre_checkout_query` 后，必须在 **10 秒内**调用 `answerPreCheckoutQuery`。只有收到 `successful_payment` 更新后，才能向用户交付商品或服务；仅仅批准预结账请求并不代表付款已经成功。\n"
+  },
+  "createInvoiceLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to create a link for an invoice"
+    ],
+    "text": "## 创建账单付款链接\n\n创建一条用于付款的账单链接。成功时直接返回生成的链接字符串。可将链接分享给用户，也可用于创建 Telegram Stars 订阅账单。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Business 商家账号创建此链接的连接 ID。**仅适用于 Telegram Stars 付款**。 |\n| `title` | String | 是 | 商品或服务名称，长度 **1–32 个字符**。 |\n| `description` | String | 是 | 商品或服务说明，长度 **1–255 个字符**。 |\n| `payload` | String | 是 | 由机器人定义的订单载荷，长度 **1–128 字节**。此内容不会展示给用户，可用于机器人内部的订单识别和业务处理。 |\n| `provider_token` | String | 否 | 通过 @BotFather 获取的支付服务商令牌。使用 Telegram Stars 付款时，传入空字符串。 |\n| `currency` | String | 是 | 三位字母的 ISO 4217 货币代码。使用 Telegram Stars 付款时必须传入 `XTR`。 |\n| `subscription_period` | Integer | 否 | 订阅在下一次扣款前的有效期，单位为秒。仅适用于 `currency=XTR` 的 Telegram Stars 付款；目前指定时**必须为 `2592000` 秒（30 天）**。订阅价格不得超过 **10000 Telegram Stars**。同一机器人可以同时拥有任意数量的有效订阅，包括同一用户的多个并行订阅。 |\n| `prices` | Array of LabeledPrice | 是 | 价格明细数组，使用 JSON 序列化的 `LabeledPrice` 对象表示商品价格、税费、折扣、运费等组成部分。使用 Telegram Stars 付款时，**数组必须且只能包含一项**。 |\n| `max_tip_amount` | Integer | 否 | 用户可支付的小费最高金额，单位为该货币的最小单位，必须使用整数而非浮点数。例如最高小费为 1.45 美元时传入 `145`。默认值为 `0`。**Telegram Stars 付款不支持此参数**。 |\n| `suggested_tip_amounts` | Array of Integer | 否 | 建议用户选择的小费金额数组，单位为货币的最小单位。最多 **4 项**；每项必须为正数，严格递增，且不得超过 `max_tip_amount`。 |\n| `start_parameter` | String | 否 | 唯一的深层链接参数。留空时，转发的账单副本仍会显示 Pay 按钮，其他用户也可以直接通过该副本付款；非空时，转发副本会显示跳转到机器人的 URL 按钮，并使用该值作为启动参数。 |\n| `provider_data` | String | 否 | 需要传给支付服务商的账单附加数据，使用 JSON 序列化。具体字段要求由支付服务商提供。 |\n| `photo_url` | String | 否 | 账单商品图片的 URL，可以是实物商品照片或服务宣传图。 |\n| `photo_size` | Integer | 否 | 商品图片大小，单位为字节。 |\n| `photo_width` | Integer | 否 | 商品图片宽度。 |\n| `photo_height` | Integer | 否 | 商品图片高度。 |\n| `need_name` | Boolean | 否 | 设为 `True` 时，要求用户提供完整姓名才能完成订单。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_phone_number` | Boolean | 否 | 设为 `True` 时，要求用户提供电话号码。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_email` | Boolean | 否 | 设为 `True` 时，要求用户提供电子邮箱。**Telegram Stars 付款时会忽略此参数**。 |\n| `need_shipping_address` | Boolean | 否 | 设为 `True` 时，要求用户提供收货地址。**Telegram Stars 付款时会忽略此参数**。 |\n| `send_phone_number_to_provider` | Boolean | 否 | 设为 `True` 时，将用户提供的电话号码发送给支付服务商。**Telegram Stars 付款时会忽略此参数**。 |\n| `send_email_to_provider` | Boolean | 否 | 设为 `True` 时，将用户提供的电子邮箱发送给支付服务商。**Telegram Stars 付款时会忽略此参数**。 |\n| `is_flexible` | Boolean | 否 | 设为 `True` 时，表示最终价格会根据配送方式变化。**Telegram Stars 付款时会忽略此参数**。 |\n\n> 使用 `subscription_period` 时，货币必须为 `XTR`；当前唯一允许的订阅周期是 30 天。\n"
+  },
+  "answerShippingQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to reply to shipping queries"
+    ],
+    "text": "## 响应配送信息查询\n\n当账单要求用户填写收货地址，并且创建账单时将 `is_flexible` 设为 `True`，Telegram 会向机器人发送包含 `shipping_query` 的 [`Update`](#update)。使用此方法返回配送结果。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `shipping_query_id` | String | 是 | 需要响应的配送查询唯一 ID。 |\n| `ok` | Boolean | 是 | 如果可以向指定地址配送，传入 `True`；如果无法配送或存在其他问题，传入 `False`。 |\n| `shipping_options` | Array of ShippingOption | 否 | 可用配送方式数组，使用 JSON 序列化。**当 `ok=True` 时必填**。 |\n| `error_message` | String | 否 | 面向用户的错误说明。**当 `ok=False` 时必填**，用于解释无法完成配送的原因；Telegram 会将此消息展示给用户。 |\n"
+  },
+  "answerPreCheckoutQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "must receive an answer within 10 seconds"
+    ],
+    "text": "## 响应付款预结账查询\n\n用户确认付款和配送信息后，Telegram 会通过 [`Update`](#update) 中的 `pre_checkout_query` 字段向机器人发送最终确认请求。使用此方法批准或拒绝本次付款。成功返回 `True`。**必须在收到预结账查询后的 10 秒内响应**，否则付款流程可能失败。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `pre_checkout_query_id` | String | 是 | 需要响应的预结账查询唯一 ID。 |\n| `ok` | Boolean | 是 | 如果商品有库存、订单信息有效且机器人准备好继续处理订单，传入 `True`；否则传入 `False`。 |\n| `error_message` | String | 否 | 面向用户的错误说明。**当 `ok=False` 时必填**，用于解释无法继续结账的原因；Telegram 会将此消息展示给用户。 |\n"
+  },
+  "getMyStarBalance": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current Telegram Stars balance of the bot"
+    ],
+    "text": "## 获取机器人的 Telegram Stars 余额\n\n获取当前机器人的 Telegram Stars 余额。无需参数。成功时返回 [`StarAmount`](#staramount) 对象。\n\n**无需参数。**\n"
+  },
+  "getStarTransactions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "bot's Telegram Star transactions in chronological order"
+    ],
+    "text": "## 获取机器人的 Stars 交易记录\n\n按时间顺序获取当前机器人的 Telegram Stars 交易记录。成功时返回 [`StarTransactions`](#startransactions) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `offset` | Integer | 否 | 需要跳过的交易记录数量，用于分页。 |\n| `limit` | Integer | 否 | 本次最多返回的交易记录数量，范围 **1–100**，默认值为 **100**。 |\n"
+  },
+  "refundStarPayment": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Refunds a successful payment in Telegram Stars"
+    ],
+    "text": "## 退还 Telegram Stars 付款\n\n退还用户此前通过 Telegram Stars 完成的一笔成功付款。成功返回 `True`。需要提供原付款用户和 Telegram 付款交易 ID。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要退款的付款用户 ID。 |\n| `telegram_payment_charge_id` | String | 是 | 原付款的 Telegram 交易标识符。 |\n\n> 建议在处理订单时保存 `SuccessfulPayment.telegram_payment_charge_id`，后续退款需要使用该值。\n"
+  },
+  "editUserStarSubscription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "cancel or re-enable extension of a subscription paid in Telegram Stars"
+    ],
+    "text": "## 修改用户的 Stars 订阅续订状态\n\n取消或重新启用用户通过 Telegram Stars 支付的订阅续订。成功返回 `True`。此方法只控制后续自动续订，不会立即终止用户当前已经付费的订阅周期。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要修改订阅状态的用户 ID。 |\n| `telegram_payment_charge_id` | String | 是 | 该订阅对应的 Telegram 付款交易标识符。 |\n| `is_canceled` | Boolean | 是 | 传入 `True` 可取消该用户订阅的自动续订；当前订阅必须仍然有效至本订阅周期结束。传入 `False` 可重新启用此前由机器人取消的订阅续订。 |\n"
+  },
+  "sendGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "gift can't be converted to Telegram Stars by the receiver"
+    ],
+    "text": "## 向用户或频道赠送礼物\n\n向指定用户或频道聊天赠送一份 Telegram 礼物。成功返回 `True`。**接收者无法将通过此方法收到的礼物兑换为 Telegram Stars**。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 否 | 接收礼物的用户 ID。**如果没有指定 `chat_id`，此参数必填**。 |\n| `chat_id` | Integer or String | 否 | 接收礼物的聊天 ID，或目标频道用户名（格式为 `@username`）。**如果没有指定 `user_id`，此参数必填**。 |\n| `gift_id` | String | 是 | 礼物的唯一 ID。**限量礼物不能赠送给频道聊天**。 |\n| `pay_for_upgrade` | Boolean | 否 | 设为 `True` 时，从机器人自己的 Stars 余额支付礼物升级费用，使接收者可以免费升级。 |\n| `text` | String | 否 | 随礼物一起展示的文字，长度 **0–128 个字符**。 |\n| `text_parse_mode` | String | 否 | 礼物附加文字的实体解析模式。仅支持 `bold`、`italic`、`underline`、`strikethrough`、`spoiler`、`custom_emoji` 和 `date_time` 等实体；其他实体会被忽略。 |\n| `text_entities` | Array of MessageEntity | 否 | 礼物附加文字中的特殊实体 JSON 数组，可代替 `text_parse_mode`。仅支持加粗、斜体、下划线、删除线、剧透、自定义表情和日期时间实体。 |\n"
+  },
+  "giftPremiumSubscription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "must be one of 3, 6, or 12"
+    ],
+    "text": "## 赠送 Telegram Premium 订阅\n\n为指定用户赠送一份 Telegram Premium 订阅。费用以 Telegram Stars 支付。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 接收 Telegram Premium 订阅的用户 ID。 |\n| `month_count` | Integer | 是 | 订阅有效月数，只能为 **3、6 或 12**。 |\n| `star_count` | Integer | 是 | 支付的 Telegram Stars 数量，必须与订阅时长对应：3 个月为 **1000 Stars**，6 个月为 **1500 Stars**，12 个月为 **2500 Stars**。 |\n| `text` | String | 否 | 随订阅服务消息一起展示的文字，长度 **0–128 个字符**。 |\n| `text_parse_mode` | String | 否 | 附加文字的实体解析模式。仅支持加粗、斜体、下划线、删除线、剧透、自定义表情和日期时间实体。 |\n| `text_entities` | Array of MessageEntity | 否 | 附加文字中的特殊实体 JSON 数组，可代替 `text_parse_mode`。 |\n"
+  },
+  "setBusinessAccountGiftSettings": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_change_gift_settings"
+    ],
+    "text": "## 设置 Business 账号礼物隐私选项\n\n修改受管理 Business 商家账号关于接收礼物的隐私设置。机器人必须具有 `can_change_gift_settings` Business 机器人权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `show_gift_button` | Boolean | 是 | 传入 `True` 时，始终在输入框中显示向该用户或 Business 账号赠送礼物的按钮。 |\n| `accepted_gift_types` | AcceptedGiftTypes | 是 | 该 Business 账号接受的礼物类型，使用 JSON 序列化的 [`AcceptedGiftTypes`](#acceptedgifttypes) 对象。 |\n"
+  },
+  "getBusinessAccountStarBalance": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_view_gifts_and_stars"
+    ],
+    "text": "## 获取 Business 账号的 Stars 余额\n\n获取受管理 Business 商家账号拥有的 Telegram Stars 数量。机器人必须具有 `can_view_gifts_and_stars` Business 机器人权限。成功返回 [`StarAmount`](#staramount) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n"
+  },
+  "transferBusinessAccountStars": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "1-10000"
+    ],
+    "text": "## 将 Business 账号 Stars 转入机器人\n\n将 Telegram Stars 从 Business 商家账号余额转入机器人的 Stars 余额。机器人必须具有 `can_transfer_stars` Business 机器人权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `star_count` | Integer | 是 | 需要转入机器人的 Telegram Stars 数量，范围 **1–10000**。 |\n"
+  },
+  "getBusinessAccountGifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "gifts received and owned by a managed business account"
+    ],
+    "text": "## 获取 Business 账号收到的礼物\n\n获取受管理 Business 商家账号收到并持有的礼物。机器人必须具有 `can_view_gifts_and_stars` Business 机器人权限。成功返回 [`OwnedGifts`](#ownedgifts) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `exclude_unsaved` | Boolean | 否 | 设为 `True` 时，排除未保存到账号资料页的礼物。 |\n| `exclude_saved` | Boolean | 否 | 设为 `True` 时，排除已保存到账号资料页的礼物。 |\n| `exclude_unlimited` | Boolean | 否 | 设为 `True` 时，排除可无限量购买的礼物。 |\n| `exclude_limited_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售且可以升级为独特礼物的礼物。 |\n| `exclude_limited_non_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售但不能升级为独特礼物的礼物。 |\n| `exclude_unique` | Boolean | 否 | 设为 `True` 时，排除独特礼物。 |\n| `exclude_from_blockchain` | Boolean | 否 | 设为 `True` 时，排除从 TON 区块链分配、无法在 Telegram 内转售或转移的礼物。 |\n| `sort_by_price` | Boolean | 否 | 设为 `True` 时，按礼物价格而非接收日期排序。排序会在分页前执行。 |\n| `offset` | String | 否 | 下一页的起始位置，使用上一次响应返回的 `next_offset`。传空字符串可获取第一页。 |\n| `limit` | Integer | 否 | 本次最多返回的礼物数量，范围 **1–100**，默认值为 **100**。 |\n"
+  },
+  "getUserGifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "gifts owned and hosted by a user"
+    ],
+    "text": "## 获取用户拥有的礼物\n\n获取指定用户拥有并展示在其资料页上的礼物。成功返回 [`OwnedGifts`](#ownedgifts) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n| `exclude_unlimited` | Boolean | 否 | 设为 `True` 时，排除可无限量购买的礼物。 |\n| `exclude_limited_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售且可以升级为独特礼物的礼物。 |\n| `exclude_limited_non_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售但不能升级为独特礼物的礼物。 |\n| `exclude_unique` | Boolean | 否 | 设为 `True` 时，排除独特礼物。 |\n| `exclude_from_blockchain` | Boolean | 否 | 设为 `True` 时，排除从 TON 区块链分配、无法在 Telegram 内转售或转移的礼物。 |\n| `sort_by_price` | Boolean | 否 | 设为 `True` 时，按礼物价格而非接收日期排序。排序会在分页前执行。 |\n| `offset` | String | 否 | 下一页的起始位置，使用上一次响应返回的 `next_offset`。传空字符串可获取第一页。 |\n| `limit` | Integer | 否 | 本次最多返回的礼物数量，范围 **1–100**，默认值为 **100**。 |\n"
+  },
+  "getChatGifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "gifts owned by a chat"
+    ],
+    "text": "## 获取聊天拥有的礼物\n\n获取指定聊天拥有的礼物。成功返回 [`OwnedGifts`](#ownedgifts) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `exclude_unsaved` | Boolean | 否 | 设为 `True` 时，排除未保存到账号资料页的礼物。 |\n| `exclude_saved` | Boolean | 否 | 设为 `True` 时，排除已保存到账号资料页的礼物。 |\n| `exclude_unlimited` | Boolean | 否 | 设为 `True` 时，排除可无限量购买的礼物。 |\n| `exclude_limited_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售且可以升级为独特礼物的礼物。 |\n| `exclude_limited_non_upgradable` | Boolean | 否 | 设为 `True` 时，排除限量发售但不能升级为独特礼物的礼物。 |\n| `exclude_unique` | Boolean | 否 | 设为 `True` 时，排除独特礼物。 |\n| `exclude_from_blockchain` | Boolean | 否 | 设为 `True` 时，排除从 TON 区块链分配、无法在 Telegram 内转售或转移的礼物。 |\n| `sort_by_price` | Boolean | 否 | 设为 `True` 时，按礼物价格而非接收日期排序。排序会在分页前执行。 |\n| `offset` | String | 否 | 下一页的起始位置，使用上一次响应返回的 `next_offset`。传空字符串可获取第一页。 |\n| `limit` | Integer | 否 | 本次最多返回的礼物数量，范围 **1–100**，默认值为 **100**。 |\n\n> `exclude_unsaved` 默认始终视为 `True`，除非机器人在频道中拥有 `can_post_messages` 管理员权限。\n\n> `exclude_saved` 默认始终视为 `False`，除非机器人在频道中拥有 `can_post_messages` 管理员权限。\n"
+  },
+  "convertGiftToStars": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_convert_gifts_to_stars"
+    ],
+    "text": "## 将普通礼物兑换为 Stars\n\n将受管理 Business 商家账号收到的一份普通礼物兑换为 Telegram Stars。机器人必须具有 `can_convert_gifts_to_stars` Business 机器人权限。成功返回 `True`。兑换会消耗这份礼物，并将对应数量的 Stars 加入 Business 账号余额。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `owned_gift_id` | String | 是 | 需要兑换为 Telegram Stars 的普通礼物唯一 ID。 |\n"
+  },
+  "upgradeGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_transfer_and_upgrade_gifts"
+    ],
+    "text": "## 将普通礼物升级为独特礼物\n\n将受管理 Business 商家账号拥有的一份普通礼物升级为独特礼物。机器人必须具有 `can_transfer_and_upgrade_gifts` Business 机器人权限；如果升级需要付费，还必须具有 `can_transfer_stars` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `owned_gift_id` | String | 是 | 需要升级为独特礼物的普通礼物唯一 ID。 |\n| `keep_original_details` | Boolean | 否 | 设为 `True` 时，在升级后的礼物中保留原礼物的文字、发送者和接收者信息。 |\n| `star_count` | Integer | 否 | 从 Business 账号余额中支付的升级费用。如果礼物的 `prepaid_upgrade_star_count > 0`，应传入 `0`；否则必须具有 `can_transfer_stars` 权限，并传入礼物的 `upgrade_star_count`。 |\n"
+  },
+  "transferGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "chat must have been active in the last 24 hours"
+    ],
+    "text": "## 转移独特礼物\n\n将受管理 Business 商家账号拥有的一份独特礼物转移给另一位用户。机器人必须具有 `can_transfer_and_upgrade_gifts` Business 机器人权限；如果转移需要付费，还必须具有 `can_transfer_stars` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | Business 商家账号连接的唯一 ID。 |\n| `owned_gift_id` | String | 是 | 需要转移的礼物唯一 ID。 |\n| `new_owner_chat_id` | Integer | 是 | 新的礼物所有者聊天 ID。该聊天必须在最近 **24 小时内处于活跃状态**。 |\n| `star_count` | Integer | 否 | 从 Business 账号余额中支付的转移费用。若该值大于 `0`，机器人必须具有 `can_transfer_stars` 权限。 |\n"
+  },
+  "StarAmount": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes an amount of Telegram Stars"
+    ],
+    "text": "## StarAmount\n\n表示 Telegram Stars 的数量。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `amount` | Integer | Telegram Stars 的整数数量，按整数精度取整；允许为负数。 |\n| `nanostar_amount` | Integer | 可选。Telegram Stars 的十亿分之一份额，范围 **-999999999 至 999999999**。仅当 `amount` 不大于 `0` 时才允许为负数。 |\n"
+  },
+  "StarTransaction": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a Telegram Star transaction"
+    ],
+    "text": "## StarTransaction\n\n描述一笔 Telegram Stars 交易。需要注意：如果购买 Stars 的用户随后向 Apple、Google 等 Stars 购买渠道发起拒付，Telegram 会从机器人的余额中扣除相应退回的 Stars；这不受 Telegram 控制。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 交易的唯一 ID。退款交易使用原始交易的 ID；用户成功付款时，该值与 `SuccessfulPayment.telegram_payment_charge_id` 一致。 |\n| `amount` | Integer | 本次交易转移的 Telegram Stars 整数数量。 |\n| `nanostar_amount` | Integer | 可选。交易转移的 Stars 十亿分之一份额，范围 **0–999999999**。 |\n| `date` | Integer | 交易创建时间，Unix 时间戳。 |\n| `source` | TransactionPartner | 可选。入账交易的来源，例如用户购买商品或服务、Fragment 退回失败的提现款项。**仅入账交易包含此字段**。 |\n| `receiver` | TransactionPartner | 可选。出账交易的接收方，例如收到退款的用户或 Fragment 提现服务。**仅出账交易包含此字段**。 |\n"
+  },
+  "StarTransactions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains a list of Telegram Star transactions"
+    ],
+    "text": "## StarTransactions\n\n包含 Telegram Stars 交易记录的列表。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `transactions` | Array of StarTransaction | 交易记录数组，每一项都是 [`StarTransaction`](#startransaction) 对象。 |\n"
+  },
+  "Gift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a gift that can be sent by the bot"
+    ],
+    "text": "## Gift\n\n描述一份可以由机器人赠送的礼物。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 礼物的唯一 ID。 |\n| `sticker` | Sticker | 用于展示该礼物的贴纸。 |\n| `star_count` | Integer | 赠送该礼物需要支付的 Telegram Stars 数量。 |\n| `upgrade_star_count` | Integer | 可选。将礼物升级为独特礼物所需支付的 Telegram Stars 数量。 |\n| `is_premium` | True | 可选。存在此字段表示只有 Telegram Premium 订阅用户才能购买该礼物。 |\n| `has_colors` | True | 可选。存在此字段表示该礼物升级后可以用于自定义用户外观。 |\n| `total_count` | Integer | 可选。此类礼物可由所有用户赠送的总数量；仅限量礼物包含此字段。 |\n| `remaining_count` | Integer | 可选。此类礼物当前剩余可赠送数量；仅限量礼物包含此字段。 |\n| `personal_total_count` | Integer | 可选。此类礼物可由当前机器人赠送的总数量；仅限量礼物包含此字段。 |\n| `personal_remaining_count` | Integer | 可选。当前机器人还可以赠送的此类礼物数量；仅限量礼物包含此字段。 |\n| `background` | GiftBackground | 可选。礼物的背景信息。 |\n| `unique_gift_variant_count` | Integer | 可选。将此类礼物升级后，可以获得的不同独特礼物变体总数。 |\n| `publisher_chat` | Chat | 可选。发布此礼物的聊天信息。 |\n"
+  },
+  "Gifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represent a list of gifts"
+    ],
+    "text": "## Gifts\n\n表示一组可供赠送的礼物。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `gifts` | Array of Gift | 礼物列表，每一项都是 [`Gift`](#gift) 对象。 |\n"
+  },
+  "OwnedGifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains the list of gifts received and owned by a user or a chat"
+    ],
+    "text": "## OwnedGifts\n\n包含用户或聊天收到并持有的礼物列表。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `total_count` | Integer | 用户或聊天当前拥有的礼物总数。 |\n| `gifts` | Array of OwnedGift | 礼物列表，每一项都是 `OwnedGift` 联合类型中的一种对象（`OwnedGiftRegular` 或 `OwnedGiftUnique`）。 |\n| `next_offset` | String | 可选。下一页查询使用的分页偏移量。如果为空字符串，表示没有更多结果。 |\n"
+  },
+  "AcceptedGiftTypes": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the types of gifts that can be gifted to a user or a chat"
+    ],
+    "text": "## AcceptedGiftTypes\n\n描述可以赠送给某位用户或某个聊天的礼物类型。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `unlimited_gifts` | Boolean | 是否接受不限量发行的普通礼物。 |\n| `limited_gifts` | Boolean | 是否接受限量发行的普通礼物。 |\n| `unique_gifts` | Boolean | 是否接受独特礼物，或可以免费升级为独特礼物的礼物。 |\n| `premium_subscription` | Boolean | 是否接受 Telegram Premium 订阅礼物。 |\n| `gifts_from_channels` | Boolean | 是否接受从频道转移过来的独特礼物。 |\n"
   }
 }

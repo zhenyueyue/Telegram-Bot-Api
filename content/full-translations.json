@@ -1196,5 +1196,201 @@
       "This object describes the types of gifts that can be gifted to a user or a chat"
     ],
     "text": "## AcceptedGiftTypes\n\n描述可以赠送给某位用户或某个聊天的礼物类型。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `unlimited_gifts` | Boolean | 是否接受不限量发行的普通礼物。 |\n| `limited_gifts` | Boolean | 是否接受限量发行的普通礼物。 |\n| `unique_gifts` | Boolean | 是否接受独特礼物，或可以免费升级为独特礼物的礼物。 |\n| `premium_subscription` | Boolean | 是否接受 Telegram Premium 订阅礼物。 |\n| `gifts_from_channels` | Boolean | 是否接受从频道转移过来的独特礼物。 |\n"
+  },
+  "RichMessageButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Exactly one of the fields other than text and style must be used"
+    ],
+    "text": "## RichMessageButton\n\n表示 [`RichMessage`](#richmessage) 中的一个按钮。除 `text` 和 `style` 外，**必须且只能设置以下按钮类型字段中的一个**，以确定按钮的行为。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | RichText | 按钮上显示的文本。只能包含普通文本，以及 [`RichTextCustomEmoji`](#richtextcustomemoji) 和 [`RichTextDateTime`](#richtextdatetime) 实体。 |\n| `style` | String | 可选。按钮样式，只能是 `danger`、`success`、`primary` 或 `link`。`link` 样式会将按钮显示为没有边框的普通链接；客户端可以根据主题为按钮背景和文字选择对应颜色。**只有回调按钮可以使用 `link` 样式**。 |\n| `url` | String | 可选。点击按钮后打开的 HTTP 或 `tg://` URL。如果用户隐私设置允许，可以使用 `tg://user?id=<user_id>`，通过用户 ID 提及用户，而不必知道其用户名。 |\n| `callback_data` | String | 可选。用户点击按钮时，发送给机器人的回调查询数据，长度为 **1–64 字节**。 |\n| `web_app` | WebAppInfo | 可选。要启动的 Web App 描述。Web App 可以通过 `answerWebAppQuery` 方法，以用户身份发送任意消息。仅适用于用户与机器人之间的私聊；**不支持代表 Business 商家账号发送的消息**。 |\n| `login_url` | LoginUrl | 可选。用于自动授权用户的 HTTPS URL，可替代 Telegram Login Widget。**不支持临时消息（Ephemeral Messages）**。 |\n| `switch_inline_query` | String | 可选。点击后提示用户选择一个聊天，打开该聊天，并将机器人用户名及指定内联查询词填入输入框。可以传空字符串，此时只填入机器人用户名。**不支持频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `switch_inline_query_current_chat` | String | 可选。点击后将机器人用户名和指定内联查询词填入当前聊天的输入框。可以传空字符串，此时只填入机器人用户名。**不支持频道、频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `switch_inline_query_chosen_chat` | SwitchInlineQueryChosenChat | 可选。点击后提示用户从指定类型的聊天中选择一个，打开该聊天，并填入机器人用户名和指定内联查询词。**不支持频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `copy_text` | CopyTextButton | 可选。点击按钮后，将指定文本复制到用户的剪贴板。 |\n| `disabled` | DisabledButton | 可选。设置此字段后，按钮将处于禁用状态，点击不会执行任何操作。 |\n"
+  },
+  "RichText": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a rich formatted text."
+    ],
+    "text": "## RichText\n\n表示富文本内容。该类型可以是普通文本字符串、由多个 [`RichText`](#richtext) 组成的数组，也可以是以下任意一种富文本对象：\n\n- [`RichTextBold`](#richtextbold)、[`RichTextItalic`](#richtextitalic)、[`RichTextUnderline`](#richtextunderline)、[`RichTextStrikethrough`](#richtextstrikethrough)、[`RichTextSpoiler`](#richtextspoiler)\n- [`RichTextDateTime`](#richtextdatetime)、[`RichTextTextMention`](#richtexttextmention)、[`RichTextSubscript`](#richtextsubscript)、[`RichTextSuperscript`](#richtextsuperscript)、[`RichTextMarked`](#richtextmarked)、[`RichTextCode`](#richtextcode)\n- [`RichTextCustomEmoji`](#richtextcustomemoji)、[`RichTextMathematicalExpression`](#richtextmathematicalexpression)\n- [`RichTextUrl`](#richtexturl)、[`RichTextEmailAddress`](#richtextemailaddress)、[`RichTextPhoneNumber`](#richtextphonenumber)、[`RichTextBankCardNumber`](#richtextbankcardnumber)\n- [`RichTextMention`](#richtextmention)、[`RichTextHashtag`](#richtexthashtag)、[`RichTextCashtag`](#richtextcashtag)、[`RichTextBotCommand`](#richtextbotcommand)\n- [`RichTextButton`](#richtextbutton)、[`RichTextAnchor`](#richtextanchor)、[`RichTextAnchorLink`](#richtextanchorlink)、[`RichTextReference`](#richtextreference)、[`RichTextReferenceLink`](#richtextreferencelink)。\n"
+  },
+  "RichTextBold": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A bold text."
+    ],
+    "text": "## RichTextBold\n\n加粗文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `bold`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextItalic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An italicized text."
+    ],
+    "text": "## RichTextItalic\n\n斜体文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `italic`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextUnderline": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An underlined text."
+    ],
+    "text": "## RichTextUnderline\n\n带下划线的文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `underline`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextStrikethrough": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A strikethrough text."
+    ],
+    "text": "## RichTextStrikethrough\n\n带删除线的文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `strikethrough`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextSpoiler": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text covered by a spoiler."
+    ],
+    "text": "## RichTextSpoiler\n\n剧透文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `spoiler`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextSubscript": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A subscript text."
+    ],
+    "text": "## RichTextSubscript\n\n下标文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `subscript`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextSuperscript": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A superscript text."
+    ],
+    "text": "## RichTextSuperscript\n\n上标文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `superscript`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextMarked": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A marked text."
+    ],
+    "text": "## RichTextMarked\n\n标记文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `marked`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextCode": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A monowidth text."
+    ],
+    "text": "## RichTextCode\n\n等宽代码文本。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `code`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n"
+  },
+  "RichTextDateTime": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Formatted date and time."
+    ],
+    "text": "## RichTextDateTime\n\n带有指定日期和时间格式的文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `date_time`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n| `unix_time` | Integer | 与该实体关联的 Unix 时间戳。 |\n| `date_time_format` | String | 定义日期和时间显示格式的字符串。具体格式规则请参阅官方的日期时间实体格式说明。 |\n"
+  },
+  "RichTextTextMention": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A mention of a Telegram user by their identifier."
+    ],
+    "text": "## RichTextTextMention\n\n通过 Telegram 用户 ID 提及某位用户的文本实体。与普通用户名提及不同，此方式通过用户对象确定被提及者。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `text_mention`。 |\n| `text` | RichText | 需要显示的提及文本。 |\n| `user` | User | 被提及的 Telegram 用户对象。 |\n"
+  },
+  "RichTextCustomEmoji": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A custom emoji."
+    ],
+    "text": "## RichTextCustomEmoji\n\n自定义表情实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `custom_emoji`。 |\n| `custom_emoji_id` | String | 自定义表情的唯一 ID。可以调用 `getCustomEmojiStickers` 获取该表情贴纸的完整信息。 |\n| `alternative_text` | String | 该自定义表情对应的替代表情文本。 |\n"
+  },
+  "RichTextMathematicalExpression": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A mathematical expression."
+    ],
+    "text": "## RichTextMathematicalExpression\n\n数学公式实体，公式内容使用 LaTeX 格式。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `mathematical_expression`。 |\n| `expression` | String | 使用 LaTeX 格式编写的数学表达式。 |\n"
+  },
+  "RichTextUrl": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text with a link."
+    ],
+    "text": "## RichTextUrl\n\n带有超链接的文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `url`。 |\n| `text` | RichText | 链接中显示的文本内容。 |\n| `url` | String | 链接目标 URL。 |\n"
+  },
+  "RichTextEmailAddress": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text with an email address."
+    ],
+    "text": "## RichTextEmailAddress\n\n电子邮件地址文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `email_address`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n| `email_address` | String | 电子邮件地址。 |\n"
+  },
+  "RichTextPhoneNumber": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text with a phone number."
+    ],
+    "text": "## RichTextPhoneNumber\n\n电话号码文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `phone_number`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n| `phone_number` | String | 电话号码。 |\n"
+  },
+  "RichTextBankCardNumber": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text with a bank card number."
+    ],
+    "text": "## RichTextBankCardNumber\n\n银行卡号文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `bank_card_number`。 |\n| `text` | RichText | 需要显示的文本内容。 |\n| `bank_card_number` | String | 银行卡号。 |\n"
+  },
+  "RichTextMention": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A mention by a username."
+    ],
+    "text": "## RichTextMention\n\n通过用户名提及某位用户的文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `mention`。 |\n| `text` | RichText | 需要显示的提及文本。 |\n| `username` | String | 被提及用户的 Telegram 用户名。 |\n"
+  },
+  "RichTextHashtag": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A hashtag."
+    ],
+    "text": "## RichTextHashtag\n\n话题标签（Hashtag）文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `hashtag`。 |\n| `text` | RichText | 需要显示的标签文本。 |\n| `hashtag` | String | 话题标签内容。 |\n"
+  },
+  "RichTextCashtag": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A cashtag."
+    ],
+    "text": "## RichTextCashtag\n\n金融资产代码标签（Cashtag）文本实体，通常用于标记股票或其他金融资产代码。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `cashtag`。 |\n| `text` | RichText | 需要显示的代码标签文本。 |\n| `cashtag` | String | 金融资产代码标签内容。 |\n"
+  },
+  "RichTextBotCommand": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A bot command."
+    ],
+    "text": "## RichTextBotCommand\n\n机器人命令文本实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `bot_command`。 |\n| `text` | RichText | 需要显示的命令文本。 |\n| `bot_command` | String | 机器人命令内容。 |\n"
+  },
+  "RichTextButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A button."
+    ],
+    "text": "## RichTextButton\n\n富文本中的按钮实体，实际按钮行为由 [`RichMessageButton`](#richmessagebutton) 对象定义。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `button`。 |\n| `button` | RichMessageButton | 按钮的具体配置。 |\n"
+  },
+  "RichTextAnchor": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An anchor."
+    ],
+    "text": "## RichTextAnchor\n\n锚点实体，用于在富文本消息中定义一个可供链接跳转的位置。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `anchor`。 |\n| `name` | String | 锚点名称，供其他链接引用。 |\n"
+  },
+  "RichTextAnchorLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A link to an anchor."
+    ],
+    "text": "## RichTextAnchorLink\n\n指向富文本消息内部锚点的链接实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `anchor_link`。 |\n| `text` | RichText | 链接中显示的文本内容。 |\n| `anchor_name` | String | 目标锚点名称。如果为空字符串，点击链接后将返回消息顶部。 |\n"
+  },
+  "RichTextReference": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A reference."
+    ],
+    "text": "## RichTextReference\n\n富文本中的引用定义，用于为一段文本指定可被链接引用的名称。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `reference`。 |\n| `text` | RichText | 引用显示的文本内容。 |\n| `name` | String | 引用名称，供其他实体链接到该引用。 |\n"
+  },
+  "RichTextReferenceLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A link to a reference."
+    ],
+    "text": "## RichTextReferenceLink\n\n指向富文本消息中某个引用定义的链接实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `reference_link`。 |\n| `text` | RichText | 链接中显示的文本内容。 |\n| `reference_name` | String | 目标引用的名称。 |\n"
   }
 }

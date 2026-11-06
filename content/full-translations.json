@@ -1200,7 +1200,7 @@
   "RichMessageButton": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Exactly one of the fields other than text and style must be used"
+      "specify the type of the button"
     ],
     "text": "## RichMessageButton\n\n表示 [`RichMessage`](#richmessage) 中的一个按钮。除 `text` 和 `style` 外，**必须且只能设置以下按钮类型字段中的一个**，以确定按钮的行为。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | RichText | 按钮上显示的文本。只能包含普通文本，以及 [`RichTextCustomEmoji`](#richtextcustomemoji) 和 [`RichTextDateTime`](#richtextdatetime) 实体。 |\n| `style` | String | 可选。按钮样式，只能是 `danger`、`success`、`primary` 或 `link`。`link` 样式会将按钮显示为没有边框的普通链接；客户端可以根据主题为按钮背景和文字选择对应颜色。**只有回调按钮可以使用 `link` 样式**。 |\n| `url` | String | 可选。点击按钮后打开的 HTTP 或 `tg://` URL。如果用户隐私设置允许，可以使用 `tg://user?id=<user_id>`，通过用户 ID 提及用户，而不必知道其用户名。 |\n| `callback_data` | String | 可选。用户点击按钮时，发送给机器人的回调查询数据，长度为 **1–64 字节**。 |\n| `web_app` | WebAppInfo | 可选。要启动的 Web App 描述。Web App 可以通过 `answerWebAppQuery` 方法，以用户身份发送任意消息。仅适用于用户与机器人之间的私聊；**不支持代表 Business 商家账号发送的消息**。 |\n| `login_url` | LoginUrl | 可选。用于自动授权用户的 HTTPS URL，可替代 Telegram Login Widget。**不支持临时消息（Ephemeral Messages）**。 |\n| `switch_inline_query` | String | 可选。点击后提示用户选择一个聊天，打开该聊天，并将机器人用户名及指定内联查询词填入输入框。可以传空字符串，此时只填入机器人用户名。**不支持频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `switch_inline_query_current_chat` | String | 可选。点击后将机器人用户名和指定内联查询词填入当前聊天的输入框。可以传空字符串，此时只填入机器人用户名。**不支持频道、频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `switch_inline_query_chosen_chat` | SwitchInlineQueryChosenChat | 可选。点击后提示用户从指定类型的聊天中选择一个，打开该聊天，并填入机器人用户名和指定内联查询词。**不支持频道私信聊天，以及代表 Business 商家账号发送的消息**。 |\n| `copy_text` | CopyTextButton | 可选。点击按钮后，将指定文本复制到用户的剪贴板。 |\n| `disabled` | DisabledButton | 可选。设置此字段后，按钮将处于禁用状态，点击不会执行任何操作。 |\n"
   },

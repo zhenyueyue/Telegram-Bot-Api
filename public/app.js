@@ -194,11 +194,11 @@ function overview() {
       <div class="hero-actions"><button class="primary-btn" data-go="${attr((get('sendMessage') || sections.find(s=>s.kind==='method') || sections[0]).id)}">开始阅读 ${icon('chevron')}</button><button class="secondary-btn" data-open-settings="1">查看文档说明 ${icon('settings')}</button></div></section>
     ${S.docs.demo ? `<div class="demo-banner"><div class="demo-copy"><strong>当前是离线预览。</strong><span> 内置少量演示章节；点击同步后读取完整官方 Bot API 文档。示例译文不是完整官方内容。</span></div><button data-sync="1">同步完整版</button></div>` : ''}
     <div class="quick-stats">${heroStat(stats.method || 0, 'API 方法', 'code')}${heroStat(stats.type || 0,'数据类型','box')}${heroStat(stats.guide || 0,'参考章节','book')}${heroStat(S.docs.version || '—','官方版本','globe')}</div>
-    <div class="section-title-row"><h2>常用接口，一步直达</h2><small>FREQUENTLY USED</small></div>
+    <div class="section-title-row"><h2>常用 API 章节</h2><small>COMMON REFERENCES</small></div>
     <div class="featured-grid">${featuredNodes || '<p>同步后显示常用 API。</p>'}</div>
-    <div class="section-title-row"><h2>继续探索</h2><small>MORE REFERENCES</small></div>
+    <div class="section-title-row"><h2>其他相关章节</h2><small>MORE REFERENCES</small></div>
     <div class="explore-list">${suggested.map(s => `<button class="explore-item" data-go="${attr(s.id)}"><span class="mini-icon">${icon(s.kind==='method'?'code':s.kind==='type'?'box':'book')}</span><span><strong>${esc(s.title)}</strong><small>${esc(nameCN(s))}</small></span><span class="go-icon">${icon('chevron')}</span></button>`).join('') || '<p>还没有其他章节。</p>'}</div>
-    <p class="footer-tip">小技巧：按 <code>/</code> 或 <code>Ctrl + K</code> 可快速搜索文档。已发布的中文要点和官方原文可随时打开；中文未覆盖的部分保留英文。</p>`;
+    <p class="footer-tip">搜索快捷键：<code>/</code> 或 <code>Ctrl + K</code>。<a href="https://github.com/zhenyueyue/Telegram-Bot-Api" target="_blank" rel="noopener noreferrer">GitHub 仓库</a> · <a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener noreferrer">Telegram 官方文档</a></p>`;
 }
 function renderMd(md, section) {
   if (!window.marked || typeof marked.parse !== 'function') {

@@ -99,9 +99,19 @@ async function fetchMarkdown(p){
 async function main(){
  const index=await fetchMarkdown(rootPath);
  const typesIndex=await fetchMarkdown(typeIndexPath);
- console.log('Official index length:',index.length,'; types index length:',typesIndex.length);
+ // The main API index links to a separate, full formatting guide. Fetch it
+ // explicitly so the "Formatting options" chapter is audited and translated
+ // against the complete official source rather than its one-line placeholder.
+ const formattingMarkdown=await fetchMarkdown('/bots/api/formatting.md');
+ console.log('Official index length:',index.length,'; types index length:',typesIndex.length,'; formatting guide length:',formattingMarkdown.length);
  if(index.length<10000 || typesIndex.length<1000)throw new Error('Telegram documentation indexes incomplete');
  const guides=guideSections(index).filter(x=>x.kind==='guide');
+ const formattingSection=guides.find(x=>x.title==='Formatting options');
+ if(!formattingSection)throw new Error('Formatting options section missing from official API index');
+ formattingSection.body=normalizeBody(formattingMarkdown,formattingSection.title);
+ if(!/MarkdownV2 style/i.test(formattingSection.body) || !/HTML style/i.test(formattingSection.body) || !/Markdown style/i.test(formattingSection.body)){
+   throw new Error('Official formatting guide is incomplete or has an unexpected structure');
+ }
  const typesFromIndex=guideSections(typesIndex).filter(x=>x.kind==='type');
  const links=[...markdownLinks(index),...markdownLinks(typesIndex)];
  const tasks=[];const seen=new Set();

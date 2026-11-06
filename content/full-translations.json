@@ -3644,5 +3644,71 @@
       "usually an emoji"
     ],
     "text": "背景直接取自内置聊天主题。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景类型，始终为 `\"chat_theme\"`。 |\n| `theme_name` | String | 聊天主题的名称，通常是一个 emoji。 |"
+  },
+  "ChatBackground": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a chat background.",
+      "Type of the background"
+    ],
+    "text": "此对象表示聊天背景。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | [BackgroundType](#backgroundtype) | 背景的类型。 |"
+  },
+  "ChecklistTasksDone": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about checklist tasks marked as done or not done.",
+      "marked_as_done_task_ids",
+      "marked_as_not_done_task_ids"
+    ],
+    "text": "此对象描述一条服务消息，表示清单中的任务已被标记为已完成或未完成。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `checklist_message` | [Message](#message) | 可选。包含相关清单的消息，该清单中的任务已被标记为已完成或未完成。请注意，即使此 `Message` 对象本身是一条回复消息，此字段中的对象也不会包含 `reply_to_message` 字段。 |\n| `marked_as_done_task_ids` | Array of Integer | 可选。已被标记为已完成的任务标识符列表。 |\n| `marked_as_not_done_task_ids` | Array of Integer | 可选。已被标记为未完成的任务标识符列表。 |"
+  },
+  "ChecklistTasksAdded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about tasks added to a checklist.",
+      "List of tasks added to the checklist"
+    ],
+    "text": "此对象描述一条服务消息，表示有任务被添加到清单中。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `checklist_message` | [Message](#message) | 可选。包含已添加任务的清单的消息。请注意，即使此 `Message` 对象本身是一条回复消息，此字段中的对象也不会包含 `reply_to_message` 字段。 |\n| `tasks` | Array of [ChecklistTask](#checklisttask) | 添加到清单中的任务列表。 |"
+  },
+  "CommunityChatAdded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a chat or a bot being added to a community.",
+      "The new community to which the chat or the bot belongs"
+    ],
+    "text": "此对象描述一条服务消息，表示某个聊天或机器人已被添加到一个社区。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `community` | [Community](#community) | 聊天或机器人新加入的社区。 |"
+  },
+  "CommunityChatJoined": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a chat being joined by a user from a community.",
+      "The community from which the chat was joined"
+    ],
+    "text": "此对象描述一条服务消息，表示某个聊天被来自某个社区的用户加入。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `community` | [Community](#community) | 此聊天所加入的社区。 |"
+  },
+  "CommunityChatRemoved": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a chat or a bot being removed from a community.",
+      "Currently holds no information."
+    ],
+    "text": "此对象描述一条服务消息，表示某个聊天或机器人已从社区中移除。目前不包含任何其他信息，也没有字段。"
+  },
+  "ForumTopicCreated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a new forum topic created in the chat.",
+      "Color of the topic icon in RGB format",
+      "is_name_implicit"
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中创建了一个新的论坛话题。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `name` | String | 话题名称。 |\n| `icon_color` | Integer | 话题图标的颜色，采用 RGB 格式。 |\n| `icon_custom_emoji_id` | String | 可选。作为话题图标显示的自定义 emoji 的唯一标识符。 |\n| `is_name_implicit` | True | 可选。如果为 `True`，表示话题创建者没有明确指定话题名称，因此机器人可能需要修改该名称。 |"
+  },
+  "ForumTopicClosed": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a forum topic closed in the chat.",
+      "Currently holds no information."
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的一个论坛话题已关闭。目前不包含任何其他信息，也没有字段。"
   }
 }

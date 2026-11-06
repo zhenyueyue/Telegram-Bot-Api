@@ -3066,22 +3066,28 @@
   "Ephemeral Messages and Commands": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Ephemeral interactions allow a bot and an individual member of a group or supergroup chat to communicate privately"
+      "Ephemeral interactions allow a bot and an individual member of a group or supergroup chat to communicate privately",
+      "Ephemeral Commands (User to Bot)",
+      "Reply Targets and Conditions",
+      "within 15 seconds of the incoming eligible action"
     ],
-    "text": "## 临时消息与命令\n\n临时交互（Ephemeral interactions）允许机器人与群组或超级群组中的某一位成员进行私密通信，同时不让聊天中的其他成员看到这些内容，从而避免干扰公共聊天时间线。临时交互可能会在一段时间后自动消失，也可能在应用重新启动时消失。"
+    "text": "## 临时消息与命令\n\n临时交互（Ephemeral interactions）允许机器人与群组或超级群组中的某一位成员在公共聊天时间线上进行私密通信，而不会让聊天中的其他成员看到这些内容，从而避免干扰其他成员。临时交互可能会在一段时间后自动消失，也可能在应用重新启动时消失。\n\n### 临时命令（用户发送给机器人）\n\n机器人可以通过在 `BotCommand` 对象中将 `is_ephemeral` 字段设置为 `True`，来声明临时命令。随后，用户可以发送临时命令。目标机器人会收到该命令，但聊天中的所有成员（包括用户和其他机器人）都无法看到它。\n\n### 临时消息\n\n机器人可以通过 `receiver_user_id` 参数指定特定用户，并向该用户发送临时消息作为回复。群组或超级群组中的其他成员不会看到这条消息。\n\n> 无法保证临时消息一定能够送达，尤其是在用户处于离线状态时。\n\n### 回复目标与发送条件\n\n- 任何机器人都可以在收到符合条件的操作后的 **15 秒内**，向某位用户发送临时消息。该消息将发送到触发此操作的**确切客户端应用**。为此，机器人必须提供以下参数之一：\n  - 从收到的回调查询（callback query）中取得的 `callback_query_id`；\n  - 从收到的临时消息中取得的 `reply_parameters.ephemeral_message_id`。\n- 如果机器人是聊天管理员，则可以随时向聊天中的任何非机器人成员发送临时消息，而无需指定 `callback_query_id` 或 `reply_parameters.ephemeral_message_id`。在这种情况下，消息可能会送达该用户正在使用的多个活跃客户端应用，但仍然**无法保证一定会送达其中任何一个客户端**。"
   },
-  "Ephemeral Commands (User to Bot)": {
+  "Paid Broadcasts": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Bots can declare ephemeral commands by setting the is_ephemeral field to True"
+      "By default, all bots are able to broadcast up to 30 messages per second",
+      "Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message",
+      "Bots with increased limits are only charged for messages that are broadcasted successfully."
     ],
-    "text": "## 临时命令（用户发送给机器人）\n\n机器人可以通过在 `BotCommand` 对象中将 `is_ephemeral` 字段设置为 `True`，来声明临时命令。\n\n随后，用户可以发送临时命令。目标机器人会收到该命令，但聊天中的所有其他成员（包括其他用户和其他机器人）都无法看到它。"
+    "text": "## 付费群发\n\n默认情况下，所有机器人每秒最多可以向用户群发 **30 条消息**。\n\n开发者可以在 **@BotFather** 中启用“付费群发”（Paid Broadcasts），将机器人的群发速度提高到每秒最多 **1,000 条消息**。\n\n每发送一条超过免费额度（每秒 30 条）的消息，都需要支付 **0.1 Telegram Stars**。费用从机器人的 Telegram Stars 余额中扣除。要使用此功能，机器人的余额至少必须有 **10,000 Stars**。\n\n> 启用了更高群发速度的机器人，只会对**成功发送的消息**收费。"
   },
-  "Ephemeral Messages": {
+  "Inline mode methods": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Bots can send an ephemeral message response back to a specific user designated by the receiver_user_id parameter"
+      "Methods and objects used in the inline mode are described in the",
+      "Inline mode section"
     ],
-    "text": "## 临时消息\n\n机器人可以通过 `receiver_user_id` 参数指定特定用户，并向该用户发送临时消息作为回复。群组或超级群组中的其他成员不会看到这条消息。\n\n> **注意：** 无法保证临时消息一定能够送达，尤其是在用户处于离线状态时。"
+    "text": "## 内联模式方法\n\n内联模式中使用的方法和对象，请参阅“内联模式”章节。"
   }
 }

@@ -369,7 +369,7 @@
       "can_delete_messages",
       "reaction from a message"
     ],
-    "text": "## 删除消息的表态\n\n在群组或超级群组中移除某条消息上的表态。机器人必须具备 `can_delete_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标超级群组 ID 或用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 是 | 目标消息标识符。 |\n| `user_id` | Integer | 否 | 若表态由用户添加，可指定需要移除其表态的用户 ID。 |\n"
+    "text": "## 删除消息的表态\n\n在群组或超级群组中移除某条消息上的表态。机器人必须具备 `can_delete_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标超级群组 ID 或用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 是 | 目标消息标识符。 |\n| `user_id` | Integer | 否 | 若表态由用户添加，可指定需要移除其表态的用户 ID。 |\n| `actor_chat_id` | Integer | 否 | 若表态由聊天身份添加，则指定需要移除其表态的聊天 ID。 |\n"
   },
   "approveSuggestedPost": {
     "version": "Bot API 10.3",

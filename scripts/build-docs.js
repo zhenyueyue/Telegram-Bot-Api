@@ -46,7 +46,13 @@ function guideSections(md){
     if(intro.length>60)sections.push({title:'Introduction',kind:'guide',level:2,body:intro});
   }
   for(let i=0;i<hs.length;i++){
-    const h=hs[i];const end=hs[i+1]?.line??lines.length;
+    const h=hs[i];
+    // Use every Markdown heading as a boundary, including deeper method/type
+    // headings. Those entries are indexed separately; allowing level-5
+    // headings to leak into a level-4 guide makes a short guide absorb the
+    // entire following method catalog and falsely demands its translation.
+    const next=raw.find(candidate=>candidate.line>h.line);
+    const end=next?.line??lines.length;
     const body=lines.slice(h.line+1,end).join('\n').trim();
     if(body.length>45)sections.push({title:h.title,kind:kindOf(h.title),level:h.level,body});
   }

@@ -2938,8 +2938,7 @@
   "Authorizing your bot": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Each bot is given a unique authentication token when it is created.",
-      "obtaining tokens and generating new ones"
+      "Each bot is given a unique authentication token"
     ],
     "text": "## 机器人身份认证\n\n创建每个机器人时，都会为其分配一个唯一的身份验证令牌（authentication token）。该令牌的格式类似于 `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`，但本文档统一使用 `<token>` 作为示例占位符。\n\n有关如何获取令牌以及重新生成令牌的说明，请参阅官方的机器人创建与管理文档。"
   },
@@ -2958,18 +2957,17 @@
   "Making requests when getting updates": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "If you're using webhooks, you can perform a request to the Bot API while sending an answer to the webhook.",
-      "Specify the method to be invoked in the method parameter of the request.",
-      "It's not possible to know that such a request was successful or get its result."
+      "perform a request to the Bot API",
+      "Specify the method to be invoked"
     ],
     "text": "## 接收更新时发起请求\n\n如果你正在使用 `webhooks`，可以在向 Webhook 请求发送响应的同时，向 Bot API 发起一个请求。\n\n传递请求参数时，可以将响应的 `Content-Type` 设置为以下任意一种：\n\n- `application/json`\n- `application/x-www-form-urlencoded`\n- `multipart/form-data`\n\n需要在请求参数 `method` 中指定要调用的 Bot API 方法。\n\n**重要限制：** 使用这种方式发起 Bot API 请求时，无法获知该请求是否成功，也无法获取它的返回结果。\n\n有关具体示例，请参阅 Telegram 官方 FAQ。"
   },
   "Using a Local Bot API Server": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "The Bot API server source code is available at telegram-bot-api.",
-      "Upload files up to 2000 MB.",
-      "Set max_webhook_connections up to 100000."
+      "The Bot API server source code is available at",
+      "Upload files up to 2000 MB",
+      "Set max_webhook_connections up to"
     ],
     "text": "## 使用本地 Bot API 服务端\n\nBot API 服务端的源代码已公开。你可以在本地运行该服务端，并将机器人请求发送到自己的服务器，而不是 `https://api.telegram.org`。\n\n切换到本地 Bot API 服务端后，机器人将获得以下能力：\n\n- 下载文件时不受文件大小限制。\n- 上传最大 **2000 MB** 的文件。\n- 使用本地文件路径以及 `file` URI scheme 上传文件。\n- Webhook 可以使用 HTTP URL，而不必使用 HTTPS URL。\n- Webhook 可以使用任意本地 IP 地址。\n- Webhook 可以使用任意端口。\n- `max_webhook_connections` 可以设置为最高 **100000**。\n- 调用 `getFile` 后，`file_path` 字段可以直接返回文件的绝对本地路径，无需再下载文件。\n\n本地 Bot API 服务端源代码：`telegram-bot-api`。"
   },

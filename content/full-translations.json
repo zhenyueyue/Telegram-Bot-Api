@@ -2934,5 +2934,51 @@
       "Score"
     ],
     "text": "## 游戏高分记录 `GameHighScore`\n\n表示游戏高分榜中的一条记录。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `position` | `Integer` | 该用户在游戏高分榜中的排名位置。 |\n| `user` | `User` | 用户信息。 |\n| `score` | `Integer` | 分数。 |\n"
+  },
+  "Authorizing your bot": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Each bot is given a unique authentication token when it is created.",
+      "obtaining tokens and generating new ones"
+    ],
+    "text": "## 机器人身份认证\n\n创建每个机器人时，都会为其分配一个唯一的身份验证令牌（authentication token）。该令牌的格式类似于 `123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11`，但本文档统一使用 `<token>` 作为示例占位符。\n\n有关如何获取令牌以及重新生成令牌的说明，请参阅官方的机器人创建与管理文档。"
+  },
+  "Making requests": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "All queries to the Telegram Bot API must be served over HTTPS",
+      "application/x-www-form-urlencoded",
+      "application/json (except for uploading files)",
+      "multipart/form-data (use to upload files)",
+      "All methods in the Bot API are case-insensitive.",
+      "All queries must be made using UTF-8."
+    ],
+    "text": "## 发起请求\n\n所有 Telegram Bot API 请求都必须通过 HTTPS 发送，并且 URL 必须采用以下格式：\n\n```text\nhttps://api.telegram.org/bot<token>/METHOD_NAME\n```\n\n例如：\n\n```text\nhttps://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe\n```\n\n支持使用 `GET` 和 `POST` HTTP 方法。Bot API 请求参数支持以下四种传递方式：\n\n- URL 查询字符串（URL query string）\n- `application/x-www-form-urlencoded`\n- `application/json`（上传文件时除外）\n- `multipart/form-data`（用于上传文件）\n\n响应内容是一个 JSON 对象，其中始终包含布尔类型字段 `ok`，并且可能包含可选的字符串字段 `description`，用于以人类可读的形式说明结果。\n\n- 当 `ok` 为 `True` 时，表示请求成功，查询结果位于 `result` 字段中。\n- 当 `ok` 为 `False` 时，表示请求失败，错误原因会在 `description` 字段中说明。\n- 响应还会返回一个整数类型的 `error_code` 字段，但该字段的具体取值可能随未来版本发生变化。\n- 某些错误响应还可能包含可选的 `parameters` 字段，其类型为 `ResponseParameters`，可用于自动处理错误。\n\n其他注意事项：\n\n- Bot API 中的所有方法名称均不区分大小写。\n- 所有请求都必须使用 UTF-8 编码。"
+  },
+  "Making requests when getting updates": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "If you're using webhooks, you can perform a request to the Bot API while sending an answer to the webhook.",
+      "Specify the method to be invoked in the method parameter of the request.",
+      "It's not possible to know that such a request was successful or get its result."
+    ],
+    "text": "## 接收更新时发起请求\n\n如果你正在使用 `webhooks`，可以在向 Webhook 请求发送响应的同时，向 Bot API 发起一个请求。\n\n传递请求参数时，可以将响应的 `Content-Type` 设置为以下任意一种：\n\n- `application/json`\n- `application/x-www-form-urlencoded`\n- `multipart/form-data`\n\n需要在请求参数 `method` 中指定要调用的 Bot API 方法。\n\n**重要限制：** 使用这种方式发起 Bot API 请求时，无法获知该请求是否成功，也无法获取它的返回结果。\n\n有关具体示例，请参阅 Telegram 官方 FAQ。"
+  },
+  "Using a Local Bot API Server": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The Bot API server source code is available at telegram-bot-api.",
+      "Upload files up to 2000 MB.",
+      "Set max_webhook_connections up to 100000."
+    ],
+    "text": "## 使用本地 Bot API 服务端\n\nBot API 服务端的源代码已公开。你可以在本地运行该服务端，并将机器人请求发送到自己的服务器，而不是 `https://api.telegram.org`。\n\n切换到本地 Bot API 服务端后，机器人将获得以下能力：\n\n- 下载文件时不受文件大小限制。\n- 上传最大 **2000 MB** 的文件。\n- 使用本地文件路径以及 `file` URI scheme 上传文件。\n- Webhook 可以使用 HTTP URL，而不必使用 HTTPS URL。\n- Webhook 可以使用任意本地 IP 地址。\n- Webhook 可以使用任意端口。\n- `max_webhook_connections` 可以设置为最高 **100000**。\n- 调用 `getFile` 后，`file_path` 字段可以直接返回文件的绝对本地路径，无需再下载文件。\n\n本地 Bot API 服务端源代码：`telegram-bot-api`。"
+  },
+  "Do I need a Local Bot API Server": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The majority of bots will be OK with the default configuration, running on our servers.",
+      "you're welcome to switch to your own at any time."
+    ],
+    "text": "#### 我是否需要本地 Bot API 服务端？\n\n大多数机器人使用 Telegram 服务器提供的默认配置就足够了。如果你确实需要本地 Bot API 服务端所提供的某项特殊功能，也可以随时切换到自己的服务端。"
   }
 }

@@ -4158,5 +4158,84 @@
       "0-360"
     ],
     "text": "此对象描述故事中一个可点击区域的位置。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `x_percentage` | Float | 区域中心点的横坐标，以媒体宽度的百分比表示。 |\n| `y_percentage` | Float | 区域中心点的纵坐标，以媒体高度的百分比表示。 |\n| `width_percentage` | Float | 区域矩形的宽度，以媒体宽度的百分比表示。 |\n| `height_percentage` | Float | 区域矩形的高度，以媒体高度的百分比表示。 |\n| `rotation_angle` | Float | 矩形顺时针旋转的角度，单位为度，范围为 0–360。 |\n| `corner_radius_percentage` | Float | 矩形圆角的半径，以媒体宽度的百分比表示。 |"
+  },
+  "LocationAddress": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the physical address of a location.",
+      "The two-letter ISO 3166-1 alpha-2 country code",
+      "Optional. State of the location",
+      "Optional. Street address of the location"
+    ],
+    "text": "此对象描述一个地点的实际地址。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `country_code` | String | 地点所在国家或地区的两字母 ISO 3166-1 alpha-2 国家代码。 |\n| `state` | String | 可选。地点所在的州或省。 |\n| `city` | String | 可选。地点所在的城市。 |\n| `street` | String | 可选。街道地址。 |"
+  },
+  "StoryAreaType": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the type of a clickable area on a story.",
+      "Currently, it can be one of",
+      "StoryAreaTypeLocation",
+      "StoryAreaTypeUniqueGift"
+    ],
+    "text": "此对象描述故事中一个可点击区域的类型。目前，它可以是以下类型之一：\n\n- [StoryAreaTypeLocation](#storyareatypelocation)：指向某个地点的区域。\n- [StoryAreaTypeSuggestedReaction](#storyareatypesuggestedreaction)：指向建议表情回应的区域。\n- [StoryAreaTypeLink](#storyareatypelink)：指向链接的区域。\n- [StoryAreaTypeWeather](#storyareatypeweather)：包含天气信息的区域。\n- [StoryAreaTypeUniqueGift](#storyareatypeuniquegift)：指向独特礼物的区域。"
+  },
+  "StoryAreaTypeLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a story area pointing to a location.",
+      "up to 10 location areas",
+      "Type of the area, always “location”",
+      "Optional. Address of the location"
+    ],
+    "text": "此对象描述故事中一个指向地点的区域。目前，一条故事最多可以包含 10 个地点区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"location\"`。 |\n| `latitude` | Float | 地点的纬度，单位为度。 |\n| `longitude` | Float | 地点的经度，单位为度。 |\n| `address` | [LocationAddress](#locationaddress) | 可选。地点的地址。 |"
+  },
+  "StoryAreaTypeSuggestedReaction": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a story area pointing to a suggested reaction.",
+      "up to 5 suggested reaction areas",
+      "Type of the area, always “suggested_reaction”",
+      "reaction area corner is flipped"
+    ],
+    "text": "此对象描述故事中一个指向建议表情回应的区域。目前，一条故事最多可以包含 5 个建议表情回应区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"suggested_reaction\"`。 |\n| `reaction_type` | [ReactionType](#reactiontype) | 表情回应的类型。 |\n| `is_dark` | Boolean | 可选。传入 `True` 表示表情回应区域使用深色背景。 |\n| `is_flipped` | Boolean | 可选。传入 `True` 表示表情回应区域的角标翻转。 |"
+  },
+  "StoryAreaTypeLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a story area pointing to an HTTP or tg:// link.",
+      "up to 3 link areas",
+      "Type of the area, always “link”",
+      "HTTP or tg:// URL to be opened when the area is clicked"
+    ],
+    "text": "此对象描述故事中一个指向 HTTP 或 `tg://` 链接的区域。目前，一条故事最多可以包含 3 个链接区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"link\"`。 |\n| `url` | String | 用户点击此区域时要打开的 HTTP 或 `tg://` URL。 |"
+  },
+  "StoryAreaTypeWeather": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a story area containing weather information.",
+      "up to 3 weather areas",
+      "Temperature, in degree Celsius",
+      "A color of the area background in the ARGB format"
+    ],
+    "text": "此对象描述故事中一个包含天气信息的区域。目前，一条故事最多可以包含 3 个天气区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"weather\"`。 |\n| `temperature` | Float | 温度，单位为摄氏度。 |\n| `emoji` | String | 表示天气状况的 emoji。 |\n| `background_color` | Integer | 区域背景颜色，使用 ARGB 格式表示。 |"
+  },
+  "StoryAreaTypeUniqueGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a story area pointing to a unique gift.",
+      "at most 1 unique gift area",
+      "Type of the area, always “unique_gift”",
+      "Unique name of the gift"
+    ],
+    "text": "此对象描述故事中一个指向独特礼物的区域。目前，一条故事最多只能包含 1 个独特礼物区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"unique_gift\"`。 |\n| `name` | String | 礼物的唯一名称。 |"
+  },
+  "StoryArea": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a clickable area on a story media.",
+      "Position of the area",
+      "Type of the area"
+    ],
+    "text": "此对象描述故事媒体中的一个可点击区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `position` | [StoryAreaPosition](#storyareaposition) | 区域的位置。 |\n| `type` | [StoryAreaType](#storyareatype) | 区域的类型。 |"
   }
 }

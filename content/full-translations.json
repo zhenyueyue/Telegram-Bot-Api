@@ -3166,5 +3166,96 @@
       "File size in bytes"
     ],
     "text": "此对象表示照片的一种尺寸，或者文件（[Document](#document)）/ 贴纸（[Sticker](#sticker)）缩略图。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 照片宽度。 |\n| `height` | Integer | 照片高度。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。 |"
+  },
+  "MessageId": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a unique message identifier.",
+      "the server might automatically schedule a message instead of sending it immediately."
+    ],
+    "text": "此对象表示一个唯一的消息标识符。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `message_id` | Integer | 唯一的消息标识符。在某些特定情况下（例如，向大型聊天发送包含视频的消息时），服务器可能会自动安排消息稍后发送，而不是立即发送。在这种情况下，该字段的值为 `0`，并且在消息实际发送之前，相关消息不可使用。 |"
+  },
+  "InaccessibleMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes a message that was deleted or is otherwise inaccessible to the bot.",
+      "Always 0. The field can be used to differentiate regular and inaccessible messages."
+    ],
+    "text": "此对象描述一条已被删除或因其他原因而无法被机器人访问的消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 该消息所属的聊天。 |\n| `message_id` | Integer | 该消息在聊天中的唯一标识符。 |\n| `date` | Integer | 始终为 `0`。可使用此字段区分普通消息和无法访问的消息。 |"
+  },
+  "MaybeInaccessibleMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes a message that can be inaccessible to the bot. It can be one of",
+      "[InaccessibleMessage](#inaccessiblemessage)"
+    ],
+    "text": "此对象描述一条可能无法被机器人访问的消息。它可以是以下类型之一：\n\n- [Message](#message)\n- [InaccessibleMessage](#inaccessiblemessage)"
+  },
+  "Animation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).",
+      "It can be bigger than 2^31",
+      "at most 52 significant bits"
+    ],
+    "text": "此对象表示一个动画文件（GIF，或不带声音的 H.264/MPEG-4 AVC 视频）。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 发送者定义的视频宽度。 |\n| `height` | Integer | 发送者定义的视频高度。 |\n| `duration` | Integer | 发送者定义的视频时长，单位为秒。 |\n| `thumbnail` | [PhotoSize](#photosize) | 可选。发送者定义的动画缩略图。 |\n| `file_name` | String | 可选。动画的原始文件名。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
+  },
+  "Audio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents an audio file to be treated as music by the Telegram clients.",
+      "Thumbnail of the album cover to which the music file belongs"
+    ],
+    "text": "此对象表示一个音频文件，Telegram 客户端会将其作为音乐处理。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `duration` | Integer | 发送者定义的音频时长，单位为秒。 |\n| `performer` | String | 可选。发送者或音频标签中定义的表演者。 |\n| `title` | String | 可选。发送者或音频标签中定义的音频标题。 |\n| `file_name` | String | 可选。原始文件名。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。 |\n| `thumbnail` | [PhotoSize](#photosize) | 可选。该音乐文件所属专辑封面的缩略图。 |"
+  },
+  "Document": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a general file (as opposed to",
+      "[voice messages](#voice) and [audio files](#audio)"
+    ],
+    "text": "此对象表示一个普通文件（区别于[照片](#photosize)、[语音消息](#voice)和[音频文件](#audio)）。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `thumbnail` | [PhotoSize](#photosize) | 可选。发送者定义的文档缩略图。 |\n| `file_name` | String | 可选。原始文件名。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
+  },
+  "LivePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a live photo.",
+      "Available sizes of the corresponding static photo",
+      "Identifier for the video file which can be used to download or reuse the file"
+    ],
+    "text": "此对象表示一张实况照片（Live Photo）。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `photo` | Array of [PhotoSize](#photosize) | 可选。对应静态照片的可用尺寸。 |\n| `file_id` | String | 视频文件的标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 视频文件的唯一标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 发送者定义的视频宽度。 |\n| `height` | Integer | 发送者定义的视频高度。 |\n| `duration` | Integer | 视频时长，单位为秒。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
+  },
+  "Story": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a story.",
+      "Unique identifier for the story in the chat"
+    ],
+    "text": "此对象表示一条故事（Story）。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 发布该故事的聊天。 |\n| `id` | Integer | 该故事在聊天中的唯一标识符。 |"
+  },
+  "VideoQuality": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a video file of a specific quality.",
+      "Codec that was used to encode the video, for example"
+    ],
+    "text": "此对象表示特定画质的视频文件。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 视频宽度。 |\n| `height` | Integer | 视频高度。 |\n| `codec` | String | 用于编码视频的编解码器，例如 `h264`、`h265` 或 `av01`。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
+  },
+  "VideoNote": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a [video message]",
+      "Video width and height (diameter of the video message) as defined by the sender"
+    ],
+    "text": "此对象表示一条[视频消息](https://telegram.org/blog/video-messages-and-telescope)。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `length` | Integer | 发送者定义的视频宽度和高度（即视频消息的直径）。 |\n| `duration` | Integer | 视频时长，单位为秒。 |\n| `thumbnail` | [PhotoSize](#photosize) | 可选。视频缩略图。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。 |"
+  },
+  "Voice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a voice note.",
+      "Duration of the audio in seconds as defined by the sender",
+      "at most 52 significant bits"
+    ],
+    "text": "此对象表示一条语音消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `duration` | Integer | 发送者定义的音频时长，单位为秒。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
   }
 }

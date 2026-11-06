@@ -1392,5 +1392,418 @@
       "A link to a reference."
     ],
     "text": "## RichTextReferenceLink\n\n指向富文本消息中某个引用定义的链接实体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，固定为 `reference_link`。 |\n| `text` | RichText | 链接中显示的文本内容。 |\n| `reference_name` | String | 目标引用的名称。 |\n"
+  },
+  "RichBlockCaption": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Caption of a rich formatted block."
+    ],
+    "text": "## RichBlockCaption\n\n富内容区块的说明文字。可同时包含说明文本和署名。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | RichText | 区块的说明文字。 |\n| `credit` | RichText | 可选。区块的署名，对应 HTML `<cite>` 标签。 |\n"
+  },
+  "RichBlockTableCell": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Cell in a table."
+    ],
+    "text": "## RichBlockTableCell\n\n表格中的一个单元格。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | RichText | 可选。单元格中的文本。如果省略，该单元格将不可见。 |\n| `is_header` | True | 可选。存在此字段表示该单元格是表头单元格。 |\n| `colspan` | Integer | 可选。单元格跨越的列数；仅当跨越列数大于 1 时使用。 |\n| `rowspan` | Integer | 可选。单元格跨越的行数；仅当跨越行数大于 1 时使用。 |\n| `align` | String | 单元格内容的水平对齐方式。目前只能是 `left`（左对齐）、`center`（居中）或 `right`（右对齐）。 |\n| `valign` | String | 单元格内容的垂直对齐方式。目前只能是 `top`（顶部）、`middle`（垂直居中）或 `bottom`（底部）。 |\n"
+  },
+  "RichBlockListItem": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An item of a list."
+    ],
+    "text": "## RichBlockListItem\n\n列表中的一个项目。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `label` | String | 该项目的标签文本。 |\n| `blocks` | Array of RichBlock | 该列表项目包含的内容区块。 |\n| `has_checkbox` | True | 可选。存在此字段表示该项目带有复选框。 |\n| `is_checked` | True | 可选。存在此字段表示该项目的复选框已勾选。 |\n| `value` | Integer | 可选。对于有序列表，指定该项目标签使用的数字。 |\n| `type` | String | 可选。对于有序列表，指定项目标签的编号样式：`a` 表示小写字母，`A` 表示大写字母，`i` 表示小写罗马数字，`I` 表示大写罗马数字，`1` 表示十进制数字。 |\n"
+  },
+  "RichBlock": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a block in a rich formatted message. Currently, it can be any of the following types:"
+    ],
+    "text": "## RichBlock\n\n表示富内容消息中的一个区块。目前可以是以下任意一种类型：\n\n- [`RichBlockParagraph`](#richblockparagraph)、[`RichBlockSectionHeading`](#richblocksectionheading)、[`RichBlockPreformatted`](#richblockpreformatted)、[`RichBlockFooter`](#richblockfooter)、[`RichBlockDivider`](#richblockdivider)\n- [`RichBlockMathematicalExpression`](#richblockmathematicalexpression)、[`RichBlockAnchor`](#richblockanchor)、[`RichBlockList`](#richblocklist)\n- [`RichBlockBlockQuotation`](#richblockblockquotation)、[`RichBlockExpandableBlockQuotation`](#richblockexpandableblockquotation)、[`RichBlockPullQuotation`](#richblockpullquotation)\n- [`RichBlockCollage`](#richblockcollage)、[`RichBlockSlideshow`](#richblockslideshow)、[`RichBlockTable`](#richblocktable)、[`RichBlockDetails`](#richblockdetails)、[`RichBlockMap`](#richblockmap)\n- [`RichBlockButtons`](#richblockbuttons)、[`RichBlockAnimation`](#richblockanimation)、[`RichBlockAudio`](#richblockaudio)、[`RichBlockDocument`](#richblockdocument)、[`RichBlockPhoto`](#richblockphoto)、[`RichBlockVideo`](#richblockvideo)、[`RichBlockVoiceNote`](#richblockvoicenote)、[`RichBlockThinking`](#richblockthinking)。\n"
+  },
+  "RichBlockParagraph": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text paragraph, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockParagraph\n\n文本段落，对应 HTML `<p>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `paragraph`。 |\n| `text` | RichText | 段落文本内容。 |\n"
+  },
+  "RichBlockSectionHeading": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A section heading, corresponding to the HTML tags"
+    ],
+    "text": "## RichBlockSectionHeading\n\n章节标题，对应 HTML `<h1>`、`<h2>`、`<h3>`、`<h4>`、`<h5>` 或 `<h6>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `heading`。 |\n| `text` | RichText | 标题文本内容。 |\n| `size` | Integer | 文本字体的相对大小，范围为 **1–6**；`1` 最大，`6` 最小。 |\n"
+  },
+  "RichBlockPreformatted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A preformatted text block, corresponding to the nested HTML tags"
+    ],
+    "text": "## RichBlockPreformatted\n\n预格式化文本区块，对应嵌套使用的 HTML `<pre>` 和 `<code>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `pre`。 |\n| `text` | RichText | 预格式化文本内容。 |\n| `language` | String | 可选。文本所使用的编程语言。 |\n"
+  },
+  "RichBlockFooter": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A footer, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockFooter\n\n页脚区块，对应 HTML `<footer>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `footer`。 |\n| `text` | RichText | 页脚文本内容。 |\n"
+  },
+  "RichBlockDivider": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A divider, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockDivider\n\n分隔线区块，对应 HTML `<hr/>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `divider`。 |\n"
+  },
+  "RichBlockMathematicalExpression": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a mathematical expression in LaTeX format"
+    ],
+    "text": "## RichBlockMathematicalExpression\n\n数学公式区块，公式使用 LaTeX 格式，对应自定义 HTML 标签 `<tg-math-block>`。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `mathematical_expression`。 |\n| `expression` | String | 使用 LaTeX 格式编写的数学表达式。 |\n"
+  },
+  "RichBlockAnchor": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with an anchor, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockAnchor\n\n锚点区块，对应带有 `name` 属性的 HTML `<a>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `anchor`。 |\n| `name` | String | 锚点名称。 |\n"
+  },
+  "RichBlockList": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A list of blocks, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockList\n\n列表区块，对应包含多个嵌套 `<li>` 标签的 HTML `<ul>` 或 `<ol>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `list`。 |\n| `items` | Array of RichBlockListItem | 列表项目数组，每项均为 [`RichBlockListItem`](#richblocklistitem) 对象。 |\n"
+  },
+  "RichBlockBlockQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block quotation, corresponding to the HTML tag `<blockquote>`."
+    ],
+    "text": "## RichBlockBlockQuotation\n\n引用区块，对应 HTML `<blockquote>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `blockquote`。 |\n| `blocks` | Array of RichBlock | 引用区块中包含的内容。 |\n| `credit` | RichText | 可选。引用内容的署名。 |\n"
+  },
+  "RichBlockExpandableBlockQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "with custom attribute"
+    ],
+    "text": "## RichBlockExpandableBlockQuotation\n\n可展开或折叠的引用区块，对应带有 `expandable` 自定义属性的 HTML `<blockquote>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `expandable_blockquote`。 |\n| `text` | RichText | 引用区块的文本内容。 |\n| `credit` | RichText | 可选。引用内容的署名。 |\n"
+  },
+  "RichBlockPullQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A quotation with centered text"
+    ],
+    "text": "## RichBlockPullQuotation\n\n居中显示的引述区块，大致对应 HTML `<aside>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `pullquote`。 |\n| `text` | RichText | 引述文本内容。 |\n| `credit` | RichText | 可选。引述内容的署名。 |\n"
+  },
+  "RichBlockCollage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A collage, corresponding to the custom HTML tag"
+    ],
+    "text": "## RichBlockCollage\n\n拼贴区块，对应自定义 HTML `<tg-collage>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `collage`。 |\n| `blocks` | Array of RichBlock | 拼贴中包含的内容区块。 |\n| `caption` | RichBlockCaption | 可选。该区块的说明文字和署名。 |\n"
+  },
+  "RichBlockSlideshow": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A slideshow, corresponding to the custom HTML tag"
+    ],
+    "text": "## RichBlockSlideshow\n\n幻灯片区块，对应自定义 HTML `<tg-slideshow>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `slideshow`。 |\n| `blocks` | Array of RichBlock | 幻灯片中包含的内容区块。 |\n| `caption` | RichBlockCaption | 可选。该区块的说明文字和署名。 |\n"
+  },
+  "RichBlockTable": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A table, corresponding to the HTML tag `<table>`."
+    ],
+    "text": "## RichBlockTable\n\n表格区块，对应 HTML `<table>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `table`。 |\n| `cells` | Array of Array of RichBlockTableCell | 二维数组，表示表格中的行和单元格；每个单元格都是 [`RichBlockTableCell`](#richblocktablecell) 对象。 |\n| `is_bordered` | True | 可选。存在此字段表示表格带有边框。 |\n| `is_striped` | True | 可选。存在此字段表示表格使用斑马纹样式。 |\n| `is_compact` | True | 可选。存在此字段表示表格单元格使用更小的内边距。 |\n| `caption` | RichText | 可选。表格标题或说明文字。 |\n"
+  },
+  "RichBlockDetails": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An expandable block for details disclosure"
+    ],
+    "text": "## RichBlockDetails\n\n可展开的详情区块，对应 HTML `<details>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `details`。 |\n| `summary` | RichText | 始终显示的区块摘要或标题。 |\n| `blocks` | Array of RichBlock | 详情区块中包含的内容。 |\n| `is_open` | True | 可选。存在此字段表示默认展开并显示区块内容。 |\n"
+  },
+  "RichBlockMap": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a map, corresponding to the custom HTML tag"
+    ],
+    "text": "## RichBlockMap\n\n地图区块，对应自定义 HTML `<tg-map>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `map`。 |\n| `location` | Location | 地图中心点的位置。 |\n| `zoom` | Integer | 地图缩放级别。 |\n| `width` | Integer | 地图预期显示宽度。 |\n| `height` | Integer | 地图预期显示高度。 |\n| `caption` | RichBlockCaption | 可选。地图区块的说明文字和署名。 |\n"
+  },
+  "RichBlockButtons": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block containing a list of buttons that are shown in one row"
+    ],
+    "text": "## RichBlockButtons\n\n按钮行区块，对应自定义 HTML `<tg-button-row>` 标签；其中的按钮会排列在同一行。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `buttons`。 |\n| `buttons` | Array of RichMessageButton | 按钮数组，每项均为 [`RichMessageButton`](#richmessagebutton) 对象。 |\n| `align` | String | 可选。按钮的水平对齐方式，目前只能是 `left`（左对齐）、`center`（居中）或 `right`（右对齐）。 |\n"
+  },
+  "RichBlockAnimation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with an animation, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockAnimation\n\n动画区块，对应 HTML `<video>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `animation`。 |\n| `animation` | Animation | 动画媒体对象。 |\n| `has_spoiler` | True | 可选。存在此字段表示媒体预览会被剧透动画遮挡。 |\n| `caption` | RichBlockCaption | 可选。动画区块的说明文字和署名。 |\n"
+  },
+  "RichBlockAudio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a music file, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockAudio\n\n音频区块，对应 HTML `<audio>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `audio`。 |\n| `audio` | Audio | 音频媒体对象。 |\n| `caption` | RichBlockCaption | 可选。音频区块的说明文字和署名。 |\n"
+  },
+  "RichBlockDocument": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a general file, corresponding to the custom HTML tag"
+    ],
+    "text": "## RichBlockDocument\n\n通用文件区块，对应自定义 HTML `<tg-document>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `document`。 |\n| `document` | Document | 文件对象。 |\n| `caption` | RichBlockCaption | 可选。文件区块的说明文字和署名。 |\n"
+  },
+  "RichBlockPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a photo, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockPhoto\n\n图片区块，对应 HTML `<img>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `photo`。 |\n| `photo` | Array of PhotoSize | 图片可用尺寸列表。 |\n| `has_spoiler` | True | 可选。存在此字段表示媒体预览会被剧透动画遮挡。 |\n| `caption` | RichBlockCaption | 可选。图片区块的说明文字和署名。 |\n"
+  },
+  "RichBlockVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a video, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockVideo\n\n视频区块，对应 HTML `<video>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `video`。 |\n| `video` | Video | 视频媒体对象。 |\n| `has_spoiler` | True | 可选。存在此字段表示媒体预览会被剧透动画遮挡。 |\n| `caption` | RichBlockCaption | 可选。视频区块的说明文字和署名。 |\n"
+  },
+  "RichBlockVoiceNote": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a voice note, corresponding to the HTML tag"
+    ],
+    "text": "## RichBlockVoiceNote\n\n语音消息区块，对应 HTML `<audio>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `voice_note`。 |\n| `voice_note` | Voice | 语音消息对象。 |\n| `caption` | RichBlockCaption | 可选。语音消息区块的说明文字和署名。 |\n"
+  },
+  "RichBlockThinking": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a “Thinking…” placeholder"
+    ],
+    "text": "## RichBlockThinking\n\n“正在思考……”占位区块，对应自定义 HTML `<tg-thinking>` 标签。该区块只能用于 `sendRichMessageDraft`，因此不会出现在收到的消息中。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `thinking`。 |\n| `text` | RichText | 占位区块显示的文本。官方建议使用专门的 AI 动作自定义表情，示例见 [AI Actions 表情集](https://t.me/addemoji/AIActions)。 |\n"
+  },
+  "InputRichBlockListItem": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An item of a list to be sent."
+    ],
+    "text": "## InputRichBlockListItem\n\n待发送列表中的一个项目。与接收消息时使用的 [`RichBlockListItem`](#richblocklistitem) 不同，此输入对象不包含 `label` 字段，项目内容由 `blocks` 表示。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `blocks` | Array of InputRichBlock | 该列表项目包含的待发送内容区块。 |\n| `has_checkbox` | True | 可选。传入 `True` 表示该项目带有复选框。 |\n| `is_checked` | True | 可选。传入 `True` 表示该项目的复选框已勾选。 |\n| `value` | Integer | 可选。对于有序列表，指定该项目标签使用的数字。 |\n| `type` | String | 可选。对于有序列表，指定项目标签的编号样式：`a` 表示小写字母，`A` 表示大写字母，`i` 表示小写罗马数字，`I` 表示大写罗马数字，`1` 表示十进制数字。 |\n"
+  },
+  "InputRichBlock": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a block in a rich formatted message to be sent."
+    ],
+    "text": "## InputRichBlock\n\n表示准备发送的富内容消息区块。目前可以是以下任意一种类型：\n\n- [`InputRichBlockParagraph`](#inputrichblockparagraph)、[`InputRichBlockSectionHeading`](#inputrichblocksectionheading)、[`InputRichBlockPreformatted`](#inputrichblockpreformatted)、[`InputRichBlockFooter`](#inputrichblockfooter)、[`InputRichBlockDivider`](#inputrichblockdivider)\n- [`InputRichBlockMathematicalExpression`](#inputrichblockmathematicalexpression)、[`InputRichBlockAnchor`](#inputrichblockanchor)、[`InputRichBlockList`](#inputrichblocklist)\n- [`InputRichBlockBlockQuotation`](#inputrichblockblockquotation)、[`InputRichBlockExpandableBlockQuotation`](#inputrichblockexpandableblockquotation)、[`InputRichBlockPullQuotation`](#inputrichblockpullquotation)\n- [`InputRichBlockCollage`](#inputrichblockcollage)、[`InputRichBlockSlideshow`](#inputrichblockslideshow)、[`InputRichBlockTable`](#inputrichblocktable)、[`InputRichBlockDetails`](#inputrichblockdetails)、[`InputRichBlockMap`](#inputrichblockmap)\n- [`InputRichBlockButtons`](#inputrichblockbuttons)、[`InputRichBlockAnimation`](#inputrichblockanimation)、[`InputRichBlockAudio`](#inputrichblockaudio)、[`InputRichBlockDocument`](#inputrichblockdocument)、[`InputRichBlockPhoto`](#inputrichblockphoto)、[`InputRichBlockVideo`](#inputrichblockvideo)、[`InputRichBlockVoiceNote`](#inputrichblockvoicenote)、[`InputRichBlockThinking`](#inputrichblockthinking)。\n"
+  },
+  "InputRichBlockParagraph": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A text paragraph, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockParagraph\n\n待发送的文本段落，对应 HTML `<p>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `paragraph`。 |\n| `text` | RichText | 段落文本内容。 |\n"
+  },
+  "InputRichBlockSectionHeading": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A section heading, corresponding to the HTML tags"
+    ],
+    "text": "## InputRichBlockSectionHeading\n\n待发送的章节标题，对应 HTML `<h1>`、`<h2>`、`<h3>`、`<h4>`、`<h5>` 或 `<h6>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `heading`。 |\n| `text` | RichText | 标题文本内容。 |\n| `size` | Integer | 文本字体的相对大小，范围为 **1–6**；`1` 最大，`6` 最小。 |\n"
+  },
+  "InputRichBlockPreformatted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A preformatted text block, corresponding to the nested HTML tags"
+    ],
+    "text": "## InputRichBlockPreformatted\n\n待发送的预格式化文本区块，对应嵌套使用的 HTML `<pre>` 和 `<code>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `pre`。 |\n| `text` | RichText | 预格式化文本内容。 |\n| `language` | String | 可选。文本所使用的编程语言。 |\n"
+  },
+  "InputRichBlockFooter": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A footer, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockFooter\n\n待发送的页脚区块，对应 HTML `<footer>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `footer`。 |\n| `text` | RichText | 页脚文本内容。 |\n"
+  },
+  "InputRichBlockDivider": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A divider, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockDivider\n\n待发送的分隔线区块，对应 HTML `<hr/>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `divider`。 |\n"
+  },
+  "InputRichBlockMathematicalExpression": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a mathematical expression in LaTeX format"
+    ],
+    "text": "## InputRichBlockMathematicalExpression\n\n待发送的数学公式区块，公式使用 LaTeX 格式，对应自定义 HTML `<tg-math-block>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `mathematical_expression`。 |\n| `expression` | String | 使用 LaTeX 格式编写的数学表达式。 |\n"
+  },
+  "InputRichBlockAnchor": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with an anchor, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockAnchor\n\n待发送的锚点区块，对应带有 `name` 属性的 HTML `<a>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `anchor`。 |\n| `name` | String | 锚点名称。 |\n"
+  },
+  "InputRichBlockList": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A list of blocks, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockList\n\n待发送的列表区块，对应包含多个嵌套 `<li>` 标签的 HTML `<ul>` 或 `<ol>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `list`。 |\n| `items` | Array of InputRichBlockListItem | 列表项目数组，每项均为 [`InputRichBlockListItem`](#inputrichblocklistitem) 对象。 |\n"
+  },
+  "InputRichBlockBlockQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block quotation, corresponding to the HTML tag `<blockquote>`."
+    ],
+    "text": "## InputRichBlockBlockQuotation\n\n待发送的引用区块，对应 HTML `<blockquote>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `blockquote`。 |\n| `blocks` | Array of InputRichBlock | 引用区块中包含的待发送内容。 |\n| `credit` | RichText | 可选。引用内容的署名。 |\n"
+  },
+  "InputRichBlockExpandableBlockQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "with custom attribute"
+    ],
+    "text": "## InputRichBlockExpandableBlockQuotation\n\n待发送的可展开或折叠引用区块，对应带有 `expandable` 自定义属性的 HTML `<blockquote>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `expandable_blockquote`。 |\n| `text` | RichText | 引用区块的文本内容。 |\n| `credit` | RichText | 可选。引用内容的署名。 |\n"
+  },
+  "InputRichBlockPullQuotation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A quotation with centered text"
+    ],
+    "text": "## InputRichBlockPullQuotation\n\n待发送的居中引述区块，大致对应 HTML `<aside>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `pullquote`。 |\n| `text` | RichText | 引述文本内容。 |\n| `credit` | RichText | 可选。引述内容的署名。 |\n"
+  },
+  "InputRichBlockCollage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A collage, corresponding to the custom HTML tag"
+    ],
+    "text": "## InputRichBlockCollage\n\n待发送的拼贴区块，对应自定义 HTML `<tg-collage>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `collage`。 |\n| `blocks` | Array of InputRichBlock | 拼贴中包含的待发送内容区块。 |\n| `caption` | RichBlockCaption | 可选。该区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockSlideshow": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A slideshow, corresponding to the custom HTML tag"
+    ],
+    "text": "## InputRichBlockSlideshow\n\n待发送的幻灯片区块，对应自定义 HTML `<tg-slideshow>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `slideshow`。 |\n| `blocks` | Array of InputRichBlock | 幻灯片中包含的待发送内容区块。 |\n| `caption` | RichBlockCaption | 可选。该区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockTable": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A table, corresponding to the HTML tag `<table>`."
+    ],
+    "text": "## InputRichBlockTable\n\n待发送的表格区块，对应 HTML `<table>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `table`。 |\n| `cells` | Array of Array of RichBlockTableCell | 二维数组，表示表格中的行和单元格；每个单元格都是 [`RichBlockTableCell`](#richblocktablecell) 对象。 |\n| `is_bordered` | True | 可选。传入 `True` 表示表格带有边框。 |\n| `is_striped` | True | 可选。传入 `True` 表示表格使用斑马纹样式。 |\n| `is_compact` | True | 可选。传入 `True` 表示表格单元格使用更小的内边距。 |\n| `caption` | RichText | 可选。表格标题或说明文字。 |\n"
+  },
+  "InputRichBlockDetails": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An expandable block for details disclosure"
+    ],
+    "text": "## InputRichBlockDetails\n\n待发送的可展开详情区块，对应 HTML `<details>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `details`。 |\n| `summary` | RichText | 始终显示的区块摘要或标题。 |\n| `blocks` | Array of InputRichBlock | 详情区块中包含的待发送内容。 |\n| `is_open` | True | 可选。传入 `True` 表示默认展开并显示区块内容。 |\n"
+  },
+  "InputRichBlockMap": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The map's width and height must not exceed 10000 in total."
+    ],
+    "text": "## InputRichBlockMap\n\n待发送的地图区块，对应自定义 HTML `<tg-map>` 标签。**宽度与高度的总和不得超过 10000，宽高比不得超过 20。**\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `map`。 |\n| `location` | Location | 地图中心点的位置。 |\n| `zoom` | Integer | 可选。地图缩放级别，范围为 **0–24**。 |\n| `width` | Integer | 可选。地图宽度，范围为 **0–10000**。 |\n| `height` | Integer | 可选。地图高度，范围为 **0–10000**。 |\n| `caption` | RichBlockCaption | 可选。地图区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockButtons": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block containing a list of buttons that are shown in one row"
+    ],
+    "text": "## InputRichBlockButtons\n\n待发送的按钮行区块，对应自定义 HTML `<tg-button-row>` 标签；其中的按钮会排列在同一行。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `buttons`。 |\n| `buttons` | Array of RichMessageButton | 要发送的按钮数组，包含 **1–8 个** [`RichMessageButton`](#richmessagebutton) 对象。 |\n| `align` | String | 可选。按钮的水平对齐方式，目前只能是 `left`（左对齐）、`center`（居中）或 `right`（右对齐）。 |\n"
+  },
+  "InputRichBlockAnimation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with an animation, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockAnimation\n\n待发送的动画区块，对应 HTML `<video>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `animation`。 |\n| `animation` | InputMediaAnimation | 动画媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。动画区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockAudio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a music file, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockAudio\n\n待发送的音频区块，对应 HTML `<audio>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `audio`。 |\n| `audio` | InputMediaAudio | 音频媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。音频区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockDocument": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a general file, corresponding to the custom HTML tag"
+    ],
+    "text": "## InputRichBlockDocument\n\n待发送的通用文件区块，对应自定义 HTML `<tg-document>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `document`。 |\n| `document` | InputMediaDocument | 文件媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。文件区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a photo, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockPhoto\n\n待发送的图片区块，对应 HTML `<img>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `photo`。 |\n| `photo` | InputMediaPhoto | 图片媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。图片区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a video, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockVideo\n\n待发送的视频区块，对应 HTML `<video>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `video`。 |\n| `video` | InputMediaVideo | 视频媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。视频区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockVoiceNote": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a voice note, corresponding to the HTML tag"
+    ],
+    "text": "## InputRichBlockVoiceNote\n\n待发送的语音消息区块，对应 HTML `<audio>` 标签。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `voice_note`。 |\n| `voice_note` | InputMediaVoiceNote | 语音消息媒体。该对象中的 `caption` 字段会被忽略。 |\n| `caption` | RichBlockCaption | 可选。语音消息区块的说明文字和署名。 |\n"
+  },
+  "InputRichBlockThinking": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A block with a “Thinking…” placeholder"
+    ],
+    "text": "## InputRichBlockThinking\n\n待发送的“正在思考……”占位区块，对应自定义 HTML `<tg-thinking>` 标签。该区块只能用于 `sendRichMessageDraft`，因此不会出现在收到的消息中。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `thinking`。 |\n| `text` | RichText | 占位区块显示的文本。官方建议使用专门的 AI 动作自定义表情，示例见 [AI Actions 表情集](https://t.me/addemoji/AIActions)。 |\n"
+  },
+  "RichMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Rich formatted message."
+    ],
+    "text": "## RichMessage\n\n富内容消息对象。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `blocks` | Array of RichBlock | 消息包含的内容区块数组。 |\n| `is_rtl` | Boolean | 可选。传入 `True` 表示该富内容消息应从右向左显示。 |\n"
+  },
+  "InputRichMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used."
+    ],
+    "text": "## InputRichMessage\n\n描述一条准备发送的富内容消息。**`html`、`markdown` 和 `blocks` 三个字段必须且只能使用其中一个。**\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `blocks` | Array of InputRichBlock | 可选。以区块数组的形式描述准备发送的富内容消息。 |\n| `html` | String | 可选。使用 HTML 格式描述准备发送的富内容消息。更多格式规则请参阅富内容消息格式说明；如果 HTML 中引用媒体，需要通过 `media` 字段提供对应媒体。 |\n| `markdown` | String | 可选。使用 Markdown 格式描述准备发送的富内容消息。更多格式规则请参阅富内容消息格式说明；如果 Markdown 中引用媒体，需要通过 `media` 字段提供对应媒体。 |\n| `media` | Array of InputRichMessageMedia | 可选。媒体列表，用于为 `html` 或 `markdown` 字段中通过 `tg://photo?id=`、`tg://video?id=`、`tg://document?id=` 和 `tg://audio?id=` 引用的媒体提供实际文件。 |\n| `is_rtl` | Boolean | 可选。传入 `True` 表示富内容消息应从右向左显示。 |\n| `skip_entity_detection` | Boolean | 可选。传入 `True` 可跳过文本中的实体自动识别，例如 URL、邮箱地址、用户名提及、话题标签、金融代码标签、机器人命令和电话号码。 |\n"
+  },
+  "InputRichMessageMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a media element embedded in an outgoing rich message."
+    ],
+    "text": "## InputRichMessageMedia\n\n描述嵌入待发送富内容消息中的一个媒体元素。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 媒体元素的唯一标识符，用于在 `tg://photo?id=`、`tg://video?id=`、`tg://document?id=` 或 `tg://audio?id=` 链接中引用。长度为 **1–64 个字符**，且只能包含 `A-Z`、`a-z`、`0-9`、`_` 和 `-`。 |\n| `media` | InputMediaAnimation or InputMediaAudio or InputMediaDocument or InputMediaPhoto or InputMediaVideo or InputMediaVoiceNote | 需要发送的媒体对象。除媒体本身及其属性外，对象中的其他字段均会被忽略。 |\n"
+  },
+  "InputRichMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of a rich message to be sent as the result of an inline query."
+    ],
+    "text": "## InputRichMessageContent\n\n表示通过内联查询结果发送的富内容消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `rich_message` | InputRichMessage | 需要发送的富内容消息。**只能使用此前已经上传到 Telegram 的文件**。 |\n"
+  },
+  "InputMediaVoiceNote": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a voice message file to be sent."
+    ],
+    "text": "## InputMediaVoiceNote\n\n表示准备发送的语音消息文件。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 媒体类型，必须为 `voice_note`。 |\n| `media` | String | 需要发送的文件。可以传入 Telegram 服务器上已有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或使用 `attach://<file_attach_name>` 引用通过 `multipart/form-data` 上传的新文件。 |\n| `caption` | String | 可选。语音消息的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析语音消息说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中出现的特殊实体列表；提供此字段时可代替 `parse_mode`。 |\n| `duration` | Integer | 可选。语音消息时长，单位为秒。 |\n"
   }
 }

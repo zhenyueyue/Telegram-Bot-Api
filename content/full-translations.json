@@ -3747,7 +3747,7 @@
   "SharedUser": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUsers button.",
+      "This object contains information about a user that was shared with the bot",
       "at most 52 significant bits",
       "The bot may not have access to the user"
     ],
@@ -3756,7 +3756,7 @@
   "UsersShared": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about the users whose identifiers were shared with the bot using a KeyboardButtonRequestUsers button.",
+      "This object contains information about the users whose identifiers were shared with the bot",
       "Information about users shared with the bot"
     ],
     "text": "此对象包含通过 `KeyboardButtonRequestUsers` 按钮向机器人分享的用户及其标识符信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的标识符。 |\n| `users` | Array of [SharedUser](#shareduser) | 分享给机器人的用户信息。 |"
@@ -3764,7 +3764,7 @@
   "ChatShared": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.",
+      "This object contains information about a chat that was shared with the bot",
       "at most 52 significant bits",
       "The bot may not have access to the chat"
     ],

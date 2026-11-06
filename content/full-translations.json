@@ -3850,5 +3850,86 @@
       "Expected price of the post"
     ],
     "text": "此对象描述一条服务消息，说明一篇建议发布的帖子未能获批。目前，这种情况仅由批准时用户资金不足导致。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含未能获批的建议帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `price` | [SuggestedPostPrice](#suggestedpostprice) | 该帖子的预期价格。 |"
+  },
+  "SuggestedPostDeclined": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about the rejection of a suggested post.",
+      "Message containing the suggested post.",
+      "will not contain the *reply_to_message* field",
+      "Comment with which the post was declined"
+    ],
+    "text": "此对象描述一条服务消息，说明一篇建议发布的帖子已被拒绝。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含被拒绝建议帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `comment` | String | 可选。拒绝该帖子的说明或评论。 |"
+  },
+  "SuggestedPostPaid": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a successful payment for a suggested post.",
+      "Currently, one of \"XTR\" for Telegram Stars or \"TON\" for TON grams.",
+      "in nanograms",
+      "The amount of Telegram Stars that was received by the channel"
+    ],
+    "text": "此对象描述一条服务消息，说明建议帖子的付款已成功完成。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含已付款建议帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `currency` | String | 付款所使用的货币。目前为以下值之一：`\"XTR\"`（Telegram Stars）或 `\"TON\"`（TON 克）。 |\n| `amount` | Integer | 可选。频道收到的货币金额，以纳克（nanograms）为单位；仅适用于 TON 付款。 |\n| `star_amount` | [StarAmount](#staramount) | 可选。频道收到的 Telegram Stars 数量；仅适用于 Telegram Stars 付款。 |"
+  },
+  "SuggestedPostRefunded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a payment refund for a suggested post.",
+      "\"post_deleted\"",
+      "within 24 hours",
+      "\"payment_refunded\""
+    ],
+    "text": "此对象描述一条服务消息，说明建议帖子的付款已退款。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含已退款建议帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `reason` | String | 退款原因。目前为以下值之一：`\"post_deleted\"`，表示帖子发布后 24 小时内被删除，或在未发布的情况下从计划消息中移除；`\"payment_refunded\"`，表示付款人申请了退款。 |"
+  },
+  "GiveawayCreated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about the creation of a scheduled giveaway.",
+      "The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only"
+    ],
+    "text": "此对象表示一条服务消息，说明已创建一项计划中的赠品抽奖活动。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `prize_star_count` | Integer | 可选。将在抽奖获奖者之间分配的 Telegram Stars 数量；仅适用于 Telegram Stars 抽奖活动。 |"
+  },
+  "Giveaway": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a message about a scheduled giveaway.",
+      "The list of chats which the user must join to participate in the giveaway",
+      "Point in time (Unix timestamp) when winners of the giveaway will be selected",
+      "ISO 3166-1 alpha-2",
+      "Users with a phone number that was bought on Fragment can always participate"
+    ],
+    "text": "此对象表示一条关于计划中赠品抽奖活动的消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chats` | Array of [Chat](#chat) | 用户必须加入才能参与抽奖的聊天列表。 |\n| `winners_selection_date` | Integer | 选出抽奖获奖者的时间点，以 Unix 时间戳表示。 |\n| `winner_count` | Integer | 计划选出的获奖用户数量。 |\n| `only_new_members` | True | 可选。如果为 `True`，则只有在抽奖开始后才加入这些聊天的用户才有资格获奖。 |\n| `has_public_winners` | True | 可选。如果为 `True`，则所有人都可以查看抽奖获奖者名单。 |\n| `prize_description` | String | 可选。其他抽奖奖品的说明。 |\n| `country_codes` | Array of String | 可选。由两个字母组成的 [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 国家/地区代码列表，用于指定有资格参与抽奖的用户必须来自哪些国家/地区。如果为空，则所有用户均可参与抽奖。使用 Fragment 购买的电话号码对应的用户始终可以参与抽奖。 |\n| `prize_star_count` | Integer | 可选。将在抽奖获奖者之间分配的 Telegram Stars 数量；仅适用于 Telegram Stars 抽奖活动。 |\n| `premium_subscription_month_count` | Integer | 可选。通过抽奖赢得的 Telegram Premium 订阅有效月数；仅适用于 Telegram Premium 抽奖活动。 |"
+  },
+  "GiveawayWinners": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a message about the completion of a giveaway with public winners.",
+      "List of up to 100 winners of the giveaway",
+      "The number of other chats the user had to join",
+      "Number of undistributed prizes",
+      "if the giveaway was canceled because the payment for it was refunded"
+    ],
+    "text": "此对象表示一条关于抽奖活动结束且获奖者公开的消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 创建该抽奖活动的聊天。 |\n| `giveaway_message_id` | Integer | 该聊天中抽奖活动消息的标识符。 |\n| `winners_selection_date` | Integer | 选出抽奖获奖者的时间点，以 Unix 时间戳表示。 |\n| `winner_count` | Integer | 本次抽奖的获奖者总数。 |\n| `winners` | Array of [User](#user) | 最多包含 100 名抽奖获奖者的列表。 |\n| `additional_chat_count` | Integer | 可选。用户为获得抽奖资格而必须加入的其他聊天数量。 |\n| `prize_star_count` | Integer | 可选。在抽奖获奖者之间分配的 Telegram Stars 数量；仅适用于 Telegram Stars 抽奖活动。 |\n| `premium_subscription_month_count` | Integer | 可选。通过抽奖赢得的 Telegram Premium 订阅有效月数；仅适用于 Telegram Premium 抽奖活动。 |\n| `unclaimed_prize_count` | Integer | 可选。尚未分配的奖品数量。 |\n| `only_new_members` | True | 可选。如果为 `True`，则只有在抽奖开始后才加入这些聊天的用户才有资格获奖。 |\n| `was_refunded` | True | 可选。如果为 `True`，则表示该抽奖活动因其付款已退款而被取消。 |\n| `prize_description` | String | 可选。其他抽奖奖品的说明。 |"
+  },
+  "GiveawayCompleted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about the completion of a giveaway without public winners.",
+      "Number of winners in the giveaway",
+      "Message with the giveaway that was completed, if it wasn't deleted",
+      "if the giveaway is a Telegram Star giveaway"
+    ],
+    "text": "此对象表示一条服务消息，说明一项没有公开获奖者名单的抽奖活动已结束。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `winner_count` | Integer | 本次抽奖的获奖者数量。 |\n| `unclaimed_prize_count` | Integer | 可选。尚未分配的奖品数量。 |\n| `giveaway_message` | [Message](#message) | 可选。已结束抽奖活动的消息；如果该消息未被删除，则提供此字段。 |\n| `is_star_giveaway` | True | 可选。如果为 `True`，表示该抽奖活动是 Telegram Stars 抽奖；否则，目前表示 Telegram Premium 抽奖。 |"
+  },
+  "LinkPreviewOptions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the options used for link preview generation.",
+      "if the link preview is disabled",
+      "If empty, then the first URL found in the message text will be used.",
+      "ignored if the URL isn't explicitly specified",
+      "link preview must be shown above the message text"
+    ],
+    "text": "此对象描述生成链接预览时使用的选项。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `is_disabled` | Boolean | 可选。如果为 `True`，则禁用链接预览。 |\n| `url` | String | 可选。用于生成链接预览的 URL。如果为空，则使用消息文本中找到的第一个 URL。 |\n| `prefer_small_media` | Boolean | 可选。如果为 `True`，则缩小链接预览中的媒体内容；如果未明确指定 URL，或预览不支持更改媒体尺寸，则忽略此设置。 |\n| `prefer_large_media` | Boolean | 可选。如果为 `True`，则放大链接预览中的媒体内容；如果未明确指定 URL，或预览不支持更改媒体尺寸，则忽略此设置。 |\n| `show_above_text` | Boolean | 可选。如果为 `True`，则链接预览显示在消息文本上方；否则，链接预览显示在消息文本下方。 |"
   }
 }

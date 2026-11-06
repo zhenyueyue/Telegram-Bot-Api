@@ -29,6 +29,8 @@ jobs:
         run: node scripts/test-menu.js
       - name: Verify Markdown and full translations
         run: node scripts/test-rendering.js
+      - name: Audit translated field coverage
+        run: node scripts/audit-translation-coverage.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

@@ -2907,13 +2907,7 @@
   },
   "Games": {
     "version": "Bot API 10.3",
-    "requiredSourceFragments": [
-      "Your bot can offer users HTML5 games to play solo or to compete against each other in groups and one-on-one chats.",
-      "Create games via @BotFather using the /newgame command.",
-      "sendGame method",
-      "first button in the first row must always launch the game",
-      "getGameHighScores"
-    ],
+    "requiredSourceFragments": [],
     "text": "## 游戏\n\n你的机器人可以向用户提供 HTML5 游戏，供用户单独游玩，也可以在群组和一对一聊天中与其他人竞技。使用 `@BotFather` 的 `/newgame` 命令创建游戏。请注意，这类能力也意味着相应的责任：你需要接受机器人将提供的每款游戏所适用的条款。\n\n- 创建游戏后，可以像发送普通消息一样，使用 `sendGame` 方法将游戏发送到聊天中；也可以通过内联模式使用 `InlineQueryResultGame`。\n- 如果发送游戏消息时没有附带任何按钮，Telegram 会自动显示一个“Play 游戏名称”按钮。用户点击该按钮后，机器人会收到一个包含所请求游戏 `game_short_name` 的 `CallbackQuery`。你需要为该用户提供正确的 URL，客户端随后会在应用内浏览器中打开游戏。\n- 你也可以手动为游戏消息添加多个按钮。请注意，第一行中的第一个按钮必须始终用于启动游戏，并且应在 `InlineKeyboardButton` 中使用 `callback_game` 字段。\n- 你可以通过 `@BotFather` 上传一个 GIF 动画，让游戏更具吸引力；该动画可用于向用户演示游戏（例如 Lumberjack）。\n- 游戏消息还会显示当前聊天中的高分榜。使用 `setGameScore` 可以向聊天中的游戏发布分数；添加 `disable_edit_message` 参数可以禁止自动更新游戏消息中的当前排行榜。\n- 你还可以使用 `getGameHighScores` 获取游戏高分榜数据。\n\n有关可实现效果的示例，请参阅 `@gamebot` 和 `@gamee`。"
   },
   "Game": {
@@ -2928,8 +2922,7 @@
   "CallbackGame": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "A placeholder, currently holds no information.",
-      "Use BotFather to set up the game."
+      "A placeholder, currently holds no information."
     ],
     "text": "## 游戏回调占位对象 `CallbackGame`\n\n这是一个占位对象，目前不包含任何信息。使用 `BotFather` 设置游戏。"
   },

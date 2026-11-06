@@ -39,3 +39,11 @@
  .markdown-table-scroll th,.markdown-table-scroll td{padding:11px 12px}
  .original-reference>summary{font-size:13px}
 }
+
+/* Offline machine translations have a prominent and distinct status. */
+.draft-notice{background:#fff8eb;border:1px solid #edd9b6;border-left:4px solid #b78235;color:#704e22;border-radius:8px;padding:13px 15px;font-size:13.5px;line-height:1.8;margin:0 0 22px}
+.draft-notice strong{color:#5a3912;font-weight:650}
+.curated-reference{margin:26px 0;border-top:1px solid #d9e4ec;padding-top:17px}
+.curated-reference>summary{cursor:pointer;color:#225e87;background:#f0f7fc;border:1px solid #cee0ed;border-radius:8px;padding:11px 14px;font-size:13px}
+.curated-reference>.markdown{padding-top:16px}
+.markdown-draft{color:#2b4156}

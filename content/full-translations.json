@@ -2717,5 +2717,199 @@
       "secret"
     ],
     "text": "## EncryptedCredentials\n\n描述解密和验证 `EncryptedPassportElement` 所需的加密凭据。有关完整的数据解密与身份验证流程，请参阅 Telegram Passport 官方文档。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `data` | String | 经过 Base64 编码的加密 JSON 序列化数据，其中包含用户专属载荷、数据哈希，以及解密和验证 `EncryptedPassportElement` 所需的密钥信息。 |\n| `hash` | String | 用于数据完整性验证的数据哈希值，采用 Base64 编码。 |\n| `secret` | String | 使用机器人的 RSA 公钥加密的密钥，采用 Base64 编码；解密资料数据时需要使用它。 |\n"
+  },
+  "AffiliateInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "affiliate that received a commission via this transaction",
+      "can be negative for refunds"
+    ],
+    "text": "## 联盟推广佣金信息 `AffiliateInfo`\n\n描述通过某笔交易获得佣金的联盟推广方信息。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `affiliate_user` | `User` | 可选。若佣金接收方是机器人或用户，则为获得联盟推广佣金的机器人或用户。 |\n| `affiliate_chat` | `Chat` | 可选。若佣金接收方是聊天，则为获得佣金的聊天。 |\n| `commission_per_mille` | `Integer` | 每当机器人从被推荐用户处收到 1000 Telegram Stars，该联盟推广方可获得的 Stars 数量。 |\n| `amount` | `Integer` | 此笔交易中联盟推广方实际获得的 Telegram Stars 整数数量，按整数取整；退款时可能为负数。 |\n| `nanostar_amount` | `Integer` | 可选。联盟推广方获得的 Telegram Stars 的十亿分之一份额数量，范围为 **-999999999 至 999999999**；退款时可能为负数。 |\n"
+  },
+  "TransactionPartner": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "source of a transaction",
+      "TransactionPartnerTelegramAds",
+      "TransactionPartnerOther"
+    ],
+    "text": "## 交易参与方 `TransactionPartner`\n\n描述一笔交易的来源，或对于支出交易，描述交易的接收方。当前可能为以下类型之一：\n\n- `TransactionPartnerUser`\n- `TransactionPartnerChat`\n- `TransactionPartnerAffiliateProgram`\n- `TransactionPartnerFragment`\n- `TransactionPartnerTelegramAds`\n- `TransactionPartnerTelegramApi`\n- `TransactionPartnerOther`\n"
+  },
+  "TransactionPartnerUser": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a transaction with a user",
+      "business_account_transfer"
+    ],
+    "text": "## 用户交易参与方 `TransactionPartnerUser`\n\n描述与用户之间发生的交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"user\"`。 |\n| `transaction_type` | `String` | 交易类型，目前可能为：`\"invoice_payment\"`（通过账单付款）、`\"paid_media_payment\"`（付费媒体付款）、`\"gift_purchase\"`（机器人发送礼物）、`\"premium_purchase\"`（机器人赠送 Telegram Premium 订阅），或 `\"business_account_transfer\"`（从受管商家账号直接转账）。 |\n| `user` | `User` | 用户信息。 |\n| `affiliate` | `AffiliateInfo` | 可选。获得佣金的联盟推广方信息。仅 `\"invoice_payment\"` 和 `\"paid_media_payment\"` 类型的交易可能包含此字段。 |\n| `invoice_payload` | `String` | 可选。由机器人指定的账单负载。仅 `\"invoice_payment\"` 类型的交易可能包含此字段。 |\n| `subscription_period` | `Integer` | 可选。付费订阅的时长。仅 `\"invoice_payment\"` 类型的交易可能包含此字段。 |\n| `paid_media` | `Array of PaidMedia` | 可选。用户购买的付费媒体信息。仅 `\"paid_media_payment\"` 类型的交易包含此字段。 |\n| `paid_media_payload` | `String` | 可选。由机器人指定的付费媒体负载。仅 `\"paid_media_payment\"` 类型的交易可能包含此字段。 |\n| `gift` | `Gift` | 可选。机器人发送给该用户的礼物。仅 `\"gift_purchase\"` 类型的交易包含此字段。 |\n| `premium_subscription_duration` | `Integer` | 可选。赠送的 Telegram Premium 订阅将持续的月数。仅 `\"premium_purchase\"` 类型的交易包含此字段。 |\n"
+  },
+  "TransactionPartnerChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a transaction with a chat",
+      "gift sent to the chat by the bot"
+    ],
+    "text": "## 聊天交易参与方 `TransactionPartnerChat`\n\n描述与某个聊天之间发生的交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"chat\"`。 |\n| `chat` | `Chat` | 聊天信息。 |\n| `gift` | `Gift` | 可选。机器人发送给该聊天的礼物。 |\n"
+  },
+  "TransactionPartnerAffiliateProgram": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "affiliate program that issued the affiliate commission",
+      "affiliate program sponsor from referred users"
+    ],
+    "text": "## 联盟推广计划交易参与方 `TransactionPartnerAffiliateProgram`\n\n描述发放此笔联盟推广佣金的联盟推广计划。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"affiliate_program\"`。 |\n| `sponsor_user` | `User` | 可选。赞助该联盟推广计划的机器人的信息。 |\n| `commission_per_mille` | `Integer` | 每当联盟推广计划赞助方从被推荐用户处收到 1000 Telegram Stars，该机器人可获得的 Stars 数量。 |\n"
+  },
+  "TransactionPartnerFragment": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "withdrawal transaction with Fragment",
+      "State of the transaction if the transaction is outgoing"
+    ],
+    "text": "## Fragment 提现交易参与方 `TransactionPartnerFragment`\n\n描述通过 Fragment 进行的提现交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"fragment\"`。 |\n| `withdrawal_state` | `RevenueWithdrawalState` | 可选。若该交易为支出交易，则表示该笔交易的状态。 |\n"
+  },
+  "TransactionPartnerTelegramAds": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "withdrawal transaction to the Telegram Ads platform"
+    ],
+    "text": "## Telegram Ads 提现交易参与方 `TransactionPartnerTelegramAds`\n\n描述向 Telegram Ads 平台进行的提现交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"telegram_ads\"`。 |\n"
+  },
+  "TransactionPartnerTelegramApi": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "payment for paid broadcasting",
+      "successful requests that exceeded regular limits"
+    ],
+    "text": "## Telegram API 交易参与方 `TransactionPartnerTelegramApi`\n\n描述因付费广播（paid broadcasting）而产生的付款交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"telegram_api\"`。 |\n| `request_count` | `Integer` | 超出常规限制、因此需要付费的成功请求数量。 |\n"
+  },
+  "TransactionPartnerOther": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "transaction with an unknown source or recipient"
+    ],
+    "text": "## 其他交易参与方 `TransactionPartnerOther`\n\n描述来源或接收方未知的交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"other\"`。 |\n"
+  },
+  "RevenueWithdrawalState": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "state of a revenue withdrawal operation",
+      "RevenueWithdrawalStateFailed"
+    ],
+    "text": "## 收入提现状态 `RevenueWithdrawalState`\n\n描述一笔收入提现操作的状态。当前可能为以下类型之一：\n\n- `RevenueWithdrawalStatePending`\n- `RevenueWithdrawalStateSucceeded`\n- `RevenueWithdrawalStateFailed`\n"
+  },
+  "RevenueWithdrawalStatePending": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "withdrawal is in progress",
+      "always “pending”"
+    ],
+    "text": "## 提现处理中状态 `RevenueWithdrawalStatePending`\n\n表示提现正在进行中。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 状态类型，始终为 `\"pending\"`。 |\n"
+  },
+  "RevenueWithdrawalStateSucceeded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "withdrawal succeeded",
+      "withdrawal was completed in Unix time",
+      "HTTPS URL"
+    ],
+    "text": "## 提现成功状态 `RevenueWithdrawalStateSucceeded`\n\n表示提现已成功完成。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 状态类型，始终为 `\"succeeded\"`。 |\n| `date` | `Integer` | 提现完成时间，以 Unix 时间戳表示。 |\n| `url` | `String` | 用于查看交易详情的 HTTPS URL。 |\n"
+  },
+  "RevenueWithdrawalStateFailed": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "withdrawal failed and the transaction was refunded",
+      "always “failed”"
+    ],
+    "text": "## 提现失败状态 `RevenueWithdrawalStateFailed`\n\n表示提现失败，且该笔交易已退款。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 状态类型，始终为 `\"failed\"`。 |\n"
+  },
+  "PassportElementError": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "error in the Telegram Passport element",
+      "PassportElementErrorTranslationFiles",
+      "PassportElementErrorUnspecified"
+    ],
+    "text": "## Telegram Passport 元素错误 `PassportElementError`\n\n表示用户提交的 Telegram Passport 元素中存在需要由用户修正的错误。该对象应为以下类型之一：\n\n- `PassportElementErrorDataField`\n- `PassportElementErrorFrontSide`\n- `PassportElementErrorReverseSide`\n- `PassportElementErrorSelfie`\n- `PassportElementErrorFile`\n- `PassportElementErrorFiles`\n- `PassportElementErrorTranslationFile`\n- `PassportElementErrorTranslationFiles`\n- `PassportElementErrorUnspecified`\n"
+  },
+  "PassportElementErrorDataField": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue in one of the data fields",
+      "field's value changes",
+      "data_hash"
+    ],
+    "text": "## Passport 数据字段错误 `PassportElementErrorDataField`\n\n表示用户提供的某个数据字段存在问题。当该字段的值发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"data\"`。 |\n| `type` | `String` | 出现错误的 Telegram Passport 信息类别，可为 `\"personal_details\"`、`\"passport\"`、`\"driver_license\"`、`\"identity_card\"`、`\"internal_passport\"` 或 `\"address\"`。 |\n| `field_name` | `String` | 出现错误的数据字段名称。 |\n| `data_hash` | `String` | Base64 编码的数据哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorFrontSide": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue with the front side of a document",
+      "must be front_side",
+      "file with the front side"
+    ],
+    "text": "## 证件正面文件错误 `PassportElementErrorFrontSide`\n\n表示证件正面文件存在问题。当证件正面文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"front_side\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"` 或 `\"internal_passport\"`。 |\n| `file_hash` | `String` | 证件正面文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorReverseSide": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue with the reverse side of a document",
+      "must be reverse_side",
+      "driver_license”, “identity_card"
+    ],
+    "text": "## 证件反面文件错误 `PassportElementErrorReverseSide`\n\n表示证件反面文件存在问题。当证件反面文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"reverse_side\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"driver_license\"` 或 `\"identity_card\"`。 |\n| `file_hash` | `String` | 证件反面文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorSelfie": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue with the selfie with a document",
+      "must be selfie",
+      "file with the selfie"
+    ],
+    "text": "## 证件自拍照错误 `PassportElementErrorSelfie`\n\n表示用户手持证件的自拍照存在问题。当自拍照文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"selfie\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"` 或 `\"internal_passport\"`。 |\n| `file_hash` | `String` | 自拍照文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue with a document scan",
+      "must be file",
+      "Base64-encoded file hash"
+    ],
+    "text": "## 证件扫描文件错误 `PassportElementErrorFile`\n\n表示证件扫描文件存在问题。当该扫描文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"file\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hash` | `String` | 文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorFiles": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue with a list of scans",
+      "must be files",
+      "List of base64-encoded file hashes"
+    ],
+    "text": "## 多个证件扫描文件错误 `PassportElementErrorFiles`\n\n表示一组证件扫描文件存在问题。当包含这些扫描件的文件列表发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"files\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hashes` | `Array of String` | Base64 编码的文件哈希值列表。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorTranslationFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "one of the files that constitute the translation",
+      "must be translation_file",
+      "Base64-encoded file hash"
+    ],
+    "text": "## 证件翻译文件错误 `PassportElementErrorTranslationFile`\n\n表示构成证件翻译版本的某个文件存在问题。当该文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"translation_file\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"`、`\"internal_passport\"`、`\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hash` | `String` | 文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorTranslationFiles": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "translated version of a document",
+      "must be translation_files",
+      "List of base64-encoded file hashes"
+    ],
+    "text": "## 证件翻译文件列表错误 `PassportElementErrorTranslationFiles`\n\n表示证件翻译版本存在问题。当证件翻译文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"translation_files\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"`、`\"internal_passport\"`、`\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hashes` | `Array of String` | Base64 编码的文件哈希值列表。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "PassportElementErrorUnspecified": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "issue in an unspecified place",
+      "new data is added",
+      "element_hash"
+    ],
+    "text": "## 未指定位置的 Passport 错误 `PassportElementErrorUnspecified`\n\n表示 Telegram Passport 元素中存在无法明确定位到具体字段或文件的问题。当用户添加新数据时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"unspecified\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别。 |\n| `element_hash` | `String` | 元素的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   }
 }

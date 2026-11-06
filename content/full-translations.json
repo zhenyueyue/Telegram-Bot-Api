@@ -386,5 +386,65 @@
       "0-128 characters"
     ],
     "text": "## 拒绝建议投稿\n\n拒绝频道私信聊天中的建议投稿。机器人必须具备对应频道的 `can_manage_direct_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer | 是 | 目标私信聊天的唯一 ID。 |\n| `message_id` | Integer | 是 | 要拒绝的建议投稿消息 ID。 |\n| `comment` | String | 否 | 发送给投稿创建者的备注，长度 **0–128** 个字符。 |\n"
+  },
+  "WebhookInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "pending_update_count",
+      "last_synchronization_error_date"
+    ],
+    "text": "## Webhook 当前状态\n\n描述机器人当前 Webhook 的状态。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `url` | String | Webhook URL。未配置 Webhook 时可以为空字符串。 |\n| `has_custom_certificate` | Boolean | 是否提供了自定义证书进行 Webhook 证书校验。 |\n| `pending_update_count` | Integer | 尚未投递的更新数量。 |\n| `ip_address` | String | 可选。Webhook 当前使用的 IP 地址。 |\n| `last_error_date` | Integer | 可选。最近一次向 Webhook 投递更新失败的时间，Unix 时间戳。 |\n| `last_error_message` | String | 可选。最近一次向 Webhook 投递更新失败时的人类可读错误信息。 |\n| `last_synchronization_error_date` | Integer | 可选。与 Telegram 数据中心同步可用更新时最近一次出错的时间，Unix 时间戳。 |\n| `max_connections` | Integer | 可选。向 Webhook 投递更新时允许的最大同时 HTTPS 连接数。 |\n| `allowed_updates` | Array of String | 可选。机器人订阅的更新类型列表。默认接收除 `chat_member`、`message_reaction`、`message_reaction_count` 外的所有更新类型。 |\n"
+  },
+  "User": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "supports_join_request_queries"
+    ],
+    "text": "## Telegram 用户或机器人\n\n表示一个 Telegram 用户或机器人。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | Integer | 用户或机器人的唯一标识符。可能超过 **32 位**整数的安全精度，但不超过 **52 个有效二进制位**，可以安全地存入 64 位整数或双精度浮点数。 |\n| `is_bot` | Boolean | 是否是机器人。 |\n| `first_name` | String | 用户或机器人的名字。 |\n| `last_name` | String | 可选。用户或机器人的姓氏。 |\n| `username` | String | 可选。用户或机器人的用户名。 |\n| `language_code` | String | 可选。用户语言的 IETF 语言标签。 |\n| `is_premium` | True | 可选。如果用户拥有 Telegram Premium，则为 `True`。 |\n| `added_to_attachment_menu` | True | 可选。如果用户把机器人添加到附件菜单中，则为 `True`。 |\n| `can_join_groups` | Boolean | 可选。是否允许邀请机器人加入群组。**仅由 `getMe` 返回**。 |\n| `can_read_all_group_messages` | Boolean | 可选。机器人隐私模式关闭时为 `True`。**仅由 `getMe` 返回**。 |\n| `supports_guest_queries` | Boolean | 可选。机器人是否支持来自非成员聊天的访客查询。**仅由 `getMe` 返回**。 |\n| `supports_inline_queries` | Boolean | 可选。机器人是否支持内联查询。**仅由 `getMe` 返回**。 |\n| `can_connect_to_business` | Boolean | 可选。机器人是否可连接到用户账号以代为管理。**仅由 `getMe` 返回**。 |\n| `has_main_web_app` | Boolean | 可选。机器人是否配置了主 Web App。**仅由 `getMe` 返回**。 |\n| `has_topics_enabled` | Boolean | 可选。机器人私聊中是否启用了论坛话题模式。**仅由 `getMe` 返回**。 |\n| `allows_users_to_create_topics` | Boolean | 可选。用户是否可以在机器人私聊中创建和删除话题。**仅由 `getMe` 返回**。 |\n| `can_manage_bots` | Boolean | 可选。是否允许创建其他由该机器人管理的机器人。**仅由 `getMe` 返回**。 |\n| `supports_join_request_queries` | Boolean | 可选。机器人是否支持加入请求查询，并可被指定处理这些请求。**仅由 `getMe` 返回**。 |\n"
+  },
+  "Chat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "is_direct_messages"
+    ],
+    "text": "## 聊天基本信息\n\n表示一个 Telegram 聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | Integer | 聊天的唯一 ID。可能超过 32 位整数的安全精度，但最多只有 **52 个有效二进制位**，使用 64 位整数或双精度浮点数保存是安全的。 |\n| `type` | String | 聊天类型：`private`（私聊）、`group`（群组）、`supergroup`（超级群组）或 `channel`（频道）。 |\n| `title` | String | 可选。超级群组、频道或普通群组的标题。 |\n| `username` | String | 可选。私聊、超级群组或频道的用户名（如果有）。 |\n| `first_name` | String | 可选。私聊中对方的名字。 |\n| `last_name` | String | 可选。私聊中对方的姓氏。 |\n| `is_forum` | True | 可选。如果超级群组启用了话题功能，则为 `True`。 |\n| `is_direct_messages` | True | 可选。如果这是某个频道的私信聊天，则为 `True`。 |\n"
+  },
+  "BotCommand": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "is_ephemeral"
+    ],
+    "text": "## 机器人命令对象\n\n表示一条机器人命令。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `command` | String | 命令文字，长度为 **1–32** 个字符，只能包含小写英文字母、数字和下划线。 |\n| `description` | String | 命令的描述，长度为 **1–256** 个字符。 |\n| `is_ephemeral` | Boolean | 可选。若为 `True`，该命令发送的临时消息仅对发送该消息的用户和机器人可见。 |\n"
+  },
+  "InputFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "multipart/form-data"
+    ],
+    "text": "## 待上传文件\n\n表示需要上传的文件内容。必须按照普通浏览器上传文件的方式，使用 `multipart/form-data` 请求提交。\n"
+  },
+  "InlineKeyboardMarkup": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "force_reply"
+    ],
+    "text": "## 消息内联键盘\n\n表示紧贴在所属消息下方的内联键盘。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `inline_keyboard` | Array of Array of InlineKeyboardButton | 键盘按钮行数组；每一行又由一组 [`InlineKeyboardButton`](#inlinekeyboardbutton) 对象构成。 |\n| `force_reply` | Boolean | 可选。传 `True` 时向用户显示回复界面，效果类似手动选择机器人消息并点击“回复”。**编辑已有内联键盘时不能更改这个字段。** |\n"
+  },
+  "CallbackQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "game_short_name",
+      "chat_instance"
+    ],
+    "text": "## 内联键盘按钮回调查询\n\n表示用户点击内联键盘按钮后发给机器人的回调查询。\n\n如果按钮附在机器人直接发送的消息上，会包含 `message`；如果消息是通过机器人以内联模式发送的，则包含 `inline_message_id`。`data` 与 `game_short_name` 两个字段中**恰好有一个**会出现。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 此次回调查询的唯一标识符。 |\n| `from` | User | 发起回调的用户。 |\n| `message` | MaybeInaccessibleMessage | 可选。触发回调的、由机器人发送且带有回调按钮的消息。 |\n| `inline_message_id` | String | 可选。触发回调的内联模式消息的标识符。 |\n| `chat_instance` | String | 全局唯一的聊天实例标识符，对应包含回调按钮的消息所属聊天，也可用于游戏排行榜。 |\n| `data` | String | 可选。与回调按钮关联的数据。**不能假设原始消息中当前仍有携带此数据的按钮。** |\n| `game_short_name` | String | 可选。要返回的游戏的短名称，也是该游戏的唯一标识符。 |\n\n> **重要**：用户按下回调按钮后，Telegram 客户端会一直显示进度条，直到机器人调用 [`answerCallbackQuery`](#answercallbackquery)。即使不需要向用户显示通知，也应调用该方法响应。\n"
+  },
+  "ChatPermissions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_react_to_messages",
+      "can_edit_tag",
+      "can_manage_topics"
+    ],
+    "text": "## 普通聊天成员权限\n\n描述非管理员用户在聊天中被允许执行的操作。以下字段均为可选字段。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `can_send_messages` | Boolean | 允许发送文本消息、富消息、联系人、抽奖及中奖信息、账单、位置和地点。 |\n| `can_send_audios` | Boolean | 允许发送音频。 |\n| `can_send_documents` | Boolean | 允许发送文件。 |\n| `can_send_photos` | Boolean | 允许发送图片。 |\n| `can_send_videos` | Boolean | 允许发送视频。 |\n| `can_send_video_notes` | Boolean | 允许发送视频消息。 |\n| `can_send_voice_notes` | Boolean | 允许发送语音消息。 |\n| `can_send_polls` | Boolean | 允许发送投票和任务清单。 |\n| `can_send_other_messages` | Boolean | 允许发送动图、游戏、贴纸以及使用内联机器人。 |\n| `can_add_web_page_previews` | Boolean | 允许为消息添加网页预览。 |\n| `can_react_to_messages` | Boolean | 允许对消息作出表态。省略时默认使用 `can_send_messages` 的值。 |\n| `can_edit_tag` | Boolean | 允许成员编辑自己的标签。省略时默认使用 `can_pin_messages` 的值。 |\n| `can_change_info` | Boolean | 允许修改聊天标题、头像和其他设置。公开超级群组会忽略此字段。 |\n| `can_invite_users` | Boolean | 允许邀请其他用户加入聊天。 |\n| `can_pin_messages` | Boolean | 允许置顶消息。公开超级群组会忽略此字段。 |\n| `can_manage_topics` | Boolean | 允许创建论坛话题。省略时默认使用 `can_pin_messages` 的值。 |\n"
   }
 }

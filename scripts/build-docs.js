@@ -168,6 +168,23 @@ async function main(){
    fullCount++;
  }
  console.log('Full translations matched source:',fullCount);
+ // Optional Markdown drafts produced by the offline translation workflow.
+ // These are machine translated and may be incorrect; source hashes prevent
+ // stale drafts from being silently applied when Telegram changes a chapter.
+ const draftFile=path.join(root,'content','draft-translations.json');
+ let draftCount=0;
+ if(fs.existsSync(draftFile)){
+   const drafts=JSON.parse(fs.readFileSync(draftFile,'utf8'));
+   for(const section of sections){
+     if(section.translation?.from==='full')continue;
+     const entry=drafts[section.title];
+     if(!entry || entry.sourceHash!==section.hash || !entry.text?.trim())continue;
+     section.curatedSummary=section.translation?.text||null;
+     section.translation={from:'draft',text:entry.text,engine:entry.model,originalHash:section.hash};
+     draftCount++;
+   }
+ }
+ console.log('Offline machine drafts matched to current source:',draftCount);
  let version=index.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';
  if(version==='未知'){
    try {
@@ -180,7 +197,7 @@ async function main(){
  fs.cpSync(path.join(root,'public'),dist,{recursive:true});
  fs.writeFileSync(path.join(dist,'data','docs.json'),JSON.stringify(doc));
  fs.writeFileSync(path.join(dist,'.nojekyll'),'');
- console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese full ${fullCount}; summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
+ console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese full ${fullCount}; draft ${draftCount}; summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
 }
 if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1});
 module.exports={markdownLinks,headings,guideSections,normalizeBody,repairTelegramTables,kindOf};

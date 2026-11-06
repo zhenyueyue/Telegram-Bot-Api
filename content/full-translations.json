@@ -4381,5 +4381,76 @@
       "Source of the added boost"
     ],
     "text": "此对象包含聊天加速（boost）的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `boost_id` | String | 此次加速的唯一标识符。 |\n| `add_date` | Integer | 聊天获得加速的时间点，以 Unix 时间戳表示。 |\n| `expiration_date` | Integer | 加速自动到期的时间点，以 Unix 时间戳表示；如果提供加速的用户延长了 Telegram Premium 订阅，则加速不会在该时间点自动到期。 |\n| `source` | [ChatBoostSource](#chatboostsource) | 此次新增加速的来源。 |"
+  },
+  "ChatBoostSource": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the source of a chat boost.",
+      "ChatBoostSourcePremium",
+      "ChatBoostSourceGiftCode",
+      "ChatBoostSourceGiveaway"
+    ],
+    "text": "此对象描述聊天加速（Boost）的来源。它可以是以下类型之一：\n\n- [ChatBoostSourcePremium](#chatboostsourcepremium)：通过订阅或赠送 Telegram Premium 获得的加速。\n- [ChatBoostSourceGiftCode](#chatboostsourcegiftcode)：通过创建 Telegram Premium 礼品码获得的加速。\n- [ChatBoostSourceGiveaway](#chatboostsourcegiveaway)：通过创建 Telegram Premium 或 Telegram Stars 抽奖活动获得的加速。"
+  },
+  "ChatBoostSourcePremium": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The boost was obtained by subscribing to Telegram Premium",
+      "Source of the boost",
+      "User that boosted the chat"
+    ],
+    "text": "此加速通过订阅 Telegram Premium，或向其他用户赠送 Telegram Premium 订阅获得。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `source` | String | 加速来源，始终为 `\"premium\"`。 |\n| `user` | [User](#user) | 为该聊天提供加速的用户。 |"
+  },
+  "ChatBoostSourceGiftCode": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The boost was obtained by the creation of Telegram Premium gift codes",
+      "Each such code boosts the chat 4 times",
+      "User for which the gift code was created"
+    ],
+    "text": "此加速通过创建 Telegram Premium 礼品码获得。每个这样的礼品码都会在相应 Telegram Premium 订阅的有效期内，为聊天提供 4 次加速。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `source` | String | 加速来源，始终为 `\"gift_code\"`。 |\n| `user` | [User](#user) | 为其创建礼品码的用户。 |"
+  },
+  "ChatBoostSourceGiveaway": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway.",
+      "prize_star_count / 500",
+      "Identifier of a message in the chat with the giveaway",
+      "there was no user to win the prize"
+    ],
+    "text": "此加速通过创建 Telegram Premium 或 Telegram Stars 抽奖活动获得。对于 Telegram Premium 抽奖，在对应 Premium 订阅的有效期内，聊天获得 4 次加速；对于 Telegram Stars 抽奖，聊天获得 `prize_star_count / 500` 次加速，有效期为一年。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `source` | String | 加速来源，始终为 `\"giveaway\"`。 |\n| `giveaway_message_id` | Integer | 聊天中包含该抽奖活动的消息标识符；该消息可能已被删除。如果消息尚未发送，此字段可以为 `0`。 |\n| `user` | [User](#user) | 可选。抽奖获奖用户（如果有）；仅适用于 Telegram Premium 抽奖。 |\n| `prize_star_count` | Integer | 可选。将在获奖者之间分配的 Telegram Stars 数量；仅适用于 Telegram Stars 抽奖。 |\n| `is_unclaimed` | True | 可选。如果为 `True`，表示抽奖已结束，但没有用户获得奖品。 |"
+  },
+  "ChatBoostUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a boost added to a chat or changed.",
+      "Information about the chat boost"
+    ],
+    "text": "此对象表示聊天新增或发生变更的一次加速。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 获得加速的聊天。 |\n| `boost` | [ChatBoost](#chatboost) | 该聊天加速的相关信息。 |"
+  },
+  "ChatBoostRemoved": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a boost removed from a chat.",
+      "Point in time (Unix timestamp) when the boost was removed",
+      "Source of the removed boost"
+    ],
+    "text": "此对象表示聊天中的一次加速已被移除。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 此前获得加速的聊天。 |\n| `boost_id` | String | 此次加速的唯一标识符。 |\n| `remove_date` | Integer | 加速被移除的时间点，以 Unix 时间戳表示。 |\n| `source` | [ChatBoostSource](#chatboostsource) | 被移除的加速的来源。 |"
+  },
+  "ChatOwnerLeft": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about the chat owner leaving the chat.",
+      "if the previous owner does not return to the chat"
+    ],
+    "text": "此对象描述一条服务消息，表示聊天所有者已离开聊天。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `new_owner` | [User](#user) | 可选。如果之前的聊天所有者没有返回，将成为新所有者的用户。 |"
+  },
+  "ChatOwnerChanged": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about an ownership change in the chat.",
+      "The new owner of the chat"
+    ],
+    "text": "此对象描述一条服务消息，表示聊天的所有权已发生变更。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `new_owner` | [User](#user) | 聊天的新所有者。 |"
   }
 }

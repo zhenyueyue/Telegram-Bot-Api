@@ -303,7 +303,7 @@ function article(s) {
   return `<div class="article-top"><div class="eyebrow">BOT API / ${kindEN(s.kind)}</div><span class="article-tag">${kindText(s.kind)}</span></div>
     <div class="article-head"><h1 class="${s.kind==='guide' ? 'guide-title' : ''}">${esc(s.title)}</h1><div class="article-subtitle">${esc(nameCN(s))} <span>· ${kindText(s.kind)}参考</span></div></div>
     <div class="reading-settings"><div class="mode-control" role="tablist"><button data-language="zh" class="${S.lang==='zh'?'active':''}">${s.translation?.from==='full'?'完整中文':s.translation?.from==='draft'?'机器译文':'中文摘要'}</button><button data-language="both" class="${compare?'active':''}">中英对照</button><button data-language="en" class="${S.lang==='en'?'active':''}">English</button></div>
-      <div class="article-tools">${s.translation ? `<button class="small-action" data-edit="1">${icon('pen')} 修订中文内容</button>` : ''}<button class="small-action" data-language="en">${icon('globe')} 官方原文</button></div></div>
+      <div class="article-tools"><button class="small-action" data-issue="1">${icon('pen')} 修改中文内容</button><button class="small-action" data-language="en">${icon('globe')} 官方原文</button></div></div>
     <div class="reader-columns ${compare?'compare':''}">${S.lang==='en' ? panel(s,'en') : S.lang==='zh' ? panel(s,'zh') : panel(s,'zh') + panel(s,'en')}</div>
     <div class="article-bottom">${prev ? `<button class="prevnext" data-go="${attr(prev.id)}"><span>← 上一章节</span><strong>${esc(prev.title)}</strong></button>` : '<span></span>'}${next ? `<button class="prevnext" data-go="${attr(next.id)}"><span>下一章节 →</span><strong>${esc(next.title)}</strong></button>` : ''}</div>
     <div class="article-source">资料来源：<a href="${attr(s.originalUrl || 'https://core.telegram.org/bots/api')}" target="_blank" rel="noopener noreferrer">Telegram Bot API 官方文档 ↗</a>。中文内容分别标注为完整译文、机器草稿或摘要；涉及技术限制时以英文原文为准。</div>`;
@@ -327,26 +327,6 @@ function openSettings(){
   renderMeta();
 }
 function closeSettings(){$('modalBackdrop').classList.add('hidden');$('modalBackdrop').setAttribute('aria-hidden','true');}
-function openEdit() {
-  const s = current(); if(!s || !s.translation) return toast('请先翻译此章节。');
-  $('editBackdrop').classList.remove('hidden'); $('editBackdrop').setAttribute('aria-hidden','false');
-  $('editTitle').textContent = `修订：${s.title}`;
-  $('editTextarea').value = s.translation.text;
-  $('editTextarea').focus();
-}
-function closeEdit() { $('editBackdrop').classList.add('hidden'); $('editBackdrop').setAttribute('aria-hidden','true'); }
-async function saveEdit(reset=false){
-  const s=current();if(!s)return;
-  const edits=readLocal('botcn-edits',{});
-  if(reset){delete edits[s.id];s.translation=S.baseline[s.id]||null;}
-  else {
-    const text=$('editTextarea').value.trim();
-    if(!text) return toast('修订内容不能留空',true);
-    edits[s.id]={hash:s.hash,text};s.translation={from:'edited',text};
-  }
-  saveLocal('botcn-edits',edits);closeEdit();renderMeta();renderMain();
-  toast(reset?'已撤销本地修订。':'修订内容已保存到当前浏览器。');
-}
 function toggleFavorite() {
   const s=current(); if(!s)return;
   if(S.favorites.includes(s.id)) S.favorites=S.favorites.filter(x=>x!==s.id);
@@ -355,6 +335,79 @@ function toggleFavorite() {
   toast(S.favorites.includes(s.id) ? '已加入收藏' : '已取消收藏');
 }
 function openOfficial() { const s=current(); if(s) window.open(s.originalUrl || 'https://core.telegram.org/bots/api','_blank','noopener'); }
+
+const ISSUE_URL_MAX_LENGTH = 7000;
+function codePoints(value) { return Array.from(String(value || '')); }
+function takeCodePoints(value, count) { return codePoints(value).slice(0, count).join(''); }
+function makeIssueDraft(s, translationText, englishText, englishExcerpt, translationExcerpt) {
+  const siteUrl = location.origin + location.pathname + '#' + encodeURIComponent(s.id);
+  const officialUrl = s.originalUrl || ('https://core.telegram.org/bots/api#' + encodeURIComponent(s.id));
+  const cnTitle = nameCN(s);
+  const title = '翻译修改建议：' + s.title;
+  const body = [
+    '## 章节信息',
+    '- 英文名称：' + s.title,
+    '- 中文标题：' + cnTitle,
+    '- 文档站链接：' + siteUrl,
+    '- Telegram 官方英文源链接：' + officialUrl,
+    '',
+    '## 英文原文',
+    englishExcerpt ? '（章节较长，以下为开头摘录；完整原文请查看官方源链接。）\n\n' + englishText : (englishText || '（未能读取英文原文，请查看官方源链接。）'),
+    '',
+    '## 当前中文翻译',
+    translationExcerpt ? '（译文较长，以下为开头摘录；完整内容请查看文档站链接。）\n\n' + translationText : (translationText || '（该章节目前没有已发布的中文译文。）'),
+    '',
+    '## 问题与建议修改',
+    ''
+  ].join('\n');
+  const url = 'https://github.com/zhenyueyue/Telegram-Bot-Api/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+  return {url, body, title, siteUrl, officialUrl};
+}
+function openTranslationIssue() {
+  const s = current();
+  if (!s) return;
+  const original = String(s.body || '');
+  const translated = String(s.translation?.text || '');
+  let draft = makeIssueDraft(s, translated, original, false, false);
+  if (draft.url.length > ISSUE_URL_MAX_LENGTH) {
+    // Keep a useful opening excerpt of the official source, then fit as much
+    // of the current translation as possible into GitHub's prefill URL.
+    const englishExcerptLength = Math.min(220, codePoints(original).length);
+    const englishExcerpt = takeCodePoints(original, englishExcerptLength);
+    const fullTranslationDraft = makeIssueDraft(s, translated, englishExcerpt, true, false);
+    if (fullTranslationDraft.url.length <= ISSUE_URL_MAX_LENGTH) {
+      draft = fullTranslationDraft;
+    } else {
+      let low = 0, high = codePoints(translated).length, best = null;
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        const excerpt = takeCodePoints(translated, mid);
+        const candidate = makeIssueDraft(s, excerpt, englishExcerpt, true, true);
+        if (candidate.url.length <= ISSUE_URL_MAX_LENGTH) {
+          best = candidate;
+          low = mid + 1;
+        } else high = mid - 1;
+      }
+      if (best) draft = best;
+      else {
+        // Defensive fallback for exceptionally long metadata or source titles.
+        let eLow = 0, eHigh = englishExcerptLength, fallback = null;
+        while (eLow <= eHigh) {
+          const mid = Math.floor((eLow + eHigh) / 2);
+          const candidate = makeIssueDraft(s, '', takeCodePoints(original, mid), true, true);
+          if (candidate.url.length <= ISSUE_URL_MAX_LENGTH) { fallback = candidate; eLow = mid + 1; }
+          else eHigh = mid - 1;
+        }
+        if (fallback) draft = fallback;
+      }
+    }
+  }
+  if (draft.url.length > ISSUE_URL_MAX_LENGTH) {
+    toast('章节信息过长，暂时无法生成安全的 Issue 链接。', true);
+    return;
+  }
+  window.open(draft.url, '_blank', 'noopener,noreferrer');
+}
 function copyLink() {
   const s=current(); if(!s)return;
   const link = location.origin + location.pathname + '#' + encodeURIComponent(s.id);
@@ -366,14 +419,14 @@ function toggleSidebar(){ $('sidebar').classList.toggle('open');$('sidebarScrim'
 function isHidden(el) { return el.classList.contains('hidden'); }
 
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-go],[data-sync],[data-open-settings],[data-language],[data-translate],[data-edit],[data-load-more]');
+  const b=e.target.closest('[data-go],[data-sync],[data-open-settings],[data-language],[data-translate],[data-issue],[data-load-more]');
   if(!b)return;
   if(b.dataset.go){ e.preventDefault();go(b.dataset.go); }
   else if(b.dataset.sync){sync();}
   else if(b.dataset.openSettings){openSettings();}
   else if(b.dataset.language){S.lang=b.dataset.language;localStorage.setItem('botcn-language',S.lang);renderMain();}
   else if(b.dataset.translate){translate(b.dataset.translate);}
-  else if(b.dataset.edit){openEdit();}
+  else if(b.dataset.issue){openTranslationIssue();}
   else if(b.dataset.loadMore){S.navLimit += 700;renderNav();}
 });
 $('searchInput').addEventListener('input', e=>{S.query=e.target.value;renderNav();});
@@ -387,10 +440,6 @@ $('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop')
 
 
 
-$('closeEdit').addEventListener('click',closeEdit);
-$('editBackdrop').addEventListener('click',e=>{if(e.target===$('editBackdrop'))closeEdit();});
-$('saveEdit').addEventListener('click',()=>saveEdit(false));
-$('resetEdit').addEventListener('click',()=>saveEdit(true));
 $('menuButton').addEventListener('click',toggleSidebar);
 $('sidebarScrim').addEventListener('click',closeSidebar);
 $('favoriteButton').addEventListener('click',toggleFavorite);
@@ -401,7 +450,7 @@ document.addEventListener('keydown',e=>{
   if((e.key==='/' && !typing) || ((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k')){
     e.preventDefault();$('searchInput').focus();$('searchInput').select();$('sidebar').classList.add('open');$('sidebarScrim').classList.add('show');
   }
-  if(e.key==='Escape') {if(!isHidden($('editBackdrop'))) closeEdit(); else if(!isHidden($('modalBackdrop'))) closeSettings();else {document.activeElement?.blur();closeSidebar();}}
+  if(e.key==='Escape') {if(!isHidden($('modalBackdrop'))) closeSettings();else {document.activeElement?.blur();closeSidebar();}}
   if(e.key==='Enter' && e.target.closest('.featured[data-go]')) go(e.target.closest('.featured').dataset.go);
 });
 window.addEventListener('popstate',()=>go(getUrlId(),true,false));

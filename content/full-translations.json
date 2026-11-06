@@ -2777,7 +2777,7 @@
   "TransactionPartnerTelegramApi": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "transaction with payment for paid broadcasting",
+      "paid broadcasting",
       "successful requests that exceeded regular limits"
     ],
     "text": "## Telegram API 交易参与方 `TransactionPartnerTelegramApi`\n\n描述因付费广播（paid broadcasting）而产生的付款交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"telegram_api\"`。 |\n| `request_count` | `Integer` | 超出常规限制、因此需要付费的成功请求数量。 |\n"

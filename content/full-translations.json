@@ -1809,7 +1809,7 @@
   "Inline mode": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "The following methods and objects allow your bot to work in inline mode",
+      "The following methods and objects allow your bot to work in",
       "To enable this option, send the"
     ],
     "text": "## 内联模式\n\n以下方法和对象可帮助机器人使用**内联模式**。\n\n更多详情，请参阅《内联机器人介绍》（Introduction to Inline bots）。\n\n要启用此功能，请向 [@BotFather](https://t.me/botfather) 发送 `/setinline` 命令，并提供占位提示文本。用户在输入框中键入机器人名称后，就会看到这段提示文本。\n\n本章节涉及的类型列在 [Bot API 类型](/bots/api/types.md#inline-mode) 中。\n\n- [`answerInlineQuery`](#answerinlinequery)：向内联查询发送答案。"
@@ -3102,7 +3102,7 @@
   "Telegram Passport": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Telegram Passport is a unified authorization method for services that require personal identification",
+      "is a unified authorization method for services that require personal identification.",
       "Types of this section are listed at"
     ],
     "text": "## Telegram Passport\n\n**Telegram Passport** 是一种统一的身份验证方式，适用于需要核验个人身份的服务。用户只需上传一次证件，即可立即将自己的资料分享给需要真实身份信息的服务（例如金融服务、ICO 等）。\n\n详细信息请参阅 [Telegram Passport 使用手册](/passport.md)。\n\n本章节涉及的类型列在 [Bot API 类型](/bots/api/types.md#telegram-passport) 中。\n\n- [`setPassportDataErrors`](#setpassportdataerrors)：通知用户，其提交的某些 Telegram Passport 信息存在错误。"

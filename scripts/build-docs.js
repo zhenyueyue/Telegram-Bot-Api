@@ -1,54 +1,139 @@
 'use strict';
-/** Generate a read-only static snapshot from the current official Bot API Markdown. */
+/**
+ * Download the *split* machine-readable Telegram Bot API docs.
+ * The index (/bots/api.md) links to individual /bots/api/methods/*.md files;
+ * /bots/api/types.md links to /bots/api/types/*.md.
+ * This is a static build. Nothing is translated or fetched by the visiting browser.
+ */
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const path = require('node:path');
-const url = 'https://core.telegram.org/bots/api.md';
+const baseUrl = 'https://core.telegram.org';
+const rootPath = '/bots/api.md';
+const typeIndexPath = '/bots/api/types.md';
 const root = path.resolve(__dirname, '..');
-const dist = path.join(root, 'dist');
-const hash = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 20);
-const cleanTitle = value => value.replace(/<[^>]+>/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[`*_~]/g, '').trim();
-const slug = value => value.toLowerCase().replace(/&[a-z]+;/g,'').replace(/[^a-z0-9\u4e00-\u9fff]+/g,'-').replace(/^-|-$/g,'') || 'section';
-const methodPrefix = /^(get|set|send|edit|delete|answer|forward|copy|ban|unban|restrict|promote|export|create|close|reopen|stop|logOut|approve|decline|pin|unpin|leave|kick|refund|verify|remove|replace|save|read|post|transfer|upgrade|convert|revoke|gift)/;
-function classify(title) {
-  if (/^[a-z][A-Za-z0-9]{2,}$/.test(title) && methodPrefix.test(title)) return 'method';
-  if (/^[A-Z][A-Za-z0-9]{2,}$/.test(title) && !/^(Telegram|BotAPI|HTTP|HTTPS|API)$/.test(title)) return 'type';
-  return 'guide';
+const dist = path.join(root,'dist');
+const digest = s => crypto.createHash('sha256').update(s).digest('hex').slice(0,20);
+const clean = s => s.replace(/<[^>]+>/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[`*_~]/g,'').trim();
+const slug = s => s.toLowerCase().replace(/&[a-z]+;/g,'').replace(/[^a-z0-9\u4e00-\u9fff]+/g,'-').replace(/^-|-$/g,'')||'section';
+const isMethod = s => /^(?:get|set|send|edit|delete|answer|forward|copy|ban|unban|restrict|promote|export|create|close|reopen|stop|logOut|approve|decline|pin|unpin|leave|kick|refund|verify|remove|replace|save|read|post|transfer|upgrade|convert|revoke|gift)[A-Z]/.test(s) || ['getMe','getUpdates','logOut','close'].includes(s);
+const kindOf = s => isMethod(s)?'method':/^[A-Z][A-Za-z0-9]{2,}$/.test(s)?'type':'guide';
+function markdownLinks(md){
+  const links=[];
+  const re=/\[([^\]]+)\]\((\/bots\/api\/(?:methods|types)\/[a-z0-9_./-]+\.md)(?:#[^)]*)?\)/gi;
+  let m;
+  while((m=re.exec(md))){links.push({title:clean(m[1]),path:m[2]});}
+  return links;
 }
-function splitMarkdown(markdown) {
- const lines = markdown.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').split('\n');
- const heads = []; let fence = null;
- for(let i=0;i<lines.length;i++){
-   const t=lines[i]; const m=t.match(/^\s*(```+|~~~+)/);
-   if(m){if(!fence)fence=m[1][0];else if(fence===m[1][0])fence=null;continue;}
-   if(fence)continue;
-   const h=t.match(/^(#{2,5})\s+(.+?)\s*#*\s*$/);
-   if(h)heads.push({line:i,level:h[1].length,title:cleanTitle(h[2])});
+function headings(md){
+  const lines=md.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').split('\n');
+  const out=[];let fence=null;
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i];const f=line.match(/^\s*(```+|~~~+)/);
+    if(f){if(!fence)fence=f[1][0];else if(fence===f[1][0])fence=null;continue;}
+    if(fence)continue;
+    const h=line.match(/^(#{1,6})\s+(.+?)\s*#*\s*$/);
+    if(h)out.push({line:i,level:h[1].length,title:clean(h[2])});
+  }
+  return {lines,headers:out};
+}
+function guideSections(md){
+  const {lines,headers:raw}=headings(md);
+  const hs=raw.filter(h=>h.level>=2 && h.level<=4);
+  let sections=[];
+  if(hs.length && hs[0].line>0){
+    const intro=lines.slice(0,hs[0].line).join('\n').trim();
+    if(intro.length>60)sections.push({title:'Introduction',kind:'guide',level:2,body:intro});
+  }
+  for(let i=0;i<hs.length;i++){
+    const h=hs[i];const end=hs[i+1]?.line??lines.length;
+    const body=lines.slice(h.line+1,end).join('\n').trim();
+    if(body.length>45)sections.push({title:h.title,kind:kindOf(h.title),level:h.level,body});
+  }
+  return sections;
+}
+function normalizeBody(md,title){
+  let result=md.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').trim();
+  const l=result.split('\n');
+  if(l.length && /^#{1,6}\s+/.test(l[0]) && clean(l[0].replace(/^#{1,6}\s+/,''))===title){l.shift();result=l.join('\n').trim();}
+  // GitHub Pages uses a hash router. Redirect inter-reference Markdown links to it.
+  return result.replace(/\]\(\/bots\/api\/(?:methods|types)\/([a-z0-9_-]+)\.md(?:#[^)]*)?\)/gi,(_,name)=>`](#${name.toLowerCase()})`);
+}
+async function fetchMarkdown(p){
+ const headers={'user-agent':'Telegram-Bot-API-CN-Reader/2.0',accept:'text/markdown'};
+ let err;
+ for(let n=0;n<3;n++){
+   try{
+     const response=await fetch(baseUrl+p,{headers,signal:AbortSignal.timeout(40000)});
+     if(!response.ok)throw new Error(`HTTP ${response.status}`);
+     const data=await response.text();
+     if(data.length<40)throw new Error('empty Markdown');
+     return data;
+   }catch(e){err=e;if(n<2)await new Promise(ok=>setTimeout(ok,500*(n+1)));}
  }
- if(heads.length<100)throw new Error(`Unexpected number of sections: ${heads.length}`);
- const ids=new Set();const sections=[];
- if(heads[0].line>0){const intro=lines.slice(0,heads[0].line).join('\n').trim();if(intro.length>60)sections.push({title:'Introduction',id:'introduction',kind:'guide',level:2,body:intro,hash:hash('Introduction\n'+intro),originalUrl:'https://core.telegram.org/bots/api'});}
- for(let i=0;i<heads.length;i++){
-    const h=heads[i];const body=lines.slice(h.line+1,heads[i+1]?.line??lines.length).join('\n').trim();
-    let id=slug(h.title);if(ids.has(id)){let n=2;while(ids.has(`${id}-${n}`))n++;id=`${id}-${n}`;}ids.add(id);
-    sections.push({id,title:h.title,kind:classify(h.title),level:h.level,body,hash:hash(h.title+'\n'+body),originalUrl:`https://core.telegram.org/bots/api#${slug(h.title)}`});
- }
- return sections;
+ throw new Error(`${p}: ${err.message}`);
 }
 async function main(){
- const response=await fetch(url,{signal:AbortSignal.timeout(90000),headers:{'user-agent':'Telegram-Bot-API-CN-Docs/1.0 (GitHub Pages build)'}});
- if(!response.ok)throw new Error(`Official document HTTP ${response.status}`);
- const markdown=await response.text();console.log('Official Markdown bytes/chars:',markdown.length,'headers:',(markdown.match(/^#{2,5} /gm)||[]).length,'head:',JSON.stringify(markdown.slice(0,230)),'tail:',JSON.stringify(markdown.slice(-230))); if(markdown.length<30000)throw new Error(`Official Markdown unexpectedly short (${markdown.length} chars)`);
- const sections=splitMarkdown(markdown);
+ const index=await fetchMarkdown(rootPath);
+ const typesIndex=await fetchMarkdown(typeIndexPath);
+ console.log('Official index length:',index.length,'; types index length:',typesIndex.length);
+ if(index.length<10000 || typesIndex.length<1000)throw new Error('Telegram documentation indexes incomplete');
+ const guides=guideSections(index).filter(x=>x.kind==='guide');
+ const typesFromIndex=guideSections(typesIndex).filter(x=>x.kind==='type');
+ const links=[...markdownLinks(index),...markdownLinks(typesIndex)];
+ const tasks=[];const seen=new Set();
+ const enqueue = item => {if(seen.has(item.path))return;seen.add(item.path);tasks.push(item);};
+ links.forEach(enqueue);
+ console.log('Discovered linked Markdown pages:',tasks.length);
+ if(tasks.length<140)throw new Error('Incomplete official Markdown index');
+ const files=[];const failures=[];
+ let cursor=0;
+ async function worker(){
+   while(cursor<tasks.length){
+     const t=tasks[cursor++];
+     try{
+       const md=await fetchMarkdown(t.path);
+       files.push({...t,md});
+       // Some method and type descriptions link to additional previously unindexed pages.
+       if(tasks.length<1200)for(const l of markdownLinks(md))enqueue(l);
+     }catch(e){failures.push(e.message);}
+   }
+ }
+ await Promise.all(Array.from({length:10},()=>worker()));
+ console.log('Fetched',files.length,'pages; failed',failures.length);
+ if(failures.length)console.warn('Missing pages:',failures.slice(0,20).join(' | '));
+ const sections=[];const used=new Set();
+ const insert=(x)=>{
+   if(!x.title || !x.body?.trim())return;
+   let id=slug(x.title);if(used.has(id)){let i=2;while(used.has(`${id}-${i}`))i++;id=`${id}-${i}`;}
+   used.add(id);
+   sections.push({...x,id,hash:digest(x.title+'\n'+x.body),originalUrl:`https://core.telegram.org/bots/api#${slug(x.title)}`});
+ };
+ guides.forEach(x=>insert({...x,body:normalizeBody(x.body,x.title)}));
+ typesFromIndex.forEach(x=>insert({...x,body:normalizeBody(x.body,x.title)}));
+ // Preserve ordering of official index listings even with parallel network requests.
+ const fileByPath=new Map(files.map(f=>[f.path,f]));
+ for(const t of tasks){
+   const f=fileByPath.get(t.path);if(!f)continue;
+   const title=(headings(f.md).headers.find(h=>h.level===1)?.title||t.title).trim();
+   const pathKind=t.path.includes('/methods/')?'method':'type';
+   insert({title,kind:pathKind,level:4,body:normalizeBody(f.md,title)});
+ }
+ const count={method:0,type:0,guide:0};sections.forEach(s=>count[s.kind]++);
+ console.log('Section count:',count);
+ if(count.method<130||count.type<100||sections.length<300)throw new Error(`Incomplete official API data (${sections.length} sections)`);
  const notes=JSON.parse(fs.readFileSync(path.join(root,'content','notes.json'),'utf8'));
- const matched = new Set();
- for(const s of sections){const note=notes[s.title];if(note){s.translation={from:'curated',text:note,originalHash:s.hash};matched.add(s.title)}}
- const v=markdown.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1] || '未知';
- const data={source:url,demo:false,syncTime:new Date().toISOString(),version:v,sourceHash:hash(markdown),sections};
+ const usedNotes=new Set();
+ for(const s of sections){
+   const note=notes[s.title];if(note){s.translation={from:'curated',text:note,originalHash:s.hash};usedNotes.add(s.title)}
+ }
+ const version=index.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';
+ const doc={source:baseUrl+rootPath,demo:false,syncTime:new Date().toISOString(),version,sourceHash:digest(index+typesIndex+files.length),sections};
  fs.mkdirSync(path.join(dist,'data'),{recursive:true});
  fs.cpSync(path.join(root,'public'),dist,{recursive:true});
- fs.writeFileSync(path.join(dist,'data','docs.json'), JSON.stringify(data));
+ fs.writeFileSync(path.join(dist,'data','docs.json'),JSON.stringify(doc));
  fs.writeFileSync(path.join(dist,'.nojekyll'),'');
- console.log(`Official Bot API ${v}; ${markdown.length} chars; ${sections.length} sections; ${matched.size} Chinese summaries. Unmatched notes: ${Object.keys(notes).filter(k=>!matched.has(k)).join(', ')}`);
+ console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
 }
-main().catch(e=>{console.error(e);process.exitCode=1});
+if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1});
+module.exports={markdownLinks,headings,guideSections,normalizeBody,kindOf};

@@ -109,7 +109,7 @@ def main():
         translated_keys=[s.split("|")[1].strip() for s in translated.splitlines()
                          if s.strip().startswith("|") and s.strip().endswith("|") and len(s.split("|"))>3]
         if input_keys!=translated_keys or done<1:
-            print("SKIPPED integrity/coverage:",sec["title"],flush=True)
+            print("SKIPPED integrity/coverage:",sec["title"],"done=",done,"fallback=",fallback,"inputRows=",len(input_keys),"translatedRows=",len(translated_keys),"inputHead=",input_keys[:4],"translatedHead=",translated_keys[:4],"sample=",repr(translated[:220]),flush=True)
             continue
         existing[sec["title"]]={"sourceHash":sec["hash"],"text":translated,
                                 "model":"Argos en→zh",

@@ -73,6 +73,8 @@
 .eyebrow:before{background:#2388cd}
 .hero h1 .accent{color:#1175ba}
 .hero-copy{color:#52677e}
+.primary-btn{background:#116cad;border-color:#116cad}
+.primary-btn:hover{background:#095c95;border-color:#095c95}
 .secondary-btn{color:#415d74;border-color:#cbd8e5}
 .secondary-btn:hover{color:#0a63a3;background:#eef6ff;border-color:#92bcda}
 .stat .stat-icon{color:#176fae;background:#e7f2fe}

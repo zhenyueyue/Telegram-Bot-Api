@@ -2036,5 +2036,166 @@
       "Describes an inline message sent by a guest bot."
     ],
     "text": "## SentGuestMessage\n\n描述由访客机器人（Guest Bot）发送的内联消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `inline_message_id` | String | 已发送内联消息的标识符。 |\n"
+  },
+  "setMessageReaction": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to change the chosen reactions on a message."
+    ],
+    "text": "## setMessageReaction\n\n设置消息上当前选中的反应。某些类型的服务消息不支持添加反应。从频道自动转发到其讨论组的消息，其可用反应与频道中的原消息相同。机器人不能使用付费反应。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标机器人、超级群组、频道的用户名，格式为 `@username`。 |\n| `message_id` | Integer | 是 | 目标消息的标识符。如果消息属于媒体组，则会将反应设置到该组中第一条未删除的消息上。 |\n| `reaction` | Array of ReactionType | 否 | 要设置到消息上的反应类型列表，以 JSON 序列化。当前，非 Premium 用户身份下的机器人每条消息最多只能设置一个反应。自定义表情反应必须已经出现在该消息中，或已获聊天管理员明确允许。机器人不能使用付费反应。 |\n| `is_big` | Boolean | 否 | 传入 `True`，以较大的动画效果显示该反应。 |\n"
+  },
+  "getUserProfilePhotos": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to get a list of profile pictures for a user."
+    ],
+    "text": "## getUserProfilePhotos\n\n获取指定用户的个人资料照片列表。成功时返回 `UserProfilePhotos` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `offset` | Integer | 否 | 要返回的第一张照片在列表中的偏移位置。默认返回全部照片。 |\n| `limit` | Integer | 否 | 限制返回的照片数量，可设置为 **1–100**。默认值为 **100**。 |\n"
+  },
+  "getUserProfileAudios": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to get a list of profile audios for a user."
+    ],
+    "text": "## getUserProfileAudios\n\n获取指定用户的个人资料音频列表。成功时返回 `UserProfileAudios` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `offset` | Integer | 否 | 要返回的第一段音频在列表中的偏移位置。默认返回全部音频。 |\n| `limit` | Integer | 否 | 限制返回的音频数量，可设置为 **1–100**。默认值为 **100**。 |\n"
+  },
+  "setUserEmojiStatus": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Changes the emoji status for a given user"
+    ],
+    "text": "## setUserEmojiStatus\n\n为指定用户设置或移除表情状态。该用户必须先通过 Mini App 的 `requestEmojiStatusAccess` 方法授权机器人管理其表情状态。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `emoji_status_custom_emoji_id` | String | 否 | 要设置为表情状态的自定义表情标识符。传入空字符串即可移除当前表情状态。 |\n| `emoji_status_expiration_date` | Integer | 否 | 表情状态的过期时间；如果不需要设置过期时间，可以不传入。 |\n"
+  },
+  "promoteChatMember": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to promote or demote a user in a supergroup or a channel."
+    ],
+    "text": "## promoteChatMember\n\n在超级群组或频道中提升或降级指定用户的管理员权限。机器人必须是该聊天的管理员，并拥有相应的管理员权限。若要降级用户，请将所有布尔权限参数都设置为 `False`。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名，格式为 `@username`。 |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `is_anonymous` | Boolean | 否 | 传入 `True`，表示隐藏该管理员在聊天中的身份。 |\n| `can_manage_chat` | Boolean | 否 | 传入 `True`，表示管理员可以查看聊天事件日志、获取 Boost 列表、查看隐藏的超级群组和频道成员、举报垃圾消息、忽略慢速模式限制，以及无需支付 Telegram Stars 即可向聊天发送消息。授予任何其他管理员权限时，也会隐含授予此权限。 |\n| `can_delete_messages` | Boolean | 否 | 传入 `True`，表示管理员可以删除其他用户发送的消息。 |\n| `can_manage_video_chats` | Boolean | 否 | 传入 `True`，表示管理员可以管理视频聊天。 |\n| `can_restrict_members` | Boolean | 否 | 传入 `True`，表示管理员可以限制、封禁或解除封禁聊天成员，也可以查看超级群组统计数据。为兼容旧版本，提升频道管理员权限时，该参数默认值为 `True`。 |\n| `can_promote_members` | Boolean | 否 | 传入 `True`，表示管理员可以授予其他用户不超过自身权限范围的管理员权限，也可以降级由自己直接或间接提升的管理员（包括由自己任命的管理员所提升的管理员）。 |\n| `can_change_info` | Boolean | 否 | 传入 `True`，表示管理员可以修改聊天标题、照片及其他设置。 |\n| `can_invite_users` | Boolean | 否 | 传入 `True`，表示管理员可以邀请新用户加入聊天。 |\n| `can_post_stories` | Boolean | 否 | 传入 `True`，表示管理员可以在聊天中发布故事。 |\n| `can_edit_stories` | Boolean | 否 | 传入 `True`，表示管理员可以编辑其他用户发布的故事、将故事发布到聊天主页、置顶聊天故事，以及访问聊天的故事存档。 |\n| `can_delete_stories` | Boolean | 否 | 传入 `True`，表示管理员可以删除其他用户发布的故事。 |\n| `can_post_messages` | Boolean | 否 | 传入 `True`，表示管理员可以在频道中发布消息、审批建议帖子或查看频道统计数据。仅适用于频道。 |\n| `can_edit_messages` | Boolean | 否 | 传入 `True`，表示管理员可以编辑其他用户发送的消息并置顶消息。仅适用于频道。 |\n| `can_pin_messages` | Boolean | 否 | 传入 `True`，表示管理员可以置顶消息。仅适用于超级群组。 |\n| `can_manage_topics` | Boolean | 否 | 传入 `True`，表示用户可以创建、重命名、关闭和重新开启论坛话题。仅适用于超级群组。 |\n| `can_manage_direct_messages` | Boolean | 否 | 传入 `True`，表示管理员可以管理频道中的私信，并拒绝建议帖子。仅适用于频道。 |\n| `can_manage_tags` | Boolean | 否 | 传入 `True`，表示管理员可以编辑普通成员的标签。仅适用于群组和超级群组。 |\n| `can_send_welcome_messages` | Boolean | 否 | 传入 `True`，表示管理员可以管理聊天欢迎消息；对于机器人，还可以直接发送欢迎消息。 |\n"
+  },
+  "verifyUser": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Verifies a user"
+    ],
+    "text": "## verifyUser\n\n代表机器人所属的组织为指定用户添加认证标记。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `custom_description` | String | 否 | 认证标记的自定义说明，长度为 **0–70 个字符**。如果该组织无权提供自定义认证说明，此参数必须为空。 |\n"
+  },
+  "verifyChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Verifies a chat"
+    ],
+    "text": "## verifyChat\n\n代表机器人所属的组织为指定聊天添加认证标记。成功时返回 `True`。频道私信聊天不能被认证。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标机器人、超级群组、频道的用户名，格式为 `@username`。 |\n| `custom_description` | String | 否 | 认证标记的自定义说明，长度为 **0–70 个字符**。如果该组织无权提供自定义认证说明，此参数必须为空。 |\n"
+  },
+  "removeUserVerification": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Removes verification from a user"
+    ],
+    "text": "## removeUserVerification\n\n移除机器人所属组织此前为指定用户添加的认证标记。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n"
+  },
+  "removeChatVerification": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Removes verification from a chat"
+    ],
+    "text": "## removeChatVerification\n\n移除机器人所属组织此前为指定聊天添加的认证标记。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标机器人或频道的用户名，格式为 `@username`。 |\n"
+  },
+  "readBusinessMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Marks incoming message as read on behalf of a business account."
+    ],
+    "text": "## readBusinessMessage\n\n代表商业账号将收到的消息标记为已读。需要拥有 `can_read_messages` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 代表其执行已读操作的商业连接的唯一标识符。 |\n| `chat_id` | Integer | 是 | 收到该消息的聊天的唯一标识符。该聊天必须在最近 **24 小时**内处于活跃状态。 |\n| `message_id` | Integer | 是 | 要标记为已读的消息的唯一标识符。 |\n"
+  },
+  "deleteBusinessMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Delete messages on behalf of a business account."
+    ],
+    "text": "## deleteBusinessMessages\n\n代表商业账号删除消息。删除机器人自身发送的消息需要 `can_delete_sent_messages` 商业机器人权限；删除任意消息则需要 `can_delete_all_messages` 权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 代表其执行删除操作的商业连接的唯一标识符。 |\n| `message_ids` | Array of Integer | 是 | 要删除的消息标识符列表，以 JSON 序列化。数量必须为 **1–100**，且所有消息必须属于同一个聊天。关于可删除消息的限制，请参阅 `deleteMessage`。 |\n"
+  },
+  "setBusinessAccountName": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Changes the first and last name of a managed business account."
+    ],
+    "text": "## setBusinessAccountName\n\n修改受管理商业账号的名字和姓氏。需要拥有 `can_change_name` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `first_name` | String | 是 | 商业账号的新名字，长度为 **1–64 个字符**。 |\n| `last_name` | String | 否 | 商业账号的新姓氏，长度为 **0–64 个字符**。 |\n"
+  },
+  "setBusinessAccountUsername": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Changes the username of a managed business account."
+    ],
+    "text": "## setBusinessAccountUsername\n\n修改受管理商业账号的用户名。需要拥有 `can_change_username` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `username` | String | 否 | 商业账号的新用户名，长度为 **0–32 个字符**。 |\n"
+  },
+  "setBusinessAccountBio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Changes the bio of a managed business account."
+    ],
+    "text": "## setBusinessAccountBio\n\n修改受管理商业账号的个人简介。需要拥有 `can_change_bio` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `bio` | String | 否 | 商业账号的新个人简介，长度为 **0–140 个字符**。 |\n"
+  },
+  "setBusinessAccountProfilePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Changes the profile photo of a managed business account."
+    ],
+    "text": "## setBusinessAccountProfilePhoto\n\n修改受管理商业账号的头像。需要拥有 `can_edit_profile_photo` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `photo` | InputProfilePhoto | 是 | 要设置的新头像。 |\n| `is_public` | Boolean | 否 | 传入 `True`，将该头像设置为公开头像。即使商业账号的隐私设置隐藏了主头像，公开头像仍会显示。一个账号只能设置一张公开头像。 |\n"
+  },
+  "removeBusinessAccountProfilePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Removes the current profile photo of a managed business account."
+    ],
+    "text": "## removeBusinessAccountProfilePhoto\n\n移除受管理商业账号当前的头像。需要拥有 `can_edit_profile_photo` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `is_public` | Boolean | 否 | 传入 `True`，移除公开头像。公开头像即使在商业账号的隐私设置隐藏主头像时也会显示。移除主头像后，如果此前存在其他头像，该头像将成为新的主头像。 |\n"
+  },
+  "postStory": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Posts a story on behalf of a managed business account."
+    ],
+    "text": "## postStory\n\n代表受管理的商业账号发布故事。需要拥有 `can_manage_stories` 商业机器人权限。成功时返回 `Story` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `content` | InputStoryContent | 是 | 故事内容。 |\n| `active_period` | Integer | 是 | 故事移入存档前的有效时长，单位为秒。必须为以下值之一：`6 * 3600`、`12 * 3600`、`86400` 或 `2 * 86400`。 |\n| `caption` | String | 否 | 故事说明文字。实体解析后长度为 **0–2048 个字符**。 |\n| `parse_mode` | String | 否 | 用于解析故事说明文字中实体的模式。详情请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 否 | 说明文字中的特殊实体列表，以 JSON 序列化。指定此参数后，可以代替 `parse_mode`。 |\n| `areas` | Array of StoryArea | 否 | 要显示在故事中的可点击区域列表，以 JSON 序列化。 |\n| `post_to_chat_page` | Boolean | 否 | 传入 `True`，使故事过期后仍可在聊天主页访问。 |\n| `protect_content` | Boolean | 否 | 传入 `True`，保护故事内容，防止被转发或截图。 |\n"
+  },
+  "repostStory": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Reposts a story on behalf of a business account from another business account."
+    ],
+    "text": "## repostStory\n\n代表一个商业账号转发另一个商业账号的故事。两个商业账号必须由同一个机器人管理，且源账号上的故事必须由该机器人发布或转发。两个商业账号都需要授予机器人 `can_manage_stories` 权限。成功时返回 `Story` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 执行转发操作的商业连接的唯一标识符。 |\n| `from_chat_id` | Integer | 是 | 发布待转发故事的聊天的唯一标识符。 |\n| `from_story_id` | Integer | 是 | 要转发的故事的唯一标识符。 |\n| `active_period` | Integer | 是 | 故事移入存档前的有效时长，单位为秒。必须为以下值之一：`6 * 3600`、`12 * 3600`、`86400` 或 `2 * 86400`。 |\n| `post_to_chat_page` | Boolean | 否 | 传入 `True`，使故事过期后仍可在聊天主页访问。 |\n| `protect_content` | Boolean | 否 | 传入 `True`，保护故事内容，防止被转发或截图。 |\n"
+  },
+  "editStory": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Edits a story previously posted by the bot on behalf of a managed business account."
+    ],
+    "text": "## editStory\n\n编辑机器人此前代表受管理商业账号发布的故事。需要拥有 `can_manage_stories` 商业机器人权限。成功时返回 `Story` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `story_id` | Integer | 是 | 要编辑的故事的唯一标识符。 |\n| `content` | InputStoryContent | 是 | 故事内容。 |\n| `caption` | String | 否 | 故事说明文字。实体解析后长度为 **0–2048 个字符**。 |\n| `parse_mode` | String | 否 | 用于解析故事说明文字中实体的模式。详情请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 否 | 说明文字中的特殊实体列表，以 JSON 序列化。指定此参数后，可以代替 `parse_mode`。 |\n| `areas` | Array of StoryArea | 否 | 要显示在故事中的可点击区域列表，以 JSON 序列化。 |\n"
+  },
+  "deleteStory": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Deletes a story previously posted by the bot on behalf of a managed business account."
+    ],
+    "text": "## deleteStory\n\n删除机器人此前代表受管理商业账号发布的故事。需要拥有 `can_manage_stories` 商业机器人权限。成功时返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商业连接的唯一标识符。 |\n| `story_id` | Integer | 是 | 要删除的故事的唯一标识符。 |\n"
+  },
+  "answerWebAppQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to set the result of an interaction with a"
+    ],
+    "text": "## answerWebAppQuery\n\n处理来自 Web App 的一次交互，并代表用户向发起该查询的聊天发送对应消息。成功时返回 `SentWebAppMessage` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `web_app_query_id` | String | 是 | 需要回应的查询的唯一标识符。 |\n| `result` | InlineQueryResult | 是 | 描述待发送消息的对象，以 JSON 序列化。 |\n"
+  },
+  "savePreparedInlineMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Stores a message that can be sent by a user of a Mini App."
+    ],
+    "text": "## savePreparedInlineMessage\n\n保存一条预备消息，供 Mini App 用户之后发送。成功时返回 `PreparedInlineMessage` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 有权使用该预备消息的目标用户的唯一标识符。 |\n| `result` | InlineQueryResult | 是 | 描述待发送消息的对象，以 JSON 序列化。 |\n| `allow_user_chats` | Boolean | 否 | 传入 `True`，表示允许将该消息发送到与普通用户的私聊。 |\n| `allow_bot_chats` | Boolean | 否 | 传入 `True`，表示允许将该消息发送到与机器人的私聊。 |\n| `allow_group_chats` | Boolean | 否 | 传入 `True`，表示允许将该消息发送到群组和超级群组。 |\n| `allow_channel_chats` | Boolean | 否 | 传入 `True`，表示允许将该消息发送到频道聊天。 |\n"
+  },
+  "savePreparedKeyboardButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Stores a keyboard button that can be used by a user within a Mini App."
+    ],
+    "text": "## savePreparedKeyboardButton\n\n保存一个预备键盘按钮，供用户在 Mini App 中使用。成功时返回 `PreparedKeyboardButton` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 有权使用该按钮的目标用户的唯一标识符。 |\n| `button` | KeyboardButton | 是 | 要保存的按钮对象，以 JSON 序列化。按钮类型必须为 `request_users`、`request_chat` 或 `request_managed_bot`。 |\n"
   }
 }

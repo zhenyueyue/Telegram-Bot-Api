@@ -336,30 +336,31 @@ function toggleFavorite() {
 }
 function openOfficial() { const s=current(); if(s) window.open(s.originalUrl || 'https://core.telegram.org/bots/api','_blank','noopener'); }
 
-const ISSUE_URL_MAX_LENGTH = 7000;
+const ISSUE_URL_MAX_LENGTH = 2800;
 function codePoints(value) { return Array.from(String(value || '')); }
 function takeCodePoints(value, count) { return codePoints(value).slice(0, count).join(''); }
-function makeIssueDraft(s, translationText, englishText, englishExcerpt, translationExcerpt) {
+function makeIssueDraft(s, translationText, englishText, englishExcerpt, translationMode) {
   const siteUrl = location.origin + location.pathname + '#' + encodeURIComponent(s.id);
   const officialUrl = s.originalUrl || ('https://core.telegram.org/bots/api#' + encodeURIComponent(s.id));
-  const cnTitle = nameCN(s);
   const title = '翻译修改建议：' + s.title;
-  const body = [
+  const bodyParts = [
     '## 章节信息',
     '- 英文名称：' + s.title,
-    '- 中文标题：' + cnTitle,
+    '- 中文标题：' + nameCN(s),
     '- 文档站链接：' + siteUrl,
     '- Telegram 官方英文源链接：' + officialUrl,
     '',
     '## 英文原文',
-    englishExcerpt ? '（章节较长，以下为开头摘录；完整原文请查看官方源链接。）\n\n' + englishText : (englishText || '（未能读取英文原文，请查看官方源链接。）'),
-    '',
-    '## 当前中文翻译',
-    translationExcerpt ? '（译文较长，以下为开头摘录；完整内容请查看文档站链接。）\n\n' + translationText : (translationText || '（该章节目前没有已发布的中文译文。）'),
-    '',
-    '## 问题与建议修改',
-    ''
-  ].join('\n');
+    englishExcerpt ? '（章节较长，以下为开头摘录；完整原文请查看官方源链接。）\n\n' + englishText : (englishText || '（未能读取英文原文，请查看官方源链接。）')
+  ];
+  if (translationMode !== 'omit') {
+    bodyParts.push('', '## 当前中文翻译',
+      translationMode === 'excerpt'
+        ? '（译文较长，以下为开头摘录；完整内容请查看文档站链接。）\n\n' + translationText
+        : (translationText || '（该章节目前没有已发布的中文译文。）'));
+  }
+  bodyParts.push('', '## 问题与建议修改', '');
+  const body = bodyParts.join('\n');
   const url = 'https://github.com/zhenyueyue/Telegram-Bot-Api/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
   return {url, body, title, siteUrl, officialUrl};
 }
@@ -368,39 +369,22 @@ function openTranslationIssue() {
   if (!s) return;
   const original = String(s.body || '');
   const translated = String(s.translation?.text || '');
-  let draft = makeIssueDraft(s, translated, original, false, false);
+  // Preserve complete prefill for short chapters. Long chapters deliberately
+  // omit the translation and use only a compact English opening excerpt.
+  let draft = makeIssueDraft(s, translated, original, false, 'full');
   if (draft.url.length > ISSUE_URL_MAX_LENGTH) {
-    // Keep a useful opening excerpt of the official source, then fit as much
-    // of the current translation as possible into GitHub's prefill URL.
-    const englishExcerptLength = Math.min(220, codePoints(original).length);
-    const englishExcerpt = takeCodePoints(original, englishExcerptLength);
-    const fullTranslationDraft = makeIssueDraft(s, translated, englishExcerpt, true, false);
-    if (fullTranslationDraft.url.length <= ISSUE_URL_MAX_LENGTH) {
-      draft = fullTranslationDraft;
-    } else {
-      let low = 0, high = codePoints(translated).length, best = null;
-      while (low <= high) {
-        const mid = Math.floor((low + high) / 2);
-        const excerpt = takeCodePoints(translated, mid);
-        const candidate = makeIssueDraft(s, excerpt, englishExcerpt, true, true);
-        if (candidate.url.length <= ISSUE_URL_MAX_LENGTH) {
-          best = candidate;
-          low = mid + 1;
-        } else high = mid - 1;
-      }
-      if (best) draft = best;
-      else {
-        // Defensive fallback for exceptionally long metadata or source titles.
-        let eLow = 0, eHigh = englishExcerptLength, fallback = null;
-        while (eLow <= eHigh) {
-          const mid = Math.floor((eLow + eHigh) / 2);
-          const candidate = makeIssueDraft(s, '', takeCodePoints(original, mid), true, true);
-          if (candidate.url.length <= ISSUE_URL_MAX_LENGTH) { fallback = candidate; eLow = mid + 1; }
-          else eHigh = mid - 1;
-        }
-        if (fallback) draft = fallback;
-      }
+    draft = makeIssueDraft(s, '', takeCodePoints(original, 120), true, 'omit');
+  }
+  // Defensive fallback: trim only the English excerpt if metadata is unusually long.
+  if (draft.url.length > ISSUE_URL_MAX_LENGTH) {
+    let low = 0, high = 120, best = null;
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      const candidate = makeIssueDraft(s, '', takeCodePoints(original, mid), true, 'omit');
+      if (candidate.url.length <= ISSUE_URL_MAX_LENGTH) { best = candidate; low = mid + 1; }
+      else high = mid - 1;
     }
+    if (best) draft = best;
   }
   if (draft.url.length > ISSUE_URL_MAX_LENGTH) {
     toast('章节信息过长，暂时无法生成安全的 Issue 链接。', true);

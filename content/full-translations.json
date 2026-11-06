@@ -2777,7 +2777,7 @@
   "TransactionPartnerTelegramApi": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "payment for paid broadcasting",
+      "transaction with payment for paid broadcasting",
       "successful requests that exceeded regular limits"
     ],
     "text": "## Telegram API 交易参与方 `TransactionPartnerTelegramApi`\n\n描述因付费广播（paid broadcasting）而产生的付款交易。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 交易参与方类型，始终为 `\"telegram_api\"`。 |\n| `request_count` | `Integer` | 超出常规限制、因此需要付费的成功请求数量。 |\n"
@@ -2801,7 +2801,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "withdrawal is in progress",
-      "always “pending”"
+      "pending"
     ],
     "text": "## 提现处理中状态 `RevenueWithdrawalStatePending`\n\n表示提现正在进行中。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 状态类型，始终为 `\"pending\"`。 |\n"
   },
@@ -2818,7 +2818,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "withdrawal failed and the transaction was refunded",
-      "always “failed”"
+      "failed"
     ],
     "text": "## 提现失败状态 `RevenueWithdrawalStateFailed`\n\n表示提现失败，且该笔交易已退款。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 状态类型，始终为 `\"failed\"`。 |\n"
   },
@@ -2844,8 +2844,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "issue with the front side of a document",
-      "must be front_side",
-      "file with the front side"
+      "file with the front side of the document changes"
     ],
     "text": "## 证件正面文件错误 `PassportElementErrorFrontSide`\n\n表示证件正面文件存在问题。当证件正面文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"front_side\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"` 或 `\"internal_passport\"`。 |\n| `file_hash` | `String` | 证件正面文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
@@ -2853,8 +2852,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "issue with the reverse side of a document",
-      "must be reverse_side",
-      "driver_license”, “identity_card"
+      "file with reverse side of the document changes"
     ],
     "text": "## 证件反面文件错误 `PassportElementErrorReverseSide`\n\n表示证件反面文件存在问题。当证件反面文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"reverse_side\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"driver_license\"` 或 `\"identity_card\"`。 |\n| `file_hash` | `String` | 证件反面文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
@@ -2862,8 +2860,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "issue with the selfie with a document",
-      "must be selfie",
-      "file with the selfie"
+      "file with the selfie changes"
     ],
     "text": "## 证件自拍照错误 `PassportElementErrorSelfie`\n\n表示用户手持证件的自拍照存在问题。当自拍照文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"selfie\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"` 或 `\"internal_passport\"`。 |\n| `file_hash` | `String` | 自拍照文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
@@ -2871,8 +2868,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "issue with a document scan",
-      "must be file",
-      "Base64-encoded file hash"
+      "file with the document scan changes"
     ],
     "text": "## 证件扫描文件错误 `PassportElementErrorFile`\n\n表示证件扫描文件存在问题。当该扫描文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"file\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hash` | `String` | 文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
@@ -2880,17 +2876,15 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "issue with a list of scans",
-      "must be files",
-      "List of base64-encoded file hashes"
+      "list of files containing the scans changes"
     ],
     "text": "## 多个证件扫描文件错误 `PassportElementErrorFiles`\n\n表示一组证件扫描文件存在问题。当包含这些扫描件的文件列表发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"files\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hashes` | `Array of String` | Base64 编码的文件哈希值列表。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
   "PassportElementErrorTranslationFile": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "one of the files that constitute the translation",
-      "must be translation_file",
-      "Base64-encoded file hash"
+      "one of the files that constitute the translation of a document",
+      "file changes"
     ],
     "text": "## 证件翻译文件错误 `PassportElementErrorTranslationFile`\n\n表示构成证件翻译版本的某个文件存在问题。当该文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"translation_file\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"`、`\"internal_passport\"`、`\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hash` | `String` | 文件的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },
@@ -2898,8 +2892,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "translated version of a document",
-      "must be translation_files",
-      "List of base64-encoded file hashes"
+      "file with the document translation change"
     ],
     "text": "## 证件翻译文件列表错误 `PassportElementErrorTranslationFiles`\n\n表示证件翻译版本存在问题。当证件翻译文件发生变化时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"translation_files\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别，可为 `\"passport\"`、`\"driver_license\"`、`\"identity_card\"`、`\"internal_passport\"`、`\"utility_bill\"`、`\"bank_statement\"`、`\"rental_agreement\"`、`\"passport_registration\"` 或 `\"temporary_registration\"`。 |\n| `file_hashes` | `Array of String` | Base64 编码的文件哈希值列表。 |\n| `message` | `String` | 错误说明信息。 |\n"
   },

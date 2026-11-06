@@ -1805,5 +1805,236 @@
       "Represents a voice message file to be sent."
     ],
     "text": "## InputMediaVoiceNote\n\n表示准备发送的语音消息文件。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 媒体类型，必须为 `voice_note`。 |\n| `media` | String | 需要发送的文件。可以传入 Telegram 服务器上已有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或使用 `attach://<file_attach_name>` 引用通过 `multipart/form-data` 上传的新文件。 |\n| `caption` | String | 可选。语音消息的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析语音消息说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中出现的特殊实体列表；提供此字段时可代替 `parse_mode`。 |\n| `duration` | Integer | 可选。语音消息时长，单位为秒。 |\n"
+  },
+  "Inline mode": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The following methods and objects allow your bot to work in inline mode."
+    ],
+    "text": "## Inline mode\n\n以下方法和对象用于让机器人支持**内联模式（Inline Mode）**。更多背景和使用说明请参阅 Telegram 的内联机器人介绍。\n\n要启用内联模式，请向 @BotFather 发送 `/setinline` 命令，并设置一段占位提示文字。用户在任意聊天的输入框中输入机器人的用户名后，这段文字会显示在输入框中，提示用户可以输入什么内容。\n"
+  },
+  "InlineQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents an incoming inline query."
+    ],
+    "text": "## InlineQuery\n\n表示收到的一次内联查询。当用户提交空查询时，机器人可以返回默认结果或热门结果。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 本次查询的唯一标识符。 |\n| `from` | User | 发起查询的用户。 |\n| `query` | String | 用户输入的查询文本，最长 **256 个字符**。 |\n| `offset` | String | 本次需要返回的结果偏移量，由机器人控制，用于实现分页。 |\n| `chat_type` | String | 可选。发起内联查询的聊天类型，可以是 `sender`（与查询发起者的私聊）、`private`、`group`、`supergroup` 或 `channel`。官方客户端和大多数第三方客户端发送的请求通常都会提供该字段；如果请求来自秘密聊天，则可能无法确定聊天类型。 |\n| `location` | Location | 可选。查询发起者的位置；仅适用于已请求用户位置权限的机器人。 |\n"
+  },
+  "answerInlineQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Use this method to send answers to an inline query."
+    ],
+    "text": "## answerInlineQuery\n\n向一次内联查询返回结果。成功时返回 `True`。每次查询最多允许返回 **50 条结果**。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `inline_query_id` | String | 是 | 需要回应的内联查询的唯一标识符。 |\n| `results` | Array of InlineQueryResult | 是 | 内联查询结果数组，需以 JSON 形式序列化。 |\n| `cache_time` | Integer | 否 | 结果在 Telegram 服务器端允许缓存的最长时间，单位为秒。默认值为 **300 秒**。 |\n| `is_personal` | Boolean | 否 | 传入 `True` 后，结果只会在服务器端为发起该查询的用户缓存。默认情况下，相同查询的结果可能会返回给其他用户。 |\n| `next_offset` | String | 否 | 下一页结果的偏移量。客户端会在使用相同查询文本发起下一次查询时传回该值。如果没有更多结果或不支持分页，请传入空字符串。长度不得超过 **64 字节**。 |\n| `button` | InlineQueryResultsButton | 否 | 用于描述显示在内联查询结果上方的按钮的 JSON 对象。 |\n"
+  },
+  "InlineQueryResultsButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a button to be shown above inline query results."
+    ],
+    "text": "## InlineQueryResultsButton\n\n描述显示在内联查询结果上方的按钮。`text` 为按钮显示的文字；此外，**`web_app` 和 `start_parameter` 两个可选字段必须且只能指定一个**。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | String | 按钮上显示的文字。 |\n| `web_app` | WebAppInfo | 可选。用户按下按钮后启动的 Web App。该 Web App 可以通过 `switchInlineQuery` 方法让用户返回内联模式。 |\n| `start_parameter` | String | 可选。用户按下按钮后发送给机器人的 `/start` 深度链接参数。长度为 **1–64 个字符**，且只能包含 `A-Z`、`a-z`、`0-9`、`_` 和 `-`。 |\n"
+  },
+  "InlineQueryResult": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents one result of an inline query."
+    ],
+    "text": "## InlineQueryResult\n\n表示一条内联查询结果。Telegram 客户端目前支持以下 **20 种**结果类型：\n\n- 媒体文件：`InlineQueryResultPhoto`、`InlineQueryResultGif`、`InlineQueryResultMpeg4Gif`、`InlineQueryResultVideo`、`InlineQueryResultAudio`、`InlineQueryResultVoice`、`InlineQueryResultDocument`\n- 其他内容：`InlineQueryResultArticle`、`InlineQueryResultLocation`、`InlineQueryResultVenue`、`InlineQueryResultContact`、`InlineQueryResultGame`\n- 已缓存媒体：`InlineQueryResultCachedPhoto`、`InlineQueryResultCachedGif`、`InlineQueryResultCachedMpeg4Gif`、`InlineQueryResultCachedSticker`、`InlineQueryResultCachedDocument`、`InlineQueryResultCachedVideo`、`InlineQueryResultCachedVoice`、`InlineQueryResultCachedAudio`。\n\n每条结果都应使用对应类型的对象结构。\n\n> **隐私提示：** 通过内联查询结果传入的所有 URL 都会提供给最终用户，因此必须将它们视为公开地址。\n"
+  },
+  "InlineQueryResultArticle": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to an article or web page."
+    ],
+    "text": "## InlineQueryResultArticle\n\n表示指向文章或网页的链接。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `article`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 结果标题。 |\n| `input_message_content` | InputMessageContent | 用户选择该结果后实际发送的消息内容。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `url` | String | 可选。结果对应的 URL。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `thumbnail_url` | String | 可选。缩略图的 URL。 |\n| `thumbnail_width` | Integer | 可选。缩略图宽度。 |\n| `thumbnail_height` | Integer | 可选。缩略图高度。 |\n"
+  },
+  "InlineQueryResultPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a photo."
+    ],
+    "text": "## InlineQueryResultPhoto\n\n表示指向照片的链接。默认情况下，用户选择该结果后会发送照片，并可附带说明文字；也可以通过 `input_message_content` 指定发送其他消息内容，以替代照片。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `photo`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `photo_url` | String | 照片的有效 URL。照片必须为 JPEG 格式，且文件大小不得超过 **5 MB**。 |\n| `thumbnail_url` | String | 照片缩略图的 URL。 |\n| `photo_width` | Integer | 可选。照片宽度。 |\n| `photo_height` | Integer | 可选。照片高度。 |\n| `title` | String | 可选。结果标题。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultGif": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to an animated GIF file."
+    ],
+    "text": "## InlineQueryResultGif\n\n表示指向 GIF 动图文件的链接。默认情况下，用户选择该结果后会发送 GIF 动图，并可附带说明文字；也可以通过 `input_message_content` 指定发送其他消息内容，以替代该动图。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `gif`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `gif_url` | String | GIF 文件的有效 URL。 |\n| `gif_width` | Integer | 可选。GIF 动图宽度。 |\n| `gif_height` | Integer | 可选。GIF 动图高度。 |\n| `gif_duration` | Integer | 可选。GIF 动图时长，单位为秒。 |\n| `thumbnail_url` | String | 结果缩略图的 URL。可以是静态图片（JPEG 或 GIF），也可以是动态缩略图（MPEG-4）。 |\n| `thumbnail_mime_type` | String | 可选。缩略图的 MIME 类型，只能是 `image/jpeg`、`image/gif` 或 `video/mp4`。默认值为 `image/jpeg`。 |\n| `title` | String | 可选。结果标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultMpeg4Gif": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a video animation (H.264/MPEG-4 AVC video without sound)."
+    ],
+    "text": "## InlineQueryResultMpeg4Gif\n\n表示指向视频动画的链接。该动画使用 H.264/MPEG-4 AVC 编码，且不包含声音。默认情况下，用户选择该结果后会发送视频动画，并可附带说明文字；也可以通过 `input_message_content` 指定发送其他消息内容，以替代该动画。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `mpeg4_gif`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `mpeg4_url` | String | MPEG-4 文件的有效 URL。 |\n| `mpeg4_width` | Integer | 可选。视频宽度。 |\n| `mpeg4_height` | Integer | 可选。视频高度。 |\n| `mpeg4_duration` | Integer | 可选。视频时长，单位为秒。 |\n| `thumbnail_url` | String | 结果缩略图的 URL。可以是静态图片（JPEG 或 GIF），也可以是动态缩略图（MPEG-4）。 |\n| `thumbnail_mime_type` | String | 可选。缩略图的 MIME 类型，只能是 `image/jpeg`、`image/gif` 或 `video/mp4`。默认值为 `image/jpeg`。 |\n| `title` | String | 可选。结果标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a page containing an embedded video player or a video file."
+    ],
+    "text": "## InlineQueryResultVideo\n\n表示指向包含嵌入式视频播放器的网页或视频文件的链接。默认情况下，用户选择该结果后会发送视频，并可附带说明文字；也可以通过 `input_message_content` 指定发送其他消息内容，以替代视频。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `video`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `video_url` | String | 嵌入式视频播放器页面或视频文件的有效 URL。 |\n| `mime_type` | String | 视频 URL 内容的 MIME 类型，只能是 `text/html` 或 `video/mp4`。 |\n| `thumbnail_url` | String | 视频缩略图的 URL，仅支持 JPEG 格式。 |\n| `title` | String | 结果标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `video_width` | Integer | 可选。视频宽度。 |\n| `video_height` | Integer | 可选。视频高度。 |\n| `video_duration` | Integer | 可选。视频时长，单位为秒。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n\n> **注意：** 如果 `InlineQueryResultVideo` 指向包含嵌入式播放器的网页（例如 YouTube 页面），必须通过 `input_message_content` 替换默认发送内容。\n"
+  },
+  "InlineQueryResultAudio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to an MP3 audio file."
+    ],
+    "text": "## InlineQueryResultAudio\n\n表示指向 MP3 音频文件的链接。默认情况下，用户选择该结果后会发送音频；也可以通过 `input_message_content` 指定发送其他消息内容，以替代音频。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `audio`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `audio_url` | String | 音频文件的有效 URL。 |\n| `title` | String | 音频标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `performer` | String | 可选。音频表演者或演唱者。 |\n| `audio_duration` | Integer | 可选。音频时长，单位为秒。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultVoice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a voice recording in an .OGG container encoded with OPUS."
+    ],
+    "text": "## InlineQueryResultVoice\n\n表示指向语音录音的链接。语音录音必须采用 OGG 容器并使用 OPUS 编码。默认情况下，用户选择该结果后会发送语音消息；也可以通过 `input_message_content` 指定发送其他消息内容，以替代语音消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `voice`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `voice_url` | String | 语音录音文件的有效 URL。 |\n| `title` | String | 录音标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `voice_duration` | Integer | 可选。语音录音时长，单位为秒。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultDocument": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a file. By default, this file will be sent by the user with an optional caption."
+    ],
+    "text": "## InlineQueryResultDocument\n\n表示指向文件的链接。默认情况下，用户选择该结果后会发送文件，并可附带说明文字；也可以通过 `input_message_content` 指定发送其他消息内容，以替代文件。**此方法目前仅支持发送 PDF 和 ZIP 文件。**\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `document`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 文件标题。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `document_url` | String | 文件的有效 URL。 |\n| `mime_type` | String | 文件内容的 MIME 类型，只能是 `application/pdf` 或 `application/zip`。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n| `thumbnail_url` | String | 可选。缩略图的 URL。 |\n| `thumbnail_width` | Integer | 可选。缩略图宽度。 |\n| `thumbnail_height` | Integer | 可选。缩略图高度。 |\n"
+  },
+  "InlineQueryResultLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a location on a map."
+    ],
+    "text": "## InlineQueryResultLocation\n\n表示地图上的一个地理位置。默认情况下，用户选择该结果后会发送该位置；也可以通过 `input_message_content` 指定发送其他消息内容，以替代位置消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `location`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `latitude` | Float | 位置的纬度，单位为度。 |\n| `longitude` | Float | 位置的经度，单位为度。 |\n| `title` | String | 位置标题。 |\n| `horizontal_accuracy` | Float | 可选。位置的水平不确定半径，单位为米，范围为 **0–1500**。 |\n| `live_period` | Integer | 可选。位置可更新的时长，单位为秒，必须为 **60–86400**，也可以使用 `0x7FFFFFFF` 表示可无限期编辑的实时位置。 |\n| `heading` | Integer | 可选。实时位置中用户移动的方向，单位为度；指定时必须为 **1–360**。 |\n| `proximity_alert_radius` | Integer | 可选。用于提醒聊天成员彼此接近的最大距离，单位为米；指定时必须为 **1–100000**。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n| `thumbnail_url` | String | 可选。缩略图的 URL。 |\n| `thumbnail_width` | Integer | 可选。缩略图宽度。 |\n| `thumbnail_height` | Integer | 可选。缩略图高度。 |\n"
+  },
+  "InlineQueryResultVenue": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a venue."
+    ],
+    "text": "## InlineQueryResultVenue\n\n表示一个地点（Venue）。默认情况下，用户选择该结果后会发送地点信息；也可以通过 `input_message_content` 指定发送其他消息内容，以替代地点消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `venue`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `latitude` | Float | 地点所在位置的纬度，单位为度。 |\n| `longitude` | Float | 地点所在位置的经度，单位为度。 |\n| `title` | String | 地点名称。 |\n| `address` | String | 地点地址。 |\n| `foursquare_id` | String | 可选。如果已知，填写该地点的 Foursquare 标识符。 |\n| `foursquare_type` | String | 可选。如果已知，填写 Foursquare 地点类型，例如 `arts_entertainment/default`、`arts_entertainment/aquarium` 或 `food/icecream`。 |\n| `google_place_id` | String | 可选。该地点在 Google Places 中的标识符。 |\n| `google_place_type` | String | 可选。该地点在 Google Places 中的类型。请参阅官方支持的类型列表。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n| `thumbnail_url` | String | 可选。缩略图的 URL。 |\n| `thumbnail_width` | Integer | 可选。缩略图宽度。 |\n| `thumbnail_height` | Integer | 可选。缩略图高度。 |\n"
+  },
+  "InlineQueryResultContact": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a contact with a phone number."
+    ],
+    "text": "## InlineQueryResultContact\n\n表示包含电话号码的联系人。默认情况下，用户选择该结果后会发送联系人信息；也可以通过 `input_message_content` 指定发送其他消息内容，以替代联系人消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `contact`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `phone_number` | String | 联系人的电话号码。 |\n| `first_name` | String | 联系人的名字。 |\n| `last_name` | String | 可选。联系人的姓氏。 |\n| `vcard` | String | 可选。以 vCard 格式提供的附加联系人信息，长度为 **0–2048 字节**。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n| `thumbnail_url` | String | 可选。缩略图的 URL。 |\n| `thumbnail_width` | Integer | 可选。缩略图宽度。 |\n| `thumbnail_height` | Integer | 可选。缩略图高度。 |\n"
+  },
+  "InlineQueryResultGame": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a Game."
+    ],
+    "text": "## InlineQueryResultGame\n\n表示一个游戏。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `game`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `game_short_name` | String | 游戏的短名称。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n"
+  },
+  "InlineQueryResultCachedPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a photo stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedPhoto\n\n引用已存储在 Telegram 服务器上的照片。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `photo`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 可选。结果标题。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `photo_file_id` | String | Telegram 服务器上该照片的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedGif": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to an animated GIF file stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedGif\n\n引用已存储在 Telegram 服务器上的GIF 动图。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `gif`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 可选。结果标题。 |\n| `gif_file_id` | String | Telegram 服务器上该GIF 文件的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedMpeg4Gif": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a video animation (H.264/MPEG-4 AVC video without sound) stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedMpeg4Gif\n\n引用已存储在 Telegram 服务器上的MPEG-4 视频动画。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `mpeg4_gif`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 可选。结果标题。 |\n| `mpeg4_file_id` | String | Telegram 服务器上该MPEG-4 文件的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedSticker": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a sticker stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedSticker\n\n引用已存储在 Telegram 服务器上的贴纸。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `sticker`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `sticker_file_id` | String | Telegram 服务器上该贴纸的有效文件标识符。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedDocument": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a file stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedDocument\n\n引用已存储在 Telegram 服务器上的文件。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `document`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 文件标题。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `document_file_id` | String | Telegram 服务器上该文件的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a video file stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedVideo\n\n引用已存储在 Telegram 服务器上的视频。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `video`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 视频标题。 |\n| `description` | String | 可选。结果的简短描述。 |\n| `video_file_id` | String | Telegram 服务器上该视频文件的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 后，将说明文字显示在媒体上方。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedVoice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to a voice message stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedVoice\n\n引用已存储在 Telegram 服务器上的语音消息。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `voice`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `title` | String | 语音消息标题。 |\n| `voice_file_id` | String | Telegram 服务器上该语音消息的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InlineQueryResultCachedAudio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a link to an MP3 audio file stored on the Telegram servers."
+    ],
+    "text": "## InlineQueryResultCachedAudio\n\n引用已存储在 Telegram 服务器上的MP3 音频文件。默认情况下，用户选择该结果后会直接发送对应媒体；也可以通过 `input_message_content` 指定实际发送的消息内容，以替代该媒体。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `audio`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `audio_file_id` | String | Telegram 服务器上该音频文件的有效文件标识符。 |\n| `caption` | String | 可选。随媒体发送的说明文字；实体解析后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 可选。用于解析说明文字中实体的模式。具体规则请参阅格式选项。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n| `input_message_content` | InputMessageContent | 可选。指定用户选择该结果后实际发送的消息内容，以替代默认的媒体或结果内容。 |\n"
+  },
+  "InputMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the content of a message to be sent as a result of an inline query."
+    ],
+    "text": "## InputMessageContent\n\n表示作为内联查询结果发送的消息内容。目前支持以下 **6 种**类型：\n\n- [`InputTextMessageContent`](#inputtextmessagecontent)：文本消息\n- [`InputRichMessageContent`](#inputrichmessagecontent)：富内容消息\n- [`InputLocationMessageContent`](#inputlocationmessagecontent)：位置消息\n- [`InputVenueMessageContent`](#inputvenuemessagecontent)：地点消息\n- [`InputContactMessageContent`](#inputcontactmessagecontent)：联系人消息\n- [`InputInvoiceMessageContent`](#inputinvoicemessagecontent)：账单消息。\n"
+  },
+  "InputTextMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of a text message to be sent as the result of an inline query."
+    ],
+    "text": "## InputTextMessageContent\n\n表示作为内联查询结果发送的文本消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `message_text` | String | 要发送的文本，长度为 **1–4096 个字符**。 |\n| `parse_mode` | String | 可选。用于解析消息文本中实体的模式。具体规则请参阅格式选项。 |\n| `entities` | Array of MessageEntity | 可选。消息文本中出现的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `link_preview_options` | LinkPreviewOptions | 可选。链接预览生成选项。 |\n"
+  },
+  "InputLocationMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of a location message to be sent as the result of an inline query."
+    ],
+    "text": "## InputLocationMessageContent\n\n表示作为内联查询结果发送的位置消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `latitude` | Float | 位置的纬度，单位为度。 |\n| `longitude` | Float | 位置的经度，单位为度。 |\n| `horizontal_accuracy` | Float | 可选。位置的水平不确定半径，单位为米，范围为 **0–1500**。 |\n| `live_period` | Integer | 可选。位置可更新的时长，单位为秒，必须为 **60–86400**，也可以使用 `0x7FFFFFFF` 表示可无限期编辑的实时位置。 |\n| `heading` | Integer | 可选。实时位置中用户移动的方向，单位为度；指定时必须为 **1–360**。 |\n| `proximity_alert_radius` | Integer | 可选。用于提醒聊天成员彼此接近的最大距离，单位为米；指定时必须为 **1–100000**。 |\n"
+  },
+  "InputVenueMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of a venue message to be sent as the result of an inline query."
+    ],
+    "text": "## InputVenueMessageContent\n\n表示作为内联查询结果发送的地点消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `latitude` | Float | 地点所在位置的纬度，单位为度。 |\n| `longitude` | Float | 地点所在位置的经度，单位为度。 |\n| `title` | String | 地点名称。 |\n| `address` | String | 地点地址。 |\n| `foursquare_id` | String | 可选。如果已知，填写该地点的 Foursquare 标识符。 |\n| `foursquare_type` | String | 可选。如果已知，填写 Foursquare 地点类型，例如 `arts_entertainment/default`、`arts_entertainment/aquarium` 或 `food/icecream`。 |\n| `google_place_id` | String | 可选。该地点在 Google Places 中的标识符。 |\n| `google_place_type` | String | 可选。该地点在 Google Places 中的类型。请参阅官方支持的类型列表。 |\n"
+  },
+  "InputContactMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of a contact message to be sent as the result of an inline query."
+    ],
+    "text": "## InputContactMessageContent\n\n表示作为内联查询结果发送的联系人消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `phone_number` | String | 联系人的电话号码。 |\n| `first_name` | String | 联系人的名字。 |\n| `last_name` | String | 可选。联系人的姓氏。 |\n| `vcard` | String | 可选。以 vCard 格式提供的附加联系人信息，长度为 **0–2048 字节**。 |\n"
+  },
+  "InputInvoiceMessageContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents the content of an invoice message to be sent as the result of an inline query."
+    ],
+    "text": "## InputInvoiceMessageContent\n\n表示作为内联查询结果发送的账单消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `title` | String | 商品名称，长度为 **1–32 个字符**。 |\n| `description` | String | 商品描述，长度为 **1–255 个字符**。 |\n| `payload` | String | 由机器人定义的账单负载，长度为 **1–128 字节**。该值不会展示给用户，可用于机器人内部处理订单。 |\n| `provider_token` | String | 可选。通过 @BotFather 获取的支付服务提供商令牌。使用 Telegram Stars 收款时传入空字符串。 |\n| `currency` | String | 三位字母的 ISO 4217 货币代码。使用 Telegram Stars 收款时传入 `XTR`。 |\n| `prices` | Array of LabeledPrice | 价格明细数组，以 JSON 形式序列化，可包含商品价格、税费、折扣、配送费、配送税费、奖励等项目。使用 Telegram Stars 收款时必须且只能包含 **1 项**。 |\n| `max_tip_amount` | Integer | 可选。允许用户支付的小费最高金额，以该货币的最小单位表示，必须使用整数而非浮点数。例如，美元最高小费为 1.45 美元时，传入 `145`。默认值为 `0`。**Telegram Stars 支付不支持此字段**。 |\n| `suggested_tip_amounts` | Array of Integer | 可选。建议用户选择的小费金额数组，以该货币的最小单位表示。最多可指定 **4 项**；金额必须为正数、严格递增，且不得超过 `max_tip_amount`。 |\n| `provider_data` | String | 可选。以 JSON 形式序列化的支付服务提供商附加数据。具体需要包含哪些字段，应由支付服务提供商说明。 |\n| `photo_url` | String | 可选。账单商品图片的 URL，可以是实物商品照片，也可以是服务的宣传图片。 |\n| `photo_size` | Integer | 可选。商品图片的文件大小，单位为字节。 |\n| `photo_width` | Integer | 可选。商品图片宽度。 |\n| `photo_height` | Integer | 可选。商品图片高度。 |\n| `need_name` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供全名。**Telegram Stars 支付会忽略此字段**。 |\n| `need_phone_number` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供电话号码。**Telegram Stars 支付会忽略此字段**。 |\n| `need_email` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供电子邮箱地址。**Telegram Stars 支付会忽略此字段**。 |\n| `need_shipping_address` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供收货地址。**Telegram Stars 支付会忽略此字段**。 |\n| `send_phone_number_to_provider` | Boolean | 可选。传入 `True` 表示将用户的电话号码发送给支付服务提供商。**Telegram Stars 支付会忽略此字段**。 |\n| `send_email_to_provider` | Boolean | 可选。传入 `True` 表示将用户的电子邮箱地址发送给支付服务提供商。**Telegram Stars 支付会忽略此字段**。 |\n| `is_flexible` | Boolean | 可选。传入 `True` 表示最终价格取决于配送方式。**Telegram Stars 支付会忽略此字段**。 |\n"
+  },
+  "ChosenInlineResult": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a result of an inline query that was chosen by the user and sent to their chat partner."
+    ],
+    "text": "## ChosenInlineResult\n\n表示用户选择并发送给聊天对象的一条内联查询结果。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `result_id` | String | 用户选择的结果的唯一标识符。 |\n| `from` | User | 选择该结果的用户。 |\n| `location` | Location | 可选。用户的位置；仅适用于已请求用户位置权限的机器人。 |\n| `inline_message_id` | String | 可选。已发送内联消息的标识符。仅当消息附带内联键盘时才会提供。该标识符也会出现在回调查询中，可用于编辑对应消息。 |\n| `query` | String | 用于获取该结果的原始查询文本。 |\n\n> **注意：** 若要在 Update 中收到此对象，必须先通过 @BotFather 启用内联反馈（Inline Feedback）。\n"
+  },
+  "SentGuestMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes an inline message sent by a guest bot."
+    ],
+    "text": "## SentGuestMessage\n\n描述由访客机器人（Guest Bot）发送的内联消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `inline_message_id` | String | 已发送内联消息的标识符。 |\n"
   }
 }

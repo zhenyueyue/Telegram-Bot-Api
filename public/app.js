@@ -188,9 +188,9 @@ function overview() {
   const featuredNodes = topIds.map((name,i) => featured(get(name), ['code','refresh','globe','box','spark','book'][i],['','violet','orange','','violet','orange'][i])).filter(Boolean).join('');
   const suggested = ['getMe','deleteMessage','editMessageText','sendPhoto','Update','Making requests','getStarTransactions','sendInvoice'].map(get).filter(Boolean).slice(0,8);
   const stats = S.docs.sections.reduce((o,s) => { o[s.kind] = (o[s.kind] || 0)+1; return o; }, {});
-  return `<div class="eyebrow">ONLINE · NO SERVER · NO API KEY</div>
-    <section class="hero"><h1>为开发者准备的<br><span class="accent">Telegram Bot API</span> 中文文档.</h1>
-      <p class="hero-copy">完整收录 Telegram Bot API 官方英文参考；常用章节提供人工整理的中文要点，支持中英对照、搜索、收藏和分享。不需要 API Key，也不需要启动本地服务器。</p>
+  return `<div class="eyebrow">TELEGRAM BOT API / 中文文档</div>
+    <section class="hero"><h1><span class="accent">Telegram Bot API</span><br>简体中文文档</h1>
+      <p class="hero-copy">Telegram Bot API 官方文档的简体中文全文翻译（非官方）。对应 Bot API ${esc(S.docs.version || "—")}，共 ${sections.length} 个章节，包含指南、API 方法和数据类型。可切换中文摘要、中英对照与英文原文。</p>
       <div class="hero-actions"><button class="primary-btn" data-go="${attr((get('sendMessage') || sections.find(s=>s.kind==='method') || sections[0]).id)}">开始阅读 ${icon('chevron')}</button><button class="secondary-btn" data-open-settings="1">查看文档说明 ${icon('settings')}</button></div></section>
     ${S.docs.demo ? `<div class="demo-banner"><div class="demo-copy"><strong>当前是离线预览。</strong><span> 内置少量演示章节；点击同步后读取完整官方 Bot API 文档。示例译文不是完整官方内容。</span></div><button data-sync="1">同步完整版</button></div>` : ''}
     <div class="quick-stats">${heroStat(stats.method || 0, 'API 方法', 'code')}${heroStat(stats.type || 0,'数据类型','box')}${heroStat(stats.guide || 0,'参考章节','book')}${heroStat(S.docs.version || '—','官方版本','globe')}</div>

@@ -53,7 +53,14 @@ function guideSections(md){
     // entire following method catalog and falsely demands its translation.
     const next=raw.find(candidate=>candidate.line>h.line);
     const end=next?.line??lines.length;
-    const body=lines.slice(h.line+1,end).join('\n').trim();
+    let body=lines.slice(h.line+1,end).join('\n').trim();
+    // The source places the global method catalog immediately after the
+    // Paid Broadcasts note. It is navigation for the API methods, not part
+    // of the Paid Broadcasts guide; those methods are indexed separately.
+    if(h.title==='Paid Broadcasts'){
+      const catalogStart=body.search(/^\\s*-\\s+\\[[a-z][A-Za-z0-9]*\\]\\(\\#/m);
+      if(catalogStart>=0)body=body.slice(0,catalogStart).trim();
+    }
     if(body.length>45)sections.push({title:h.title,kind:kindOf(h.title),level:h.level,body});
   }
   return sections;

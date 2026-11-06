@@ -4736,5 +4736,76 @@
       "text_color"
     ],
     "text": "## 独特礼物背景色\n\n描述独特礼物背景的颜色配置。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `center_color` | `Integer` | 背景中心的颜色，以 RGB 格式表示。 |\n| `edge_color` | `Integer` | 背景边缘的颜色，以 RGB 格式表示。 |\n| `symbol_color` | `Integer` | 应用于图案符号的颜色，以 RGB 格式表示。 |\n| `text_color` | `Integer` | 背景文字的颜色，以 RGB 格式表示。 |"
+  },
+  "UniqueGiftBackdrop": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "backdrop of a unique gift",
+      "rarity_per_mille"
+    ],
+    "text": "## 独特礼物背景\n\n描述独特礼物的背景。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `name` | `String` | 背景的名称。 |\n| `colors` | [`UniqueGiftBackdropColors`](#uniquegiftbackdropcolors) | 背景的颜色配置。 |\n| `rarity_per_mille` | `Integer` | 每 **1000 件升级的礼物**中，获得该背景的独特礼物数量。 |\n"
+  },
+  "UniqueGiftColors": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "light_theme_main_color",
+      "light_theme_other_colors",
+      "dark_theme_main_color",
+      "dark_theme_other_colors"
+    ],
+    "text": "## 独特礼物配色方案\n\n包含基于独特礼物的配色方案，可用于用户名称、消息回复及链接预览。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `model_custom_emoji_id` | `String` | 独特礼物模型的自定义 Emoji 标识符。 |\n| `symbol_custom_emoji_id` | `String` | 独特礼物图案符号的自定义 Emoji 标识符。 |\n| `light_theme_main_color` | `Integer` | 浅色主题使用的主颜色，采用 RGB 格式。 |\n| `light_theme_other_colors` | Array of [`Integer`](#integer) | 浅色主题使用的 **1–3 种**辅助颜色，均采用 RGB 格式。 |\n| `dark_theme_main_color` | `Integer` | 深色主题使用的主颜色，采用 RGB 格式。 |\n| `dark_theme_other_colors` | Array of [`Integer`](#integer) | 深色主题使用的 **1–3 种**辅助颜色，均采用 RGB 格式。 |\n"
+  },
+  "UniqueGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "gift_id",
+      "is_from_blockchain",
+      "publisher_chat"
+    ],
+    "text": "## 独特礼物\n\n描述由普通礼物升级而成的独特礼物。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `gift_id` | `String` | 升级前的普通礼物标识符。 |\n| `base_name` | `String` | 升级前普通礼物的易读名称。 |\n| `name` | `String` | 礼物的唯一名称，可以用于 `https://t.me/nft/...` 链接及故事区域。 |\n| `number` | `Integer` | 在从同一种普通礼物升级而来的礼物中，这件升级礼物的唯一编号。 |\n| `model` | [`UniqueGiftModel`](#uniquegiftmodel) | 礼物的模型。 |\n| `symbol` | [`UniqueGiftSymbol`](#uniquegiftsymbol) | 礼物的图案符号。 |\n| `backdrop` | [`UniqueGiftBackdrop`](#uniquegiftbackdrop) | 礼物的背景。 |\n| `is_premium` | `True` | 可选。若原始普通礼物仅允许 Telegram Premium 订阅用户购买，则为 `True`。 |\n| `is_burned` | `True` | 可选。若该礼物已被用于合成另一件礼物、因而不再可用，则为 `True`。 |\n| `is_from_blockchain` | `True` | 可选。若该礼物从 TON 区块链分配而来，不能在 Telegram 内转售或转让，则为 `True`。 |\n| `colors` | [`UniqueGiftColors`](#uniquegiftcolors) | 可选。礼物所有者可用于聊天名称、消息回复和链接预览的配色方案；**仅针对企业账号的礼物及当前正在出售的礼物提供**。 |\n| `publisher_chat` | [`Chat`](#chat) | 可选。发布该礼物的聊天信息。 |\n"
+  },
+  "GiftInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "prepaid_upgrade_star_count",
+      "is_upgrade_separate",
+      "unique_gift_number"
+    ],
+    "text": "## 普通礼物服务消息\n\n描述普通礼物的发送或接收所产生的服务消息。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `gift` | [`Gift`](#gift) | 礼物的信息。 |\n| `owned_gift_id` | `String` | 可选。机器人所接收礼物的唯一标识符；**仅在代表企业账号收到礼物时提供**。 |\n| `convert_star_count` | `Integer` | 可选。收礼者将礼物兑换成 Telegram Stars 时可获得的 Stars 数量；如果无法兑换，则省略该字段。 |\n| `prepaid_upgrade_star_count` | `Integer` | 可选。为允许升级礼物而预先支付的 Telegram Stars 数量。 |\n| `is_upgrade_separate` | `True` | 可选。若礼物的升级服务是在礼物发送之后购买的，则为 `True`。 |\n| `can_be_upgraded` | `True` | 可选。若该礼物能够升级为独特礼物，则为 `True`。 |\n| `text` | `String` | 可选。附加到礼物上的消息文字。 |\n| `entities` | Array of [`MessageEntity`](#messageentity) | 可选。消息文字中的特殊实体。 |\n| `is_private` | `True` | 可选。若发送者与礼物文字只有接收者能够看到，则为 `True`；否则所有人都能看到。 |\n| `unique_gift_number` | `Integer` | 可选。为此礼物升级后预留的唯一编号，参见 `UniqueGift.number`。 |\n"
+  },
+  "UniqueGiftInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "last_resale_currency",
+      "last_resale_amount",
+      "next_transfer_date"
+    ],
+    "text": "## 独特礼物服务消息\n\n描述独特礼物的发送或接收所产生的服务消息。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `gift` | [`UniqueGift`](#uniquegift) | 独特礼物的信息。 |\n| `origin` | `String` | 礼物的来源。目前可为 `upgrade`（从普通礼物升级）、`transfer`（从其他用户或频道转让）、`resale`（向其他用户购买）、`gifted_upgrade`（礼物发送后另行购买升级服务），或 `offer`（通过礼物购买报价买入或卖出）。 |\n| `text` | `String` | 可选。附加到礼物上的消息文字。 |\n| `entities` | Array of [`MessageEntity`](#messageentity) | 可选。消息文字中的特殊实体。 |\n| `is_private` | `True` | 可选。若发送者及礼物文字仅对礼物接收者可见，则为 `True`；否则所有人都能看到。 |\n| `last_resale_currency` | `String` | 可选。向其他用户购买礼物时所用的支付货币。目前为 `XTR`（Telegram Stars）或 `TON`（TON grams）。 |\n| `last_resale_amount` | `Integer` | 可选。向其他用户购买礼物时支付的金额，单位分别为 **Telegram Stars** 或 **nanograms（10⁻⁹ TON）**，与 `last_resale_currency` 对应。 |\n| `owned_gift_id` | `String` | 可选。机器人所接收礼物的唯一标识符；**仅在代表企业账号收到礼物时提供**。 |\n| `transfer_star_count` | `Integer` | 可选。转让礼物所需支付的 Telegram Stars 数量；如果机器人不能转让该礼物，则省略此字段。 |\n| `next_transfer_date` | `Integer` | 可选。允许转让礼物的时刻，使用 Unix 时间戳。如果时间已过去，则礼物目前即可转让。 |\n"
+  },
+  "OwnedGift": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "OwnedGiftRegular",
+      "OwnedGiftUnique"
+    ],
+    "text": "## 已拥有的礼物\n\n描述用户或聊天收到且目前拥有的礼物。当前可以是以下两种类型之一：\n\n- [`OwnedGiftRegular`](#ownedgiftregular)：普通礼物。\n- [`OwnedGiftUnique`](#ownedgiftunique)：独特礼物。\n"
+  },
+  "OwnedGiftRegular": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "owned_gift_id",
+      "is_upgrade_separate",
+      "unique_gift_number"
+    ],
+    "text": "## 已拥有的普通礼物\n\n描述用户或聊天收到且拥有的普通礼物。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 礼物类型，始终为 `regular`。 |\n| `gift` | [`Gift`](#gift) | 普通礼物信息。 |\n| `owned_gift_id` | `String` | 可选。机器人所识别的礼物唯一标识符；**仅用于代表企业账号收到的礼物**。 |\n| `sender_user` | [`User`](#user) | 可选。如果已知发送者且发送者为用户，则为该用户的信息。 |\n| `send_date` | `Integer` | 礼物发送日期，采用 Unix 时间戳。 |\n| `text` | `String` | 可选。礼物附带的消息文字。 |\n| `entities` | Array of [`MessageEntity`](#messageentity) | 可选。文字中的特殊实体列表。 |\n| `is_private` | `True` | 可选。若发送者和礼物文字仅对礼物接收者可见，则为 `True`；否则所有人都能看到。 |\n| `is_saved` | `True` | 可选。若礼物显示在账号的个人资料页面上，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `can_be_upgraded` | `True` | 可选。若礼物可升级为独特礼物，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `was_refunded` | `True` | 可选。若礼物已退款、因而不再可用，则为 `True`。 |\n| `convert_star_count` | `Integer` | 可选。收礼者可以不收下礼物、改为领取的 Telegram Stars 数量；如果不能兑换为 Stars，则省略。**仅适用于代表企业账号收到的礼物**。 |\n| `prepaid_upgrade_star_count` | `Integer` | 可选。为允许礼物升级而支付的 Telegram Stars 数量。 |\n| `is_upgrade_separate` | `True` | 可选。若礼物升级服务在礼物发送后另行购买，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `unique_gift_number` | `Integer` | 可选。该礼物升级后预留的独特礼物编号，参见 `UniqueGift.number`。 |\n"
+  },
+  "OwnedGiftUnique": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_be_transferred",
+      "transfer_star_count",
+      "next_transfer_date"
+    ],
+    "text": "## 已拥有的独特礼物\n\n描述用户或聊天收到且拥有的独特礼物。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 礼物类型，始终为 `unique`。 |\n| `gift` | [`UniqueGift`](#uniquegift) | 独特礼物信息。 |\n| `owned_gift_id` | `String` | 可选。机器人所识别的礼物唯一标识符；**仅用于代表企业账号收到的礼物**。 |\n| `sender_user` | [`User`](#user) | 可选。如果发送者已知且为用户，则为该用户的信息。 |\n| `send_date` | `Integer` | 礼物发送日期，采用 Unix 时间戳。 |\n| `is_saved` | `True` | 可选。若礼物显示在账号的个人资料页面上，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `can_be_transferred` | `True` | 可选。若礼物可以转移给另一名所有者，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `transfer_star_count` | `Integer` | 可选。转让该礼物所需支付的 Telegram Stars 数量；若机器人无法转让该礼物，则省略。 |\n| `next_transfer_date` | `Integer` | 可选。可转让该礼物的时间，采用 Unix 时间戳；若该时间已过去，表示当前即可转让。 |\n"
   }
 }

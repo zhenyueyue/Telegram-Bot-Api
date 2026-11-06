@@ -127,10 +127,12 @@ async function main(){
  for(const s of sections){
    const note=notes[s.title];if(note){s.translation={from:'curated',text:note,originalHash:s.hash};usedNotes.add(s.title)}
  }
- let version=index.match(/Bot\\s*API\\s*(\\d+\\.\\d+)/i)?.[1]||'未知';
+ let version=index.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';
  if(version==='未知'){
-   try {const changelog=await fetchMarkdown('/bots/api-changelog.md'); version=changelog.match(/Bot\\s*API\\s*(\\d+\\.\\d+)/i)?.[1]||'未知';}
-   catch(e){console.warn('Version lookup unavailable:',e.message)}
+   try {
+     const response=await fetch('https://core.telegram.org/bots/api-changelog',{signal:AbortSignal.timeout(30000)});
+     if(response.ok){const page=await response.text();version=page.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';}
+   }catch(e){console.warn('Version lookup unavailable:',e.message)}
  }
  const doc={source:baseUrl+rootPath,demo:false,syncTime:new Date().toISOString(),version,sourceHash:digest(index+typesIndex+files.length),sections};
  fs.mkdirSync(path.join(dist,'data'),{recursive:true});

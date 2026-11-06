@@ -3257,5 +3257,104 @@
       "at most 52 significant bits"
     ],
     "text": "此对象表示一条语音消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `duration` | Integer | 发送者定义的音频时长，单位为秒。 |\n| `mime_type` | String | 可选。文件的 MIME 类型。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。该数值可能大于 (2^{31})，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用有符号 64 位整数或双精度浮点数存储。 |"
+  },
+  "PaidMediaInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the paid media added to a message.",
+      "The number of Telegram Stars that must be paid to buy access to the media",
+      "Information about the paid media"
+    ],
+    "text": "此对象描述添加到消息中的付费媒体。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `star_count` | Integer | 用户必须支付以购买媒体访问权限的 Telegram Stars 数量。 |\n| `paid_media` | Array of [PaidMedia](#paidmedia) | 付费媒体的信息。 |"
+  },
+  "PaidMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes paid media. Currently, it can be one of",
+      "PaidMediaLivePhoto",
+      "PaidMediaPhoto",
+      "PaidMediaPreview",
+      "PaidMediaVideo"
+    ],
+    "text": "此对象描述付费媒体。目前，它可以是以下类型之一：\n\n- [PaidMediaLivePhoto](#paidmedialivephoto)\n- [PaidMediaPhoto](#paidmediaphoto)\n- [PaidMediaPreview](#paidmediapreview)\n- [PaidMediaVideo](#paidmediavideo)"
+  },
+  "PaidMediaLivePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media is a",
+      "live photo",
+      "Type of the paid media, always",
+      "The photo"
+    ],
+    "text": "付费媒体是一张[实况照片](#livephoto)。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 付费媒体的类型，始终为 `\"live_photo\"`。 |\n| `live_photo` | [LivePhoto](#livephoto) | 实况照片。 |"
+  },
+  "PaidMediaPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media is a photo.",
+      "Type of the paid media, always",
+      "The photo"
+    ],
+    "text": "付费媒体是一张照片。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 付费媒体的类型，始终为 `\"photo\"`。 |\n| `photo` | Array of [PhotoSize](#photosize) | 照片。 |"
+  },
+  "PaidMediaPreview": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media isn't available before the payment.",
+      "Type of the paid media, always",
+      "Media width as defined by the sender",
+      "Duration of the media in seconds as defined by the sender"
+    ],
+    "text": "在付款之前，无法访问该付费媒体。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 付费媒体的类型，始终为 `\"preview\"`。 |\n| `width` | Integer | 可选。发送者定义的媒体宽度。 |\n| `height` | Integer | 可选。发送者定义的媒体高度。 |\n| `duration` | Integer | 可选。媒体时长，单位为秒，由发送者定义。 |"
+  },
+  "PaidMediaVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media is a video.",
+      "Type of the paid media, always",
+      "The video"
+    ],
+    "text": "付费媒体是一段视频。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 付费媒体的类型，始终为 `\"video\"`。 |\n| `video` | [Video](#video) | 视频。 |"
+  },
+  "Contact": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a phone contact.",
+      "Contact's phone number",
+      "Contact's first name",
+      "Additional data about the contact in the form of a vCard"
+    ],
+    "text": "此对象表示一个电话联系人。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `phone_number` | String | 联系人的电话号码。 |\n| `first_name` | String | 联系人的名字。 |\n| `last_name` | String | 可选。联系人的姓氏。 |\n| `user_id` | Integer | 可选。该联系人在 Telegram 中的用户标识符。此数值可能超过 32 位，某些编程语言在处理时可能遇到困难或出现静默错误。但该数值最多只有 52 个有效二进制位，因此可以安全地使用 64 位整数或双精度浮点数存储此标识符。 |\n| `vcard` | String | 可选。以 vCard 格式表示的联系人附加信息。 |"
+  },
+  "Dice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents an animated emoji that displays a random value.",
+      "Emoji on which the dice throw animation is based",
+      "Value of the dice, 1-6",
+      "1-5",
+      "1-64"
+    ],
+    "text": "此对象表示一个会显示随机数值的动态表情符号。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `emoji` | String | 用于呈现掷骰子动画的表情符号。 |\n| `value` | Integer | 骰子的数值：对于基础表情符号为 🎲、🎯 和 🎳 时，取值范围为 1–6；对于 🏀 和 ⚽ 时，取值范围为 1–5；对于 🎰 时，取值范围为 1–64。 |"
+  },
+  "Link": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents an HTTP link.",
+      "URL of the link"
+    ],
+    "text": "此对象表示一个 HTTP 链接。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `url` | String | 链接的 URL。 |"
+  },
+  "PollMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "At most one of the optional fields can be present in any given object.",
+      "Media is an animation",
+      "currently, can't be received in a poll option",
+      "The HTTP link attached to the poll option",
+      "Media is a sticker",
+      "currently, for poll options only"
+    ],
+    "text": "在同一个对象中，最多只能出现以下可选字段中的一个。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `animation` | [Animation](#animation) | 可选。媒体是一段动画，包含该动画的信息。 |\n| `audio` | [Audio](#audio) | 可选。媒体是一个音频文件，包含该文件的信息；目前无法在投票选项中接收此类型。 |\n| `document` | [Document](#document) | 可选。媒体是一个普通文件，包含该文件的信息；目前无法在投票选项中接收此类型。 |\n| `link` | [Link](#link) | 可选。附加到投票选项的 HTTP 链接。 |\n| `live_photo` | [LivePhoto](#livephoto) | 可选。媒体是一张实况照片，包含该实况照片的信息。 |\n| `location` | [Location](#location) | 可选。媒体是一个共享位置，包含该位置的信息。 |\n| `photo` | Array of [PhotoSize](#photosize) | 可选。媒体是一张照片，包含该照片的可用尺寸。 |\n| `sticker` | [Sticker](#sticker) | 可选。媒体是一个贴纸，包含该贴纸的信息；目前仅适用于投票选项。 |\n| `venue` | [Venue](#venue) | 可选。媒体是一个地点，包含该地点的信息。 |\n| `video` | [Video](#video) | 可选。媒体是一段视频，包含该视频的信息。 |"
   }
 }

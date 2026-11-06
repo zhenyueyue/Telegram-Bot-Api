@@ -4452,5 +4452,83 @@
       "The new owner of the chat"
     ],
     "text": "此对象描述一条服务消息，表示聊天的所有权已发生变更。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `new_owner` | [User](#user) | 聊天的新所有者。 |"
+  },
+  "UserChatBoosts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a list of boosts added to a chat by a user.",
+      "The list of boosts added to the chat by the user"
+    ],
+    "text": "此对象表示某个用户为聊天提供的加速列表。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `boosts` | Array of [ChatBoost](#chatboost) | 该用户为该聊天提供的加速列表。 |"
+  },
+  "SentWebAppMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes an inline message sent by a",
+      "Identifier of the sent inline message",
+      "attached to the message"
+    ],
+    "text": "此对象描述 Web App 代表用户发送的一条内联消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `inline_message_id` | String | 可选。已发送内联消息的标识符。只有该消息附带[内联键盘](#inlinekeyboardmarkup)时，此字段才可用。 |"
+  },
+  "PreparedInlineMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes an inline message to be sent by a user of a Mini App.",
+      "Unique identifier of the prepared message",
+      "Expired prepared messages can no longer be used"
+    ],
+    "text": "此对象描述一条由 Mini App 用户准备发送的内联消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | String | 已准备消息的唯一标识符。 |\n| `expiration_date` | Integer | 已准备消息的过期日期，使用 Unix 时间表示。消息过期后便不能再使用。 |"
+  },
+  "PreparedKeyboardButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a keyboard button to be used by a user of a Mini App.",
+      "Unique identifier of the keyboard button"
+    ],
+    "text": "此对象描述一个供 Mini App 用户使用的键盘按钮。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | String | 此键盘按钮的唯一标识符。 |"
+  },
+  "InputMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the content of a media message to be sent.",
+      "InputMediaAnimation",
+      "InputMediaAudio",
+      "InputMediaDocument",
+      "InputMediaLivePhoto",
+      "InputMediaPhoto",
+      "InputMediaVideo"
+    ],
+    "text": "此对象表示准备发送的媒体消息内容。它应当是以下类型之一：\n\n- [InputMediaAnimation](#inputmediaanimation)：动画媒体。\n- [InputMediaAudio](#inputmediaaudio)：音乐音频。\n- [InputMediaDocument](#inputmediadocument)：通用文件。\n- [InputMediaLivePhoto](#inputmedialivephoto)：动态照片。\n- [InputMediaPhoto](#inputmediaphoto)：照片。\n- [InputMediaVideo](#inputmediavideo)：视频。"
+  },
+  "InputMediaAnimation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents an animation file (GIF or H.264/MPEG-4 AVC video without sound) to be sent.",
+      "Thumbnail of the file sent",
+      "0-1024 characters after entities parsing",
+      "Animation duration in seconds"
+    ],
+    "text": "此对象表示准备发送的动画文件，可以是 GIF，也可以是不含声音的 H.264/MPEG-4 AVC 视频。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 媒体类型，必须为 `\"animation\"`。 |\n| `media` | String | 要发送的文件。发送文件可使用 Telegram 服务器上已有文件的 `file_id`（推荐）、可供 Telegram 从互联网获取文件的 HTTP URL，或使用 `multipart/form-data` 上传新文件时的 `attach://<file_attach_name>` 引用（文件须以 `<file_attach_name>` 为表单字段名）。详情参阅[发送文件](https://core.telegram.org/bots/api#sending-files)。 |\n| `thumbnail` | String | 可选。发送文件的缩略图。如果服务端支持自动生成缩略图，可以忽略该字段。缩略图必须采用 JPEG 格式，文件大小小于 200 kB，宽度和高度均不得超过 320 像素。仅当主文件通过 `multipart/form-data` 上传时有效，否则忽略。缩略图不能重复使用，只能以新文件形式上传；上传后可以使用 `attach://<file_attach_name>` 引用，对应字段名为 `<file_attach_name>`。 |\n| `caption` | String | 可选。要发送的动画说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。解析动画说明文字中实体时使用的模式。详见[文本格式选项](#formatting-options)。 |\n| `caption_entities` | Array of [MessageEntity](#messageentity) | 可选。说明文字中的特殊实体列表，可用于代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。传入 `True` 表示说明文字必须显示在媒体上方。 |\n| `width` | Integer | 可选。动画的宽度。 |\n| `height` | Integer | 可选。动画的高度。 |\n| `duration` | Integer | 可选。动画时长，单位为秒。 |\n| `has_spoiler` | Boolean | 可选。传入 `True` 表示动画需要由剧透遮罩动画覆盖。 |"
+  },
+  "InputMediaAudio": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents an audio file to be treated as music to be sent.",
+      "Thumbnail of the file sent",
+      "0-1024 characters after entities parsing",
+      "Performer of the audio",
+      "Title of the audio"
+    ],
+    "text": "此对象表示准备以音乐形式发送的音频文件。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 媒体类型，必须为 `\"audio\"`。 |\n| `media` | String | 要发送的文件。发送文件可使用 Telegram 服务器上已有文件的 `file_id`（推荐）、可供 Telegram 从互联网获取文件的 HTTP URL，或使用 `multipart/form-data` 上传新文件时的 `attach://<file_attach_name>` 引用（文件须以 `<file_attach_name>` 为表单字段名）。详情参阅[发送文件](https://core.telegram.org/bots/api#sending-files)。 |\n| `thumbnail` | String | 可选。发送文件的缩略图。如果服务端支持自动生成缩略图，可以忽略该字段。缩略图必须采用 JPEG 格式，文件大小小于 200 kB，宽度和高度均不得超过 320 像素。仅当主文件通过 `multipart/form-data` 上传时有效，否则忽略。缩略图不能重复使用，只能以新文件形式上传；上传后可以使用 `attach://<file_attach_name>` 引用，对应字段名为 `<file_attach_name>`。 |\n| `caption` | String | 可选。音频说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。解析音频说明文字中实体时使用的模式。详见[文本格式选项](#formatting-options)。 |\n| `caption_entities` | Array of [MessageEntity](#messageentity) | 可选。说明文字中的特殊实体列表，可用于代替 `parse_mode`。 |\n| `duration` | Integer | 可选。音频时长，单位为秒。 |\n| `performer` | String | 可选。音频的表演者。 |\n| `title` | String | 可选。音频的标题。 |"
+  },
+  "InputMediaDocument": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a general file to be sent.",
+      "Thumbnail of the file sent",
+      "0-1024 characters after entities parsing",
+      "Disables automatic server-side content type detection"
+    ],
+    "text": "此对象表示准备发送的通用文件。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 媒体类型，必须为 `\"document\"`。 |\n| `media` | String | 要发送的文件。发送文件可使用 Telegram 服务器上已有文件的 `file_id`（推荐）、可供 Telegram 从互联网获取文件的 HTTP URL，或使用 `multipart/form-data` 上传新文件时的 `attach://<file_attach_name>` 引用（文件须以 `<file_attach_name>` 为表单字段名）。详情参阅[发送文件](https://core.telegram.org/bots/api#sending-files)。 |\n| `thumbnail` | String | 可选。发送文件的缩略图。如果服务端支持自动生成缩略图，可以忽略该字段。缩略图必须采用 JPEG 格式，文件大小小于 200 kB，宽度和高度均不得超过 320 像素。仅当主文件通过 `multipart/form-data` 上传时有效，否则忽略。缩略图不能重复使用，只能以新文件形式上传；上传后可以使用 `attach://<file_attach_name>` 引用，对应字段名为 `<file_attach_name>`。 |\n| `caption` | String | 可选。文件说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。解析文件说明文字中实体时使用的模式。详见[文本格式选项](#formatting-options)。 |\n| `caption_entities` | Array of [MessageEntity](#messageentity) | 可选。说明文字中的特殊实体列表，可用于代替 `parse_mode`。 |\n| `disable_content_type_detection` | Boolean | 可选。禁用服务器对通过 `multipart/form-data` 上传的文件自动检测内容类型。如果文件作为相册（媒体组）的一部分发送，此值始终为 `True`。 |"
   }
 }

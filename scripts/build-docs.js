@@ -52,10 +52,33 @@ function guideSections(md){
   }
   return sections;
 }
+// Telegram's split Markdown currently uses a one-cell underline even for
+// multi-column parameter tables, e.g. "|Parameter|Type|Required|Description|"
+// followed by "|-----------|". Repair this upstream source variant so all
+// official GFM tables render normally instead of leaking raw pipe syntax.
+function repairTelegramTables(markdown){
+ const lines=markdown.split('\n');
+ for(let i=1;i<lines.length-1;i++){
+   const separator=lines[i].trim();
+   if(!/^\|\s*:?-{3,}:?\s*\|$/.test(separator))continue;
+   const heading=lines[i-1].trim();
+   const row=lines[i+1].trim();
+   if(!heading.startsWith('|')||!heading.endsWith('|')||!row.startsWith('|')||!row.endsWith('|'))continue;
+   const count=line=>line.slice(1,-1).split('|').length;
+   const columns=count(heading);
+   if(columns<2||count(row)!==columns)continue;
+   lines[i]='| '+Array(columns).fill('---').join(' | ')+' |';
+ }
+ return lines.join('\n');
+}
 function normalizeBody(md,title){
   let result=md.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').trim();
   const l=result.split('\n');
   if(l.length && /^#{1,6}\s+/.test(l[0]) && clean(l[0].replace(/^#{1,6}\s+/,''))===title){l.shift();result=l.join('\n').trim();}
+  // The split Markdown includes a source-navigation preamble not present in
+  // the official reader. Keep the body content without that extra banner.
+  result=result.replace(/^>\s*Part of the \[Telegram Bot API\]\([^\n]+\n*/i,'');
+  result=repairTelegramTables(result);
   // GitHub Pages uses a hash router. Redirect inter-reference Markdown links to it.
   return result.replace(/\]\(\/bots\/api\/(?:methods|types)\/([a-z0-9_-]+)\.md(?:#[^)]*)?\)/gi,(_,name)=>`](#${name.toLowerCase()})`);
 }
@@ -160,4 +183,4 @@ async function main(){
  console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese full ${fullCount}; summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
 }
 if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1});
-module.exports={markdownLinks,headings,guideSections,normalizeBody,kindOf};
+module.exports={markdownLinks,headings,guideSections,normalizeBody,repairTelegramTables,kindOf};

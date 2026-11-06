@@ -3359,94 +3359,56 @@
   "InputPollMedia": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object represents the content of a poll description or a quiz explanation to be sent.",
-      "InputMediaAnimation",
-      "InputMediaAudio",
-      "InputMediaDocument",
-      "InputMediaLivePhoto",
-      "InputMediaLocation",
-      "InputMediaPhoto",
-      "InputMediaVenue",
-      "InputMediaVideo"
+      "This object represents the content of a poll description or a quiz explanation to be sent."
     ],
     "text": "此对象表示要发送的投票说明或测验解释的媒体内容。它必须是以下类型之一：\n\n- `InputMediaAnimation`\n- `InputMediaAudio`\n- `InputMediaDocument`\n- `InputMediaLivePhoto`\n- `InputMediaLocation`\n- `InputMediaPhoto`\n- `InputMediaVenue`\n- `InputMediaVideo`"
   },
   "InputPollOptionMedia": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object represents the content of a poll option to be sent.",
-      "InputMediaAnimation",
-      "InputMediaLink",
-      "InputMediaLivePhoto",
-      "InputMediaLocation",
-      "InputMediaPhoto",
-      "InputMediaSticker",
-      "InputMediaVenue",
-      "InputMediaVideo"
+      "This object represents the content of a poll option to be sent."
     ],
     "text": "此对象表示要发送的投票选项的媒体内容。它必须是以下类型之一：\n\n- `InputMediaAnimation`\n- `InputMediaLink`\n- `InputMediaLivePhoto`\n- `InputMediaLocation`\n- `InputMediaPhoto`\n- `InputMediaSticker`\n- `InputMediaVenue`\n- `InputMediaVideo`"
   },
   "PollOption": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about one answer option in a poll.",
-      "Option text, 1-100 characters",
-      "Currently, only custom emoji entities are allowed in poll option texts",
-      "Number of users who voted for this option; may be 0 if unknown",
-      "omitted if the option existed in the original poll"
+      "This object contains information about one answer option in a poll."
     ],
     "text": "此对象包含投票中一个答案选项的信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `persistent_id` | String | 选项的唯一标识符；添加或删除选项时，该标识符保持不变。 |\n| `text` | String | 选项文本，长度为 1–100 个字符。 |\n| `text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在选项文本中的特殊实体。目前，投票选项文本中只允许使用自定义表情符号实体。 |\n| `media` | [PollMedia](#pollmedia) | 可选。添加到投票选项中的媒体。 |\n| `voter_count` | Integer | 选择此选项的用户数量；如果数量未知，则可能为 0。 |\n| `added_by_user` | [User](#user) | 可选。添加此选项的用户；如果该选项不是在投票创建后由用户添加的，则省略此字段。 |\n| `added_by_chat` | [Chat](#chat) | 可选。添加此选项的聊天；如果该选项不是在投票创建后由聊天添加的，则省略此字段。 |\n| `addition_date` | Integer | 可选。添加此选项的时间点（Unix 时间戳）；如果该选项已存在于原始投票中，则省略此字段。 |"
   },
   "InputPollOption": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about one answer option in a poll to be sent.",
-      "Option text, 1-100 characters",
-      "Currently, only custom emoji entities are allowed.",
-      "It can be specified instead of text_parse_mode."
+      "This object contains information about one answer option in a poll to be sent."
     ],
     "text": "此对象包含要发送的投票中一个答案选项的信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `text` | String | 选项文本，长度为 1–100 个字符。 |\n| `text_parse_mode` | String | 可选。用于解析文本中实体的模式。有关详细信息，请参阅文本格式选项。目前，只允许使用自定义表情符号实体。 |\n| `text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在投票选项文本中的特殊实体的 JSON 序列化列表。可以使用此字段代替 `text_parse_mode` 指定实体。 |\n| `media` | [InputPollOptionMedia](#inputpolloptionmedia) | 可选。添加到投票选项中的媒体。 |"
   },
   "PollAnswer": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object represents an answer of a user in a non-anonymous poll.",
-      "Unique poll identifier",
-      "The chat that changed the answer to the poll, if the voter is anonymous",
-      "The user that changed the answer, if the voter isn't anonymous",
-      "May be empty if the vote was retracted"
+      "This object represents an answer of a user in a non-anonymous poll."
     ],
     "text": "此对象表示用户在非匿名投票中的一次作答。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `poll_id` | String | 投票的唯一标识符。 |\n| `voter_chat` | [Chat](#chat) | 可选。如果投票者是匿名的，则表示更改投票答案的聊天。 |\n| `user` | [User](#user) | 可选。如果投票者不是匿名的，则表示更改投票答案的用户。 |\n| `option_ids` | Array of Integer | 所选答案选项的从 0 开始计数的标识符。如果投票已撤回，该数组可能为空。 |\n| `option_persistent_ids` | Array of String | 所选答案选项的持久化标识符。如果投票已撤回，该数组可能为空。 |"
   },
   "Poll": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object contains information about a poll.",
-      "Poll question, 1-300 characters",
-      "Currently, only custom emoji entities are allowed in poll questions",
-      "The country code “FT” is used for users with anonymous numbers.",
-      "Available only for polls in quiz mode which are closed or were sent (not forwarded) by the bot or to the private chat with the bot.",
-      "0-200 characters"
+      "This object contains information about a poll."
     ],
     "text": "此对象包含有关投票的信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | String | 投票的唯一标识符。 |\n| `question` | String | 投票问题，长度为 1–300 个字符。 |\n| `question_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在投票问题中的特殊实体。目前，投票问题中只允许使用自定义表情符号实体。 |\n| `options` | Array of [PollOption](#polloption) | 投票选项列表。 |\n| `total_voter_count` | Integer | 参与投票的用户总数。 |\n| `is_closed` | Boolean | 如果投票已关闭，则为 `True`。 |\n| `is_anonymous` | Boolean | 如果投票为匿名投票，则为 `True`。 |\n| `type` | String | 投票类型，目前可以是 `\"regular\"`（普通投票）或 `\"quiz\"`（测验）。 |\n| `allows_multiple_answers` | Boolean | 如果投票允许选择多个答案，则为 `True`。 |\n| `allows_revoting` | Boolean | 如果投票允许更改已选择的答案选项，则为 `True`。 |\n| `members_only` | Boolean | 如果投票仅允许在最初发送该投票的聊天中已成为成员超过 24 小时的用户参与，则为 `True`。 |\n| `country_codes` | Array of String | 可选。由两个字母组成的 ISO 3166-1 alpha-2 国家/地区代码列表，表示允许参与投票的用户所在国家/地区。如果未提供，则任何国家/地区的用户都可以参与。匿名号码用户使用国家/地区代码 `\"FT\"`。 |\n| `correct_option_ids` | Array of Integer | 可选。正确答案选项的从 0 开始计数的标识符数组。仅适用于测验模式下已关闭的投票，或由机器人发送（而非转发）的投票，或发送到与机器人私聊中的投票。 |\n| `explanation` | String | 可选。当用户选择错误答案，或点击测验式投票中的灯泡图标时显示的文本，长度为 0–200 个字符。 |\n| `explanation_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在解释文本中的特殊实体，例如用户名、URL、机器人命令等。 |\n| `explanation_media` | [PollMedia](#pollmedia) | 可选。添加到测验解释中的媒体。 |\n| `open_period` | Integer | 可选。投票创建后保持有效的时长，单位为秒。 |\n| `close_date` | Integer | 可选。投票将自动关闭的时间点（Unix 时间戳）。 |\n| `description` | String | 可选。投票说明；仅适用于 `Message` 对象中的投票。 |\n| `description_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在投票说明中的特殊实体，例如用户名、URL、机器人命令等。 |\n| `media` | [PollMedia](#pollmedia) | 可选。添加到投票说明中的媒体；仅适用于 `Message` 对象中的投票。 |"
   },
   "ChecklistTask": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Describes a task in a checklist.",
-      "Unique identifier of the task",
-      "Point in time (Unix timestamp) when the task was completed; 0 if the task wasn't completed"
+      "Describes a task in a checklist."
     ],
     "text": "此对象描述清单中的一项任务。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | Integer | 任务的唯一标识符。 |\n| `text` | String | 任务文本。 |\n| `text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在任务文本中的特殊实体。 |\n| `completed_by_user` | [User](#user) | 可选。完成此任务的用户；如果任务不是由用户完成的，则省略此字段。 |\n| `completed_by_chat` | [Chat](#chat) | 可选。完成此任务的聊天；如果任务不是由聊天完成的，则省略此字段。 |\n| `completion_date` | Integer | 任务完成的时间点（Unix 时间戳）；如果任务尚未完成，则为 `0`。 |"
   },
   "Checklist": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Describes a checklist.",
-      "Title of the checklist",
-      "List of checklist tasks",
-      "True, if users other than the creator of the list can add tasks",
-      "True, if users other than the creator of the list can mark tasks as done or not done"
+      "Describes a checklist."
     ],
     "text": "此对象描述一个清单。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `title` | String | 清单标题。 |\n| `title_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在清单标题中的特殊实体。 |\n| `tasks` | Array of [ChecklistTask](#checklisttask) | 清单中的任务列表。 |\n| `others_can_add_tasks` | True | 可选。如果清单创建者以外的用户可以添加任务，则为 `True`。 |\n| `others_can_mark_tasks_as_done` | True | 可选。如果清单创建者以外的用户可以将任务标记为已完成或未完成，则为 `True`。 |"
   }

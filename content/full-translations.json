@@ -851,8 +851,7 @@
   "copyMessage": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "paid media messages",
-      "correct_option_ids is known to the bot"
+      "is known to the bot"
     ],
     "text": "## 复制单条消息\n\n复制一条消息到其他聊天。与 `forwardMessage` 类似，但**复制后的消息不会附带指向原消息的链接**。服务消息、付费媒体、赠品、赠品中奖者消息和账单消息不能复制；测验投票只有在机器人知道 `correct_option_ids` 的值时才能复制。成功时返回新消息的 [`MessageId`](#messageid)。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题（消息线程）的唯一 ID；仅适用于论坛超级群组和启用了话题模式的机器人私聊。 |\n| `direct_messages_topic_id` | Integer | 否 | 目标频道私信话题的 ID。向频道私信聊天发送消息时，此参数必填。 |\n| `from_chat_id` | Integer or String | 是 | 原消息所在聊天的唯一 ID，或原聊天中目标机器人的用户名、超级群组或频道用户名（`@username`）。 |\n| `message_id` | Integer | 是 | 原聊天中的消息 ID。 |\n| `video_start_timestamp` | Integer | 否 | 复制视频时，为视频设置新的起始时间点。 |\n| `caption` | String | 否 | 媒体说明文字；解析实体后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 否 | 媒体说明文字的格式实体解析模式。 |\n| `caption_entities` | Array of MessageEntity | 否 | 媒体说明文字中的格式实体 JSON 数组，可代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 否 | 设为 `True` 时，将媒体说明文字显示在媒体上方。 |\n| `disable_notification` | Boolean | 否 | 静默发送：用户会收到通知，但不会播放提示音。 |\n| `protect_content` | Boolean | 否 | 保护复制后的消息内容，阻止转发和保存。 |\n| `allow_paid_broadcast` | Boolean | 否 | 设为 `True` 后可忽略普通广播速率限制，每秒最多发送 **1000 条消息**；每条成功发送的消息收费 **0.1 Telegram Stars**。 |\n| `message_effect_id` | String | 否 | 要附加到消息上的特效 ID；仅适用于复制到私聊。 |\n| `suggested_post_parameters` | SuggestedPostParameters | 否 | 频道私信聊天中的建议投稿参数，使用 JSON 序列化对象。如果复制的消息回复了另一条建议投稿，原投稿会被自动拒绝。 |\n| `reply_parameters` | ReplyParameters | 否 | 描述需要回复的消息及回复方式。 |\n| `reply_markup` | InlineKeyboardMarkup / ReplyKeyboardMarkup / ReplyKeyboardRemove / ForceReply | 否 | 额外的交互界面选项，使用 JSON 序列化对象。 |\n\n> 如果没有指定新的 `caption`，则保留原媒体说明文字。未提供新说明文字时，`show_caption_above_media` 会被忽略。\n"
   },

@@ -3565,5 +3565,81 @@
       "The color of the background fill in the RGB24 format"
     ],
     "text": "使用所选颜色填充背景。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景填充类型，始终为 `\"solid\"`。 |\n| `color` | Integer | 背景填充颜色，采用 RGB24 格式。 |"
+  },
+  "Payments": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Your bot can accept payments from Telegram users.",
+      "introduction to payments"
+    ],
+    "text": "你的机器人可以接受 Telegram 用户的付款。有关支付流程以及如何为机器人设置支付功能的详细信息，请参阅[支付简介](https://core.telegram.org/bots/payments)。"
+  },
+  "BackgroundFillGradient": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is a gradient fill.",
+      "rotation angle of the background fill in degrees; 0-359"
+    ],
+    "text": "背景使用渐变填充。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景填充类型，始终为 `\"gradient\"`。 |\n| `top_color` | Integer | 渐变顶部的颜色，采用 RGB24 格式。 |\n| `bottom_color` | Integer | 渐变底部的颜色，采用 RGB24 格式。 |\n| `rotation_angle` | Integer | 背景填充的顺时针旋转角度，单位为度；取值范围为 0–359。 |"
+  },
+  "BackgroundFillFreeformGradient": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is a freeform gradient that rotates after every message in the chat.",
+      "3 or 4 base colors",
+      "RGB24 format"
+    ],
+    "text": "背景使用自由形状渐变填充，并且每当聊天中发送一条消息后，渐变都会旋转。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景填充类型，始终为 `\"freeform_gradient\"`。 |\n| `colors` | Array of Integer | 用于生成自由形状渐变的 3 或 4 种基础颜色列表，采用 RGB24 格式。 |"
+  },
+  "BackgroundType": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the type of a background.",
+      "BackgroundTypeFill",
+      "BackgroundTypeWallpaper",
+      "BackgroundTypePattern",
+      "BackgroundTypeChatTheme"
+    ],
+    "text": "此对象描述背景的类型。目前可以是以下类型之一：\n\n- [BackgroundTypeFill](#backgroundtypefill)\n- [BackgroundTypeWallpaper](#backgroundtypewallpaper)\n- [BackgroundTypePattern](#backgroundtypepattern)\n- [BackgroundTypeChatTheme](#backgroundtypechattheme)"
+  },
+  "BackgroundTypeFill": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is automatically filled based on the selected colors.",
+      "Dimming of the background in dark themes, as a percentage; 0-100"
+    ],
+    "text": "背景会根据所选颜色自动填充。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景类型，始终为 `\"fill\"`。 |\n| `fill` | [BackgroundFill](#backgroundfill) | 背景填充方式。 |\n| `dark_theme_dimming` | Integer | 深色主题下背景的变暗程度，以百分比表示；取值范围为 0–100。 |"
+  },
+  "BackgroundTypeWallpaper": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is a wallpaper in the JPEG format.",
+      "is_blurred",
+      "is_moving",
+      "450x450 square",
+      "radius 12"
+    ],
+    "text": "背景是一张 JPEG 格式的壁纸。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景类型，始终为 `\"wallpaper\"`。 |\n| `document` | [Document](#document) | 包含壁纸的文件。 |\n| `dark_theme_dimming` | Integer | 深色主题下背景的变暗程度，以百分比表示；取值范围为 0–100。 |\n| `is_blurred` | True | 可选。若为 `True`，表示壁纸会先缩放以适配 450×450 的正方形区域，然后使用半径为 12 的模糊效果进行模糊处理。 |\n| `is_moving` | True | 可选。若为 `True`，表示设备倾斜时背景会轻微移动。 |"
+  },
+  "BackgroundTypePattern": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      ".PNG or .TGV",
+      "application/x-tgwallpattern",
+      "intensity",
+      "is_inverted",
+      "is_moving",
+      "0-100"
+    ],
+    "text": "背景是一种 `.PNG` 或 `.TGV` 格式的图案。`.TGV` 是经过 gzip 压缩的 SVG 子集，其 MIME 类型为 `\"application/x-tgwallpattern\"`。该图案会与用户选择的背景填充方式组合使用。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景类型，始终为 `\"pattern\"`。 |\n| `document` | [Document](#document) | 包含图案的文件。 |\n| `fill` | [BackgroundFill](#backgroundfill) | 与图案组合使用的背景填充方式。 |\n| `intensity` | Integer | 图案显示在填充背景上方时的强度；取值范围为 0–100。 |\n| `is_inverted` | True | 可选。若为 `True`，表示背景填充仅应用于图案本身；在这种情况下，所有其他像素均为黑色。此设置仅适用于深色主题。 |\n| `is_moving` | True | 可选。若为 `True`，表示设备倾斜时背景会轻微移动。 |"
+  },
+  "BackgroundTypeChatTheme": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is taken directly from a built-in chat theme.",
+      "theme_name",
+      "usually an emoji"
+    ],
+    "text": "背景直接取自内置聊天主题。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景类型，始终为 `\"chat_theme\"`。 |\n| `theme_name` | String | 聊天主题的名称，通常是一个 emoji。 |"
   }
 }

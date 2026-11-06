@@ -3076,7 +3076,7 @@
   "Paid Broadcasts": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "By default, all bots are able to broadcast up to 30 messages per second",
+      "By default, all bots are able to broadcast up to",
       "Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message",
       "Bots with increased limits are only charged for messages that are broadcasted successfully."
     ],

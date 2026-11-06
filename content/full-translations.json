@@ -4530,5 +4530,69 @@
       "Disables automatic server-side content type detection"
     ],
     "text": "此对象表示准备发送的通用文件。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 媒体类型，必须为 `\"document\"`。 |\n| `media` | String | 要发送的文件。发送文件可使用 Telegram 服务器上已有文件的 `file_id`（推荐）、可供 Telegram 从互联网获取文件的 HTTP URL，或使用 `multipart/form-data` 上传新文件时的 `attach://<file_attach_name>` 引用（文件须以 `<file_attach_name>` 为表单字段名）。详情参阅[发送文件](https://core.telegram.org/bots/api#sending-files)。 |\n| `thumbnail` | String | 可选。发送文件的缩略图。如果服务端支持自动生成缩略图，可以忽略该字段。缩略图必须采用 JPEG 格式，文件大小小于 200 kB，宽度和高度均不得超过 320 像素。仅当主文件通过 `multipart/form-data` 上传时有效，否则忽略。缩略图不能重复使用，只能以新文件形式上传；上传后可以使用 `attach://<file_attach_name>` 引用，对应字段名为 `<file_attach_name>`。 |\n| `caption` | String | 可选。文件说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。解析文件说明文字中实体时使用的模式。详见[文本格式选项](#formatting-options)。 |\n| `caption_entities` | Array of [MessageEntity](#messageentity) | 可选。说明文字中的特殊实体列表，可用于代替 `parse_mode`。 |\n| `disable_content_type_detection` | Boolean | 可选。禁用服务器对通过 `multipart/form-data` 上传的文件自动检测内容类型。如果文件作为相册（媒体组）的一部分发送，此值始终为 `True`。 |"
+  },
+  "InputMediaLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents an HTTP link to be sent",
+      "HTTP URL of the link"
+    ],
+    "text": "## 要发送的 HTTP 链接\n\n表示要发送的 HTTP 链接。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `link`。 |\n| `url` | `String` | 链接的 HTTP URL。 |"
+  },
+  "InputMediaLivePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a live photo to be sent",
+      "Sending live photos by a URL is currently unsupported"
+    ],
+    "text": "## 要发送的实况照片\n\n表示要发送的实况照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `live_photo`。 |\n| `media` | `String` | 要发送的实况照片视频。推荐传入 Telegram 服务器上已有文件的 `file_id`；也可以使用 `attach://<file_attach_name>`，通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。**目前不支持通过 URL 发送实况照片。** |\n| `photo` | `String` | 要发送的对应静态照片。推荐传入 Telegram 服务器上已有文件的 `file_id`；也可以使用 `attach://<file_attach_name>`，通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。**目前不支持通过 URL 发送实况照片。** |\n| `caption` | `String` | 可选。待发送媒体的说明文字；解析实体后长度为 **0–1024 个字符**。 |\n| `parse_mode` | `String` | 可选。解析说明文字中实体的模式。详见[格式化选项](#formatting-options)。 |\n| `caption_entities` | `Array of MessageEntity` | 可选。说明文字中出现的特殊实体列表，可代替 `parse_mode` 指定。 |\n| `show_caption_above_media` | `Boolean` | 可选。传入 `True`，将说明文字显示在消息媒体上方。 |\n| `has_spoiler` | `Boolean` | 可选。传入 `True`，为该媒体添加剧透遮盖动画。 |"
+  },
+  "InputMediaLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a location to be sent",
+      "0-1500"
+    ],
+    "text": "## 要发送的地理位置\n\n表示要发送的地理位置。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `location`。 |\n| `latitude` | `Float` | 地理位置的纬度。 |\n| `longitude` | `Float` | 地理位置的经度。 |\n| `horizontal_accuracy` | `Float` | 可选。位置的不确定范围半径，单位为米；取值范围为 **0–1500**。 |"
+  },
+  "InputMediaPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a photo to be sent",
+      "has_spoiler"
+    ],
+    "text": "## 要发送的照片\n\n表示要发送的照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `photo`。 |\n| `media` | `String` | 要发送的照片文件。推荐传入 Telegram 服务器上已有文件的 `file_id`；也可以使用 HTTP URL 让 Telegram 从互联网获取文件，或使用 `attach://<file_attach_name>`，通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n| `caption` | `String` | 可选。待发送媒体的说明文字；解析实体后长度为 **0–1024 个字符**。 |\n| `parse_mode` | `String` | 可选。解析说明文字中实体的模式。详见[格式化选项](#formatting-options)。 |\n| `caption_entities` | `Array of MessageEntity` | 可选。说明文字中出现的特殊实体列表，可代替 `parse_mode` 指定。 |\n| `show_caption_above_media` | `Boolean` | 可选。传入 `True`，将说明文字显示在消息媒体上方。 |\n| `has_spoiler` | `Boolean` | 可选。传入 `True`，为该媒体添加剧透遮盖动画。 |"
+  },
+  "InputMediaSticker": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a sticker file to be sent",
+      "emoji"
+    ],
+    "text": "## 要发送的贴纸\n\n表示要发送的贴纸文件。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `sticker`。 |\n| `media` | `String` | 要发送的贴纸。推荐传入 Telegram 服务器上已有贴纸的 `file_id`；也可以传入 HTTP URL，让 Telegram 从互联网获取 **`.WEBP` 贴纸**；或者传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新的 **`.WEBP`、`.TGS` 或 `.WEBM` 贴纸**。详见[发送文件](#sending-files)。 |\n| `emoji` | `String` | 可选。与贴纸关联的表情符号；**仅适用于刚上传的贴纸**。 |"
+  },
+  "InputMediaVenue": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a venue to be sent",
+      "google_place_type"
+    ],
+    "text": "## 要发送的场所\n\n表示要发送的场所。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `venue`。 |\n| `latitude` | `Float` | 场所的纬度。 |\n| `longitude` | `Float` | 场所的经度。 |\n| `title` | `String` | 场所名称。 |\n| `address` | `String` | 场所地址。 |\n| `foursquare_id` | `String` | 可选。场所的 Foursquare 标识符。 |\n| `foursquare_type` | `String` | 可选。已知的 Foursquare 场所类型，例如 `arts_entertainment/default`、`arts_entertainment/aquarium` 或 `food/icecream`。 |\n| `google_place_id` | `String` | 可选。场所的 Google Places 标识符。 |\n| `google_place_type` | `String` | 可选。场所的 Google Places 类型，参见[支持的类型](https://developers.google.com/maps/documentation/places/web-service/place-types)。 |"
+  },
+  "InputMediaVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Represents a video to be sent",
+      "supports_streaming"
+    ],
+    "text": "## 要发送的视频\n\n表示要发送的视频。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `video`。 |\n| `media` | `String` | 要发送的视频文件。推荐传入 Telegram 服务器上已有文件的 `file_id`；也可以使用 HTTP URL 让 Telegram 从互联网获取文件，或使用 `attach://<file_attach_name>`，通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n| `thumbnail` | `String` | 可选。所发送文件的缩略图；如果服务器支持自动生成文件缩略图，可忽略。必须为 JPEG 格式，小于 **200 kB**，宽和高均不得超过 **320**。如果文件并非通过 `multipart/form-data` 上传，此字段会被忽略。缩略图**不能复用，只能作为新文件上传**；可传入 `attach://<file_attach_name>` 引用以该名称通过 `multipart/form-data` 上传的缩略图。详见[发送文件](#sending-files)。 |\n| `cover` | `String` | 可选。消息中视频的封面。推荐传入 Telegram 服务器上已有文件的 `file_id`；也可以使用 HTTP URL 让 Telegram 从互联网获取文件，或使用 `attach://<file_attach_name>`，通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n| `start_timestamp` | `Integer` | 可选。视频在消息中的起始时间戳。 |\n| `caption` | `String` | 可选。待发送媒体的说明文字；解析实体后长度为 **0–1024 个字符**。 |\n| `parse_mode` | `String` | 可选。解析说明文字中实体的模式。详见[格式化选项](#formatting-options)。 |\n| `caption_entities` | `Array of MessageEntity` | 可选。说明文字中出现的特殊实体列表，可代替 `parse_mode` 指定。 |\n| `show_caption_above_media` | `Boolean` | 可选。传入 `True`，将说明文字显示在消息媒体上方。 |\n| `width` | `Integer` | 可选。视频宽度。 |\n| `height` | `Integer` | 可选。视频高度。 |\n| `duration` | `Integer` | 可选。视频时长，单位为秒。 |\n| `supports_streaming` | `Boolean` | 可选。若上传的视频适合流式播放，传入 `True`。 |\n| `has_spoiler` | `Boolean` | 可选。传入 `True`，为该媒体添加剧透遮盖动画。 |"
+  },
+  "InputPaidMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "describes the paid media to be sent",
+      "InputPaidMediaLivePhoto"
+    ],
+    "text": "## 要发送的付费媒体\n\n此对象描述要发送的付费媒体。目前可以是以下类型之一：\n\n- [`InputPaidMediaLivePhoto`](#inputpaidmedialivephoto)\n- [`InputPaidMediaPhoto`](#inputpaidmediaphoto)\n- [`InputPaidMediaVideo`](#inputpaidmediavideo)"
   }
 }

@@ -3450,7 +3450,7 @@
       "Can't be a live location.",
       "Foursquare identifier of the venue",
       "Google Places identifier of the venue",
-      "supported_types"
+      "supported types"
     ],
     "text": "此对象表示一个场所。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `location` | [Location](#location) | 场所的位置。不能是实时位置。 |\n| `title` | String | 场所名称。 |\n| `address` | String | 场所地址。 |\n| `foursquare_id` | String | 可选。场所的 Foursquare 标识符。 |\n| `foursquare_type` | String | 可选。场所的 Foursquare 类型。例如：`\"arts_entertainment/default\"`、`\"arts_entertainment/aquarium\"` 或 `\"food/icecream\"`。 |\n| `google_place_id` | String | 可选。场所的 Google Places 标识符。 |\n| `google_place_type` | String | 可选。场所的 Google Places 类型。请参阅 [Google Places 支持的类型](https://developers.google.com/places/web-service/supported_types)。 |"
   },

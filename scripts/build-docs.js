@@ -127,6 +127,24 @@ async function main(){
  for(const s of sections){
    const note=notes[s.title];if(note){s.translation={from:'curated',text:note,originalHash:s.hash};usedNotes.add(s.title)}
  }
+ const fullTranslations=JSON.parse(fs.readFileSync(path.join(root,'content','full-translations.json'),'utf8'));
+ let fullCount=0;
+ for(const s of sections){
+   const entry=fullTranslations[s.title];
+   if(!entry)continue;
+   const source=s.body.replace(/\s+/g,' ').toLowerCase();
+   const missing=(entry.requiredSourceFragments||[]).filter(part=>!source.includes(part.toLowerCase()));
+   if(missing.length){
+     console.warn('Full translation not applied: official content changed:',s.title,missing);
+     continue;
+   }
+   if(!entry.text?.trim() || !/\|[^\n]+\|/.test(entry.text)){
+     throw new Error('Incomplete full translation structure: '+s.title);
+   }
+   s.translation={from:'full',text:entry.text.trim(),version:entry.version||null,originalHash:s.hash};
+   fullCount++;
+ }
+ console.log('Full translations matched source:',fullCount);
  let version=index.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';
  if(version==='未知'){
    try {
@@ -139,7 +157,7 @@ async function main(){
  fs.cpSync(path.join(root,'public'),dist,{recursive:true});
  fs.writeFileSync(path.join(dist,'data','docs.json'),JSON.stringify(doc));
  fs.writeFileSync(path.join(dist,'.nojekyll'),'');
- console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
+ console.log(`SUCCESS Bot API ${version}; sections ${sections.length}; Chinese full ${fullCount}; summaries ${usedNotes.size}/${Object.keys(notes).length}; output ${fs.statSync(path.join(dist,'data','docs.json')).size} bytes`);
 }
 if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1});
 module.exports={markdownLinks,headings,guideSections,normalizeBody,kindOf};

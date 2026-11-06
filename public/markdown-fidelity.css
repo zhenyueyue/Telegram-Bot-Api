@@ -1,0 +1,41 @@
+
+/* Faithful Markdown reading: preserve tables, code and structural hierarchy. */
+.markdown{line-height:1.85}
+.markdown h2,.markdown h3,.markdown h4{scroll-margin-top:24px;letter-spacing:-.2px}
+.markdown p,.markdown li{max-width:100%;overflow-wrap:anywhere}
+.markdown p{margin-bottom:1.05em}
+.markdown ul,.markdown ol{padding-left:1.5em;margin:12px 0 20px}
+.markdown ul li,.markdown ol li{margin:.35em 0}
+.markdown pre{position:relative;overflow:auto;max-width:100%;border-radius:10px}
+.markdown pre code{display:block;overflow:visible;white-space:pre}
+.markdown :not(pre)>code{font-size:.9em;border:1px solid #d9e7f2;padding:2px 5px;border-radius:4px;white-space:break-spaces;overflow-wrap:anywhere}
+.markdown blockquote{margin:19px 0;padding:13px 18px}
+.markdown-table-scroll{display:block;max-width:100%;overflow-x:auto;margin:22px 0 25px;border:1px solid #cedbe7;border-radius:10px;background:#fff;scrollbar-width:thin;scrollbar-color:#abc2d6 transparent}
+.markdown-table-scroll:focus-visible{outline:3px solid #a8d7fb;outline-offset:2px}
+.markdown-table-scroll table,.reader-columns.compare .markdown-table-scroll table{display:table;width:100%;min-width:485px;border-collapse:separate;border-spacing:0;margin:0;font-size:13.5px;line-height:1.65}
+.markdown-table-scroll th,.markdown-table-scroll td,.reader-columns.compare .markdown-table-scroll th,.reader-columns.compare .markdown-table-scroll td{border:0;border-bottom:1px solid #dce5ee;border-right:1px solid #e7edf3;padding:12px 14px;min-width:110px;vertical-align:top;text-align:left;white-space:normal}
+.markdown-table-scroll th:last-child,.markdown-table-scroll td:last-child{border-right:0;min-width:190px}
+.markdown-table-scroll tbody tr:last-child td{border-bottom:0}
+.markdown-table-scroll thead{background:#eaf2f9}
+.markdown-table-scroll thead th{font-size:13.2px;font-weight:650;color:#294963;white-space:nowrap}
+.markdown-table-scroll tbody tr:nth-child(even){background:#f8fbfe}
+.markdown-table-scroll tbody tr:nth-child(even) td{background:transparent}
+.markdown-table-scroll tbody td:first-child{font-family:var(--mono);font-size:13px;color:#0d5f98}
+.markdown-summary{font-size:14px}
+.summary-notice{border:1px solid #cfdfef;border-left:4px solid #3187c0;border-radius:7px;font-size:13.5px;line-height:1.75;background:#f1f7fd;color:#345976;padding:12px 15px}
+.summary-notice strong{color:#225780;font-weight:650}
+.original-reference{margin-top:27px;padding-top:18px;border-top:1px solid #d6e2ec}
+.original-reference>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:12px 14px;margin-bottom:18px;border:1px solid #ccdae7;border-radius:8px;background:#f6f9fc;color:#294861;font-size:13.5px;font-weight:650}
+.original-reference>summary::before{content:"▾";color:#146fae}
+.original-reference:not([open])>summary::before{content:"▸"}
+.original-reference>summary::-webkit-details-marker{display:none}
+.original-reference[open]>summary{background:#eaf3fb;border-color:#b9d2e5}
+.original-reference>.markdown{padding:2px 0 0}
+.summary-panel .markdown-summary{padding-bottom:2px}
+.reader-columns.compare{gap:20px}
+@media(max-width:780px){
+ .markdown-table-scroll{margin-inline:0}
+ .markdown-table-scroll table,.reader-columns.compare .markdown-table-scroll table{min-width:470px}
+ .markdown-table-scroll th,.markdown-table-scroll td{padding:11px 12px}
+ .original-reference>summary{font-size:13px}
+}

@@ -1,0 +1,13 @@
+{
+  "getFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "basic information about a file",
+      "up to 20MB in size",
+      "for at least 1 hour",
+      "file_id",
+      "MIME type"
+    ],
+    "text": "## 获取文件信息并准备下载\n\n使用此方法获取文件的基本信息，并为下载做好准备。目前，通过 Telegram 托管的 Bot API，机器人最多可下载 **20 MB** 的文件。\n\n调用成功时，将返回一个 [`File`](#file) 对象。随后可以通过以下链接下载文件：\n\n`https://api.telegram.org/file/bot<token>/<file_path>`\n\n其中，`<file_path>` 取自 API 响应中的 `file_path` 字段。Telegram 保证该下载链接**至少在 1 小时内有效**；链接过期后，可以再次调用 `getFile` 获取新的下载链接。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `file_id` | `String` | 是（Yes） | 需要获取其文件信息的文件标识符。 |\n\n**注意：** 此方法不一定会保留文件的原始名称和 MIME 类型。因此，当收到 `File` 对象时，如果能够取得文件名和 MIME 类型，应及时保存。\n"
+  }
+}

@@ -97,7 +97,8 @@ function renderMeta() {
   document.querySelector('.status-dot').classList.toggle('demo', !!S.docs.demo);
   $('lastSyncText').textContent = asTime(S.docs.syncTime);
   const completed = S.docs.sections.filter(s => !!s.translation).length;
-  $('translationCount').textContent = `${completed} / ${S.docs.sections.length} 章节有中文要点（并非完整翻译）`;
+  const full = S.docs.sections.filter(s => s.translation?.from==='full').length;
+  $('translationCount').textContent = `${full} 章节有全文译文，${completed-full} 章节有中文摘要，合计 ${S.docs.sections.length} 章`;
   // GitHub Pages is read-only; no API keys are needed or stored.
 }
 function groupsForNav() {
@@ -199,37 +200,94 @@ function overview() {
     <p class="footer-tip">小技巧：按 <code>/</code> 或 <code>Ctrl + K</code> 可快速搜索文档。已发布的中文要点和官方原文可随时打开；中文未覆盖的部分保留英文。</p>`;
 }
 function renderMd(md, section) {
+  if (!window.marked || typeof marked.parse !== 'function') {
+    return '<pre class="markdown-error">Markdown 渲染器未加载。请刷新页面重试。</pre>';
+  }
   const renderer = new marked.Renderer();
-  // Avoid executing HTML returned by a translation model or supplied in a Markdown source.
-  renderer.html = code => esc(code);
-  let markup = marked.parse(md || '', { gfm:true, breaks:false, headerIds:false, mangle:false, renderer });
-  const temp = document.createElement('div'); temp.innerHTML = markup;
+  // Treat raw HTML in external Markdown as visible text, not executable markup.
+  renderer.html = raw => esc(raw);
+  const markup = marked.parse(String(md || ''), {
+    gfm:true, breaks:false, headerIds:false, mangle:false, renderer
+  });
+  const temp = document.createElement('div');
+  temp.innerHTML = markup;
+  // Keep semantic table layout and put horizontal scrolling on a wrapper.
+  for (const table of temp.querySelectorAll('table')) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'markdown-table-scroll';
+    wrapper.setAttribute('role','region');
+    wrapper.setAttribute('aria-label','参数与字段表格（可横向滚动）');
+    wrapper.setAttribute('tabindex','0');
+    table.parentNode.insertBefore(wrapper,table);
+    wrapper.appendChild(table);
+  }
   for (const a of temp.querySelectorAll('a')) {
-    const href = a.getAttribute('href') || '';
-    if (/^(javascript|data|vbscript):/i.test(href)) { a.removeAttribute('href'); continue; }
+    let href = (a.getAttribute('href') || '').trim();
+    if (!href || /^(?:javascript|data|vbscript):/i.test(href)) {
+      a.removeAttribute('href');
+      continue;
+    }
     if (href.startsWith('#')) {
       const id = href.slice(1).toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff-]+/g,'-');
-      if (S.docs.sections.some(s => s.id === id)) a.setAttribute('data-go',id);
-      else a.setAttribute('href',`https://core.telegram.org/bots/api${href}`);
-    } else if (href.startsWith('/bots/api#') || href.startsWith('https://core.telegram.org/bots/api#')) {
-      const id = href.split('#').pop().toLowerCase();
-      if (S.docs.sections.some(s => s.id === id)) a.setAttribute('data-go',id);
+      if (S.docs.sections.some(s=>s.id===id)) {
+        a.setAttribute('data-go',id);
+        a.setAttribute('href','#'+id);
+      } else {
+        a.setAttribute('href','https://core.telegram.org/bots/api'+href);
+      }
+    } else if (href.startsWith('/bots/')) {
+      a.setAttribute('href','https://core.telegram.org'+href);
+    } else if (/^https?:\/\//i.test(href)) {
+      const target = href.match(/^https:\/\/core\.telegram\.org\/bots\/api#([a-z0-9-]+)/i);
+      const id = target?.[1]?.toLowerCase();
+      if (id && S.docs.sections.some(s=>s.id===id)) {
+        a.setAttribute('data-go',id);
+        a.setAttribute('href','#'+id);
+      }
+    } else if (!/^(?:mailto:|tg:)/i.test(href)) {
+      a.removeAttribute('href');
     }
-    a.setAttribute('target','_blank'); a.setAttribute('rel','noopener noreferrer');
+    if (a.dataset.go) {
+      a.removeAttribute('target');
+      a.removeAttribute('rel');
+    } else {
+      a.setAttribute('target','_blank');
+      a.setAttribute('rel','noopener noreferrer');
+    }
+  }
+  for (const img of temp.querySelectorAll('img')) {
+    const src = (img.getAttribute('src') || '').trim();
+    if (/^(?:javascript|data|vbscript):/i.test(src) || !src) {
+      img.remove();
+      continue;
+    }
+    if (src.startsWith('/')) img.setAttribute('src','https://core.telegram.org'+src);
+    img.setAttribute('loading','lazy');
+    img.setAttribute('decoding','async');
   }
   return temp.innerHTML;
 }
 function panel(s, language) {
   const cn = language === 'zh';
-  const data = cn ? s.translation : { text: s.body, from:'official' };
-  const title = cn ? '简体中文 · 重点解读' : 'English · Official';
-  const status = cn ? ({curated:'人工摘要 · 非全文', edited:'你的本地修订', preview:'示例'})[data?.from] || '暂无中文解读' : '官方原文';
+  const data = cn ? s.translation : {text:s.body,from:'official'};
+  const isFull = cn && data?.from === 'full';
+  const isSummary = cn && data && !isFull;
+  const title = cn ? (isFull ? '简体中文 · 完整译文' : '简体中文 · 要点摘要') : 'English · 官方原文';
+  const status = !cn ? '官方原文' : isFull ? '按原文结构翻译' : data?.from==='edited' ? '个人修订 · 未校验' : data ? '摘要 · 非全文' : '暂无中文译文';
+  const englishReference = '<details class="original-reference" open><summary>完整英文原文（含参数表及注意事项）</summary><div class="markdown">'
+    + renderMd(s.body,s) + '</div></details>';
   let body;
   if (cn && !data) {
-    body = `<div class="not-translated"><div class="placeholder-icon">${icon('book')}</div><h3>这个章节还没有中文解读</h3><p>官方英文原文已经完整收录。中文要点由人工编写，目前尚未覆盖此章节；不会显示未经校对的机器翻译。</p><button class="primary-btn" data-language="en">${icon('external')} 查看英文原文</button></div>`;
-
-  } else body = `${cn && data?.from==='curated' ? '<p class="summary-notice">本节为人工整理的中文重点说明，并非官方原文逐句翻译。具体参数、约束及返回值请切换英文核对。</p>' : ''}<div class="markdown">${renderMd(data?.text || '',s) || `<p>${cn ? '暂无解读':'本章节只有标题。'}</p>`}</div>`;
-  return `<section class="reader-panel"><header class="panel-header"><div class="panel-title"><span class="lang-dot ${cn?'':'en'}"></span>${title}</div><span class="panel-status">${esc(status)}</span></header><div class="panel-body">${body}</div></section>`;
+    body = '<div class="not-translated"><div class="placeholder-icon">'+icon('book')+'</div><h3>该章节尚未翻译为中文</h3><p>下方保留完整的官方英文原文，不会使用概括性摘要冒充全文翻译。</p></div>'
+      + (S.lang === 'zh' ? englishReference : '');
+  } else if (isSummary) {
+    body = '<p class="summary-notice"><strong>中文重点摘要，并非逐段翻译。</strong>当前中文内容只用于快速理解；原文的参数、限制和注意事项可能未全部包含。</p>'
+      + '<div class="markdown markdown-summary">'+renderMd(data.text,s)+'</div>'
+      + (S.lang === 'zh' ? englishReference : '');
+  } else {
+    body = '<div class="markdown">'+renderMd(data?.text || '',s)+'</div>';
+  }
+  return '<section class="reader-panel '+(isSummary ? 'summary-panel':'')+'"><header class="panel-header"><div class="panel-title"><span class="lang-dot '+(cn?'':'en')+'"></span>'+title+'</div><span class="panel-status">'+esc(status)+'</span></header><div class="panel-body">'+body+'</div></section>';
 }
 function article(s) {
   const index = S.docs.sections.indexOf(s);
@@ -237,11 +295,11 @@ function article(s) {
   const compare = S.lang === 'both';
   return `<div class="article-top"><div class="eyebrow">BOT API / ${kindEN(s.kind)}</div><span class="article-tag">${kindText(s.kind)}</span></div>
     <div class="article-head"><h1 class="${s.kind==='guide' ? 'guide-title' : ''}">${esc(s.title)}</h1><div class="article-subtitle">${esc(nameCN(s))} <span>· ${kindText(s.kind)}参考</span></div></div>
-    <div class="reading-settings"><div class="mode-control" role="tablist"><button data-language="zh" class="${S.lang==='zh'?'active':''}">简体中文</button><button data-language="both" class="${compare?'active':''}">中英对照</button><button data-language="en" class="${S.lang==='en'?'active':''}">English</button></div>
-      <div class="article-tools">${s.translation ? `<button class="small-action" data-edit="1">${icon('pen')} 修订译文</button>` : ''}<button class="small-action" data-language="en">${icon('globe')} 官方原文</button></div></div>
+    <div class="reading-settings"><div class="mode-control" role="tablist"><button data-language="zh" class="${S.lang==='zh'?'active':''}">${s.translation?.from==='full'?'完整中文':'中文摘要'}</button><button data-language="both" class="${compare?'active':''}">中英对照</button><button data-language="en" class="${S.lang==='en'?'active':''}">English</button></div>
+      <div class="article-tools">${s.translation ? `<button class="small-action" data-edit="1">${icon('pen')} 修订中文内容</button>` : ''}<button class="small-action" data-language="en">${icon('globe')} 官方原文</button></div></div>
     <div class="reader-columns ${compare?'compare':''}">${S.lang==='en' ? panel(s,'en') : S.lang==='zh' ? panel(s,'zh') : panel(s,'zh') + panel(s,'en')}</div>
     <div class="article-bottom">${prev ? `<button class="prevnext" data-go="${attr(prev.id)}"><span>← 上一章节</span><strong>${esc(prev.title)}</strong></button>` : '<span></span>'}${next ? `<button class="prevnext" data-go="${attr(next.id)}"><span>下一章节 →</span><strong>${esc(next.title)}</strong></button>` : ''}</div>
-    <div class="article-source">资料来源：<a href="${attr(s.originalUrl || 'https://core.telegram.org/bots/api')}" target="_blank" rel="noopener noreferrer">Telegram Bot API 官方文档 ↗</a>。中文译文供辅助理解，技术细节以英文原文为准。</div>`;
+    <div class="article-source">资料来源：<a href="${attr(s.originalUrl || 'https://core.telegram.org/bots/api')}" target="_blank" rel="noopener noreferrer">Telegram Bot API 官方文档 ↗</a>。中文内容标注完整译文或摘要状态；技术细节以英文原文为准。</div>`;
 }
 function renderMain() {
   const s = current();

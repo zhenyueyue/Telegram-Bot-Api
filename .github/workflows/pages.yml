@@ -25,6 +25,9 @@ jobs:
           node-version: '22'
       - name: Build static documentation
         run: node scripts/build-docs.js
+      - name: Verify published feedback bundle
+        run: |
+          node -e "const fs=require('node:fs'); const html=fs.readFileSync('dist/index.html','utf8'); const app=fs.readFileSync('dist/app.js','utf8'); const docs=JSON.parse(fs.readFileSync('dist/data/docs.json','utf8')); const checks=[['versioned app asset',html.includes('app.js?v=issue-prefill-ecaac5a')],['Issue creation URL',app.includes('issues/new?title=')],['prefilled title',app.includes('翻译修改建议：')],['7000-character URL ceiling',app.includes('ISSUE_URL_MAX_LENGTH = 7000')],['new button label',app.includes('修改中文内容')],['legacy local editor removed',!app.includes('openEdit')&&!app.includes('saveEdit')&&!html.includes('editBackdrop')],['611 chapters',docs.sections.length===611]]; for(const [name,ok] of checks){console.log((ok?'PASS ':'FAIL ')+name); if(!ok)process.exitCode=1;}"
       - name: Check bilingual navigation
         run: node scripts/test-menu.js
       - name: Verify Markdown and full translations

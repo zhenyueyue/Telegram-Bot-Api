@@ -102,3 +102,67 @@ body{font-size:var(--type-body)}
  .article-head h1{font-size:27px}
  .panel-title{font-size:13px}
 }
+
+
+/* Bilingual navigation: full API identifier + readable Chinese explanation. */
+.nav-item-bilingual{
+  min-height:59px;
+  padding:8px 12px 8px 14px;
+  align-items:center;
+  gap:11px;
+}
+.nav-item-bilingual .nav-index{
+  align-self:center;
+  width:6px;
+  height:6px;
+}
+.nav-item-bilingual .nav-labels{
+  display:flex;
+  flex:1 1 auto;
+  min-width:0;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+}
+.nav-item-bilingual .nav-name{
+  display:block;
+  max-width:100%;
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font:500 13px/1.38 var(--mono);
+  color:#2e475f;
+}
+.nav-item-bilingual .nav-name-cn{
+  display:block;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font:400 12.6px/1.45 var(--sans);
+  color:#64778a;
+  letter-spacing:.1px;
+}
+.nav-item-bilingual:hover .nav-name,
+.nav-item-bilingual.active .nav-name{color:#0b609e}
+.nav-item-bilingual:hover .nav-name-cn{color:#346889}
+.nav-item-bilingual.active .nav-name-cn{color:#356c93}
+.nav-item-bilingual .nav-bookmark{
+  flex:0 0 auto;
+  margin-left:auto;
+  align-self:center;
+  font-size:13px;
+  color:#bc7c17;
+}
+.nav-heading{padding-top:8px;padding-bottom:9px}
+.nav-group{margin-bottom:18px}
+@media(max-width:1100px){
+  .nav-item-bilingual{padding-left:11px;padding-right:10px;gap:9px}
+  .nav-item-bilingual .nav-name{font-size:12.7px}
+}
+@media(max-width:780px){
+  .nav-item-bilingual{min-height:60px}
+  .nav-item-bilingual .nav-name{font-size:13px}
+}

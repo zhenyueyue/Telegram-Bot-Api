@@ -1809,7 +1809,7 @@
   "Inline mode": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "The following methods and objects allow your bot to work in inline mode."
+      "inline mode"
     ],
     "text": "## Inline mode\n\n以下方法和对象用于让机器人支持**内联模式（Inline Mode）**。更多背景和使用说明请参阅 Telegram 的内联机器人介绍。\n\n要启用内联模式，请向 @BotFather 发送 `/setinline` 命令，并设置一段占位提示文字。用户在任意聊天的输入框中输入机器人的用户名后，这段文字会显示在输入框中，提示用户可以输入什么内容。\n"
   },
@@ -1921,7 +1921,7 @@
   "InlineQueryResultGame": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents a Game."
+      "game_short_name"
     ],
     "text": "## InlineQueryResultGame\n\n表示一个游戏。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 结果类型，固定为 `game`。 |\n| `id` | String | 该结果的唯一标识符，长度为 **1–64 字节**。 |\n| `game_short_name` | String | 游戏的短名称。 |\n| `reply_markup` | InlineKeyboardMarkup | 可选。附加到消息上的内联键盘。 |\n"
   },
@@ -1991,42 +1991,42 @@
   "InputTextMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of a text message to be sent as the result of an inline query."
+      "message_text"
     ],
     "text": "## InputTextMessageContent\n\n表示作为内联查询结果发送的文本消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `message_text` | String | 要发送的文本，长度为 **1–4096 个字符**。 |\n| `parse_mode` | String | 可选。用于解析消息文本中实体的模式。具体规则请参阅格式选项。 |\n| `entities` | Array of MessageEntity | 可选。消息文本中出现的特殊实体列表；提供此字段时可以代替 `parse_mode`。 |\n| `link_preview_options` | LinkPreviewOptions | 可选。链接预览生成选项。 |\n"
   },
   "InputLocationMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of a location message to be sent as the result of an inline query."
+      "latitude"
     ],
     "text": "## InputLocationMessageContent\n\n表示作为内联查询结果发送的位置消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `latitude` | Float | 位置的纬度，单位为度。 |\n| `longitude` | Float | 位置的经度，单位为度。 |\n| `horizontal_accuracy` | Float | 可选。位置的水平不确定半径，单位为米，范围为 **0–1500**。 |\n| `live_period` | Integer | 可选。位置可更新的时长，单位为秒，必须为 **60–86400**，也可以使用 `0x7FFFFFFF` 表示可无限期编辑的实时位置。 |\n| `heading` | Integer | 可选。实时位置中用户移动的方向，单位为度；指定时必须为 **1–360**。 |\n| `proximity_alert_radius` | Integer | 可选。用于提醒聊天成员彼此接近的最大距离，单位为米；指定时必须为 **1–100000**。 |\n"
   },
   "InputVenueMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of a venue message to be sent as the result of an inline query."
+      "foursquare_id"
     ],
     "text": "## InputVenueMessageContent\n\n表示作为内联查询结果发送的地点消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `latitude` | Float | 地点所在位置的纬度，单位为度。 |\n| `longitude` | Float | 地点所在位置的经度，单位为度。 |\n| `title` | String | 地点名称。 |\n| `address` | String | 地点地址。 |\n| `foursquare_id` | String | 可选。如果已知，填写该地点的 Foursquare 标识符。 |\n| `foursquare_type` | String | 可选。如果已知，填写 Foursquare 地点类型，例如 `arts_entertainment/default`、`arts_entertainment/aquarium` 或 `food/icecream`。 |\n| `google_place_id` | String | 可选。该地点在 Google Places 中的标识符。 |\n| `google_place_type` | String | 可选。该地点在 Google Places 中的类型。请参阅官方支持的类型列表。 |\n"
   },
   "InputContactMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of a contact message to be sent as the result of an inline query."
+      "phone_number"
     ],
     "text": "## InputContactMessageContent\n\n表示作为内联查询结果发送的联系人消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `phone_number` | String | 联系人的电话号码。 |\n| `first_name` | String | 联系人的名字。 |\n| `last_name` | String | 可选。联系人的姓氏。 |\n| `vcard` | String | 可选。以 vCard 格式提供的附加联系人信息，长度为 **0–2048 字节**。 |\n"
   },
   "InputInvoiceMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of an invoice message to be sent as the result of an inline query."
+      "payload"
     ],
     "text": "## InputInvoiceMessageContent\n\n表示作为内联查询结果发送的账单消息内容。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `title` | String | 商品名称，长度为 **1–32 个字符**。 |\n| `description` | String | 商品描述，长度为 **1–255 个字符**。 |\n| `payload` | String | 由机器人定义的账单负载，长度为 **1–128 字节**。该值不会展示给用户，可用于机器人内部处理订单。 |\n| `provider_token` | String | 可选。通过 @BotFather 获取的支付服务提供商令牌。使用 Telegram Stars 收款时传入空字符串。 |\n| `currency` | String | 三位字母的 ISO 4217 货币代码。使用 Telegram Stars 收款时传入 `XTR`。 |\n| `prices` | Array of LabeledPrice | 价格明细数组，以 JSON 形式序列化，可包含商品价格、税费、折扣、配送费、配送税费、奖励等项目。使用 Telegram Stars 收款时必须且只能包含 **1 项**。 |\n| `max_tip_amount` | Integer | 可选。允许用户支付的小费最高金额，以该货币的最小单位表示，必须使用整数而非浮点数。例如，美元最高小费为 1.45 美元时，传入 `145`。默认值为 `0`。**Telegram Stars 支付不支持此字段**。 |\n| `suggested_tip_amounts` | Array of Integer | 可选。建议用户选择的小费金额数组，以该货币的最小单位表示。最多可指定 **4 项**；金额必须为正数、严格递增，且不得超过 `max_tip_amount`。 |\n| `provider_data` | String | 可选。以 JSON 形式序列化的支付服务提供商附加数据。具体需要包含哪些字段，应由支付服务提供商说明。 |\n| `photo_url` | String | 可选。账单商品图片的 URL，可以是实物商品照片，也可以是服务的宣传图片。 |\n| `photo_size` | Integer | 可选。商品图片的文件大小，单位为字节。 |\n| `photo_width` | Integer | 可选。商品图片宽度。 |\n| `photo_height` | Integer | 可选。商品图片高度。 |\n| `need_name` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供全名。**Telegram Stars 支付会忽略此字段**。 |\n| `need_phone_number` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供电话号码。**Telegram Stars 支付会忽略此字段**。 |\n| `need_email` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供电子邮箱地址。**Telegram Stars 支付会忽略此字段**。 |\n| `need_shipping_address` | Boolean | 可选。传入 `True` 表示完成订单时需要用户提供收货地址。**Telegram Stars 支付会忽略此字段**。 |\n| `send_phone_number_to_provider` | Boolean | 可选。传入 `True` 表示将用户的电话号码发送给支付服务提供商。**Telegram Stars 支付会忽略此字段**。 |\n| `send_email_to_provider` | Boolean | 可选。传入 `True` 表示将用户的电子邮箱地址发送给支付服务提供商。**Telegram Stars 支付会忽略此字段**。 |\n| `is_flexible` | Boolean | 可选。传入 `True` 表示最终价格取决于配送方式。**Telegram Stars 支付会忽略此字段**。 |\n"
   },
   "ChosenInlineResult": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents a result of an inline query that was chosen by the user and sent to their chat partner."
+      "result_id"
     ],
     "text": "## ChosenInlineResult\n\n表示用户选择并发送给聊天对象的一条内联查询结果。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `result_id` | String | 用户选择的结果的唯一标识符。 |\n| `from` | User | 选择该结果的用户。 |\n| `location` | Location | 可选。用户的位置；仅适用于已请求用户位置权限的机器人。 |\n| `inline_message_id` | String | 可选。已发送内联消息的标识符。仅当消息附带内联键盘时才会提供。该标识符也会出现在回调查询中，可用于编辑对应消息。 |\n| `query` | String | 用于获取该结果的原始查询文本。 |\n\n> **注意：** 若要在 Update 中收到此对象，必须先通过 @BotFather 启用内联反馈（Inline Feedback）。\n"
   },

@@ -26,6 +26,33 @@ const css=fs.readFileSync('public/markdown-fidelity.css','utf8');
 assert.match(css,/display:table/);
 assert.match(css,/\.original-reference/);
 new Function(app);
+
+const cleanup=require('../public/markdown-cleanup.js');
+assert.equal(docs.sections.length,611,'No chapters may be removed');
+const full=docs.sections.filter(s=>s.translation?.from==='full');
+assert.equal(full.length,611,'Every Bot API 10.3 chapter must retain its full translation');
+const leakedNames=[],repairedNames=[];
+const visibleMarkup=html=>String(html)
+  .replace(/<pre\b[^>]*>[\s\S]*?<\/pre>/g,'')
+  .replace(/<code\b[^>]*>[\s\S]*?<\/code>/g,'');
+const residue=/\*\*[^*\n]{1,350}\*\*|__[^_\n]{1,350}__|~~[^~\n]{1,350}~~/;
+for(const section of full){
+  const before=marked.parse(section.translation.text,{gfm:true});
+  const after=cleanup.repair(before);
+  if(residue.test(visibleMarkup(before)))repairedNames.push(section.title);
+  if(residue.test(visibleMarkup(after)))leakedNames.push(section.title);
+}
+assert.deepEqual(leakedNames,[],'Visible unrendered emphasis exists outside code examples');
+for(const name of ['banChatMember','Sticker','sendLocation','restrictChatMember']){
+  assert.ok(repairedNames.includes(name),'Expected regression sample '+name);
+}
+const ban=full.find(s=>s.title==='banChatMember');
+const sticker=full.find(s=>s.title==='Sticker');
+assert.match(cleanup.repair(marked.parse(ban.translation.text)),/<strong>始终为 <code>True<\/code><\/strong>/);
+assert.match(cleanup.repair(marked.parse(sticker.translation.text)),/<strong>\.WEBP 或 \.JPG<\/strong>/);
+console.log('Markdown emphasis scanned: 611 full chapters; repaired:',repairedNames.length,
+            'chapters:',repairedNames.join(', '),'; visible leftovers:',leakedNames.length);
+
 console.log('PASS: Full getFile Chinese translation matches key English requirements.');
 console.log('PASS: Markdown tables, code, and headings parse for both languages.');
 console.log('PASS: summary-only chapters retain the complete English original in Chinese mode.');

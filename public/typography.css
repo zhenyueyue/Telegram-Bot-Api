@@ -1,0 +1,104 @@
+/* Telegram Bot API reader: consistent, legible type hierarchy. */
+:root{--type-ui:13.5px;--type-secondary:12.5px;--type-body:15px}
+body{font-size:var(--type-body)}
+/* Navigation */
+.app-shell{grid-template-columns:296px minmax(0,1fr)}
+.sidebar-head{padding-inline:18px;gap:11px}
+.brand-mark{flex:0 0 39px}
+.brand-text strong{font-size:15px;font-weight:650;letter-spacing:-.15px}
+.brand-text small{font-size:11.5px;font-weight:450;letter-spacing:.1px}
+.local-tag{font-size:10.5px;font-weight:600;letter-spacing:0;padding:3px 5px}
+.side-search{height:44px;margin:10px 15px 14px}
+.side-search input{font-size:var(--type-ui)}
+.side-search kbd{font-size:11.5px}
+.nav-filter{gap:2px;padding:0 12px 13px}
+.nav-filter button{font-size:13px;font-weight:500;padding:7px 11px}
+.nav-filter button.active{font-weight:650}
+.nav-heading{font-size:12px;font-weight:600;letter-spacing:.15px;padding:5px 12px 9px}
+.nav-heading .nav-count{font-size:12px;font-weight:500}
+.nav-item{font-size:var(--type-ui);font-weight:450;line-height:1.5;min-height:40px;padding:9px 12px 9px 14px}
+.nav-item.active{font-weight:600}
+.nav-zero,.nav-limit{font-size:13px}
+.sync-pill{font-size:var(--type-secondary);line-height:1.5}
+.side-footer-action{font-size:var(--type-ui);font-weight:500;line-height:1.45}
+/* Header and home */
+.crumb-root,.crumb-current{font-size:14px}
+.version-chip{font-size:11.5px;font-weight:600;letter-spacing:.1px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:1px}
+.hero h1{letter-spacing:-.85px}
+.hero-copy{font-size:var(--type-body);line-height:1.85}
+.primary-btn,.secondary-btn{font-size:var(--type-ui);font-weight:600;min-height:41px;padding-inline:17px}
+.stat div strong{font-size:17px;font-weight:650}
+.stat div span{font-size:var(--type-secondary)}
+.section-title-row small{font-size:12px;font-weight:500;letter-spacing:.2px}
+.featured h3{font:600 15.5px/1.45 var(--mono);letter-spacing:0}
+.featured p{font-size:13px;line-height:1.6}
+.explore-item strong{font:600 13.5px/1.5 var(--mono)}
+.explore-item small{font-size:var(--type-secondary);line-height:1.5}
+.footer-tip{font-size:var(--type-secondary);line-height:1.7}
+/* Article reading */
+.article-head h1{font-weight:700;letter-spacing:-.75px}
+.article-subtitle{font-size:14px}
+.article-tag{font-size:12px;font-weight:600;letter-spacing:.2px}
+.mode-control button{font-size:13px;font-weight:500;padding:8px 14px}
+.mode-control button.active{font-weight:600}
+.small-action{font-size:12.8px;font-weight:500;min-height:34px;padding:6px 11px}
+.panel-header{height:auto;min-height:48px;padding-block:9px;gap:10px;flex-wrap:wrap}
+.panel-title{font-size:13.5px;font-weight:600}
+.panel-status{font-size:12.5px}
+.not-translated h3{font-size:16px;font-weight:600}
+.not-translated p{font-size:13.5px}
+.translation-caution{font-size:12.5px}
+.summary-notice{font-size:13px;line-height:1.75;padding:12px 15px}
+.reader-columns.compare .summary-notice{font-size:12.5px}
+.markdown{font-size:var(--type-body);line-height:1.82}
+.markdown h2{font-size:20px}
+.markdown h3{font-size:17px}
+.markdown h4{font-size:15px}
+.markdown strong{font-weight:650}
+.markdown code{font-size:13px}
+.markdown pre code{font-size:12.5px;line-height:1.75}
+.markdown table{font-size:13.5px;line-height:1.6}
+.markdown th{font-size:13px;font-weight:600}
+.markdown td:first-child{font-size:13px}
+.markdown table code{font-size:12.5px}
+.reader-columns.compare .markdown{font-size:14px}
+.reader-columns.compare .markdown table{font-size:12.5px}
+.reader-columns.compare .markdown th,.reader-columns.compare .markdown td{font-size:12.5px}
+.reader-columns.compare .markdown pre code{font-size:12.5px}
+.markdown table th,.markdown table td{min-width:108px}
+.markdown table th:last-child,.markdown table td:last-child{min-width:195px}
+.prevnext span{font-size:12px}
+.prevnext strong{font:600 13.5px/1.5 var(--mono)}
+.article-source{font-size:12.5px}
+/* Dialogs */
+.modal-kicker{font-size:11.5px;font-weight:600;letter-spacing:.8px}
+.setting-note strong{font-size:13.5px;font-weight:600}
+.setting-note p{font-size:13px}
+.field label{font-size:13.2px;font-weight:600}
+.field input{font-size:13px}
+.field small,.setting-section-heading p,.tool-label small,.cost-note,.save-hint{font-size:12.5px}
+.tool-label strong{font-size:13.5px;font-weight:600}
+.edit-desc{font-size:13.5px}
+.edit-modal textarea{font-size:13.5px;line-height:1.75}
+.toast{font-size:13px}
+/* Responsive */
+@media(max-width:1100px){
+ .app-shell{grid-template-columns:270px minmax(0,1fr)}
+ .sidebar-head{padding-inline:13px;gap:9px}
+ .brand-text strong{font-size:14px}
+ .local-tag{font-size:10px;padding:2px 4px}
+}
+@media(max-width:780px){
+ .app-shell{display:block}
+ .sidebar{width:290px;max-width:calc(100vw - 34px)}
+ .brand-text strong{font-size:15px}
+}
+@media(max-width:560px){
+ .hero h1{font-size:30px}
+ .markdown{font-size:14.5px}
+ .markdown table{font-size:12.5px}
+ .reader-columns.compare .markdown{font-size:14.5px}
+ .article-head h1{font-size:27px}
+ .panel-title{font-size:13px}
+}

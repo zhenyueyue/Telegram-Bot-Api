@@ -632,5 +632,206 @@
       "message_thread_id"
     ],
     "text": "## 发送机器人动作状态\n\n向用户显示机器人正在输入、上传文件等状态。状态最多持续 **5 秒**，而且在机器人真正发送消息后，Telegram 客户端会清除该状态。成功返回 `True`。\n\n例如图片机器人需要时间处理图片时，可以调用 `sendChatAction` 并传入 `upload_photo`，让用户看到“正在发送图片”，不必单独发送“请稍候”消息。**仅建议在响应需要明显等待时使用。**\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 发送聊天动作所代表的 Telegram Business 连接 ID。 |\n| `chat_id` | Integer or String | 是 | 目标聊天 ID，或机器人、超级群组的 `@username`。**不支持频道与频道私信聊天**。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题或消息线程 ID，仅适用于超级群组及开启论坛话题模式的机器人私聊。 |\n| `action` | String | 是 | 动作类型：`typing`（输入文本）、`upload_photo`（上传图片）、`record_video` / `upload_video`（录制/上传视频）、`record_voice` / `upload_voice`（录制/上传语音）、`upload_document`（上传文件）、`choose_sticker`（选择贴纸）、`find_location`（查找位置）、`record_video_note` / `upload_video_note`（录制/上传视频消息）。 |\n"
+  },
+  "getForumTopicIconStickers": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Requires no parameters",
+      "custom emoji"
+    ],
+    "text": "## 获取论坛话题可用的图标贴纸\n\n获取可用作论坛话题图标的自定义表情贴纸列表，所有用户均可将这些贴纸用作话题图标。成功返回一个 [`Sticker`](#sticker) 对象数组。\n\n**无需参数。**\n"
+  },
+  "createForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_manage_topics",
+      "icon_color",
+      "icon_custom_emoji_id"
+    ],
+    "text": "## 创建论坛话题\n\n在启用论坛话题的超级群组，或者机器人与某个用户的私聊中创建新话题。在超级群组中，机器人必须是管理员并具有 `can_manage_topics` 权限。成功返回包含新话题信息的 [`ForumTopic`](#forumtopic) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `name` | String | 是 | 话题名称，长度 **1–128 个字符**。 |\n| `icon_color` | Integer | 否 | 话题图标颜色（RGB 整数），当前只能使用：`7322096` (`0x6FB9F0`)、`16766590` (`0xFFD67E`)、`13338331` (`0xCB86DB`)、`9367192` (`0x8EEE98`)、`16749490` (`0xFF93B2`)、`16478047` (`0xFB6F5F`)。 |\n| `icon_custom_emoji_id` | String | 否 | 用作话题图标的自定义表情 ID。可通过 [`getForumTopicIconStickers`](#getforumtopiciconstickers) 获取可用 ID。 |\n"
+  },
+  "editForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "unless it is the creator",
+      "icon_custom_emoji_id"
+    ],
+    "text": "## 修改论坛话题名称和图标\n\n修改论坛超级群组或机器人私聊中的某个话题名称、图标。对于论坛超级群组，机器人必须是管理员并拥有 `can_manage_topics` 权限；如果机器人本身是该话题的创建者，则无需满足这项管理员权限要求。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `message_thread_id` | Integer | 是 | 目标论坛话题对应消息线程的唯一 ID。 |\n| `name` | String | 否 | 新话题名称，长度 **0–128 个字符**。省略或传空字符串时保留当前名称。 |\n| `icon_custom_emoji_id` | String | 否 | 新的话题图标自定义表情 ID，可从 `getForumTopicIconStickers` 获取。传空字符串移除图标；省略时保留当前图标。 |\n"
+  },
+  "closeForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "close an open topic",
+      "unless it is the creator"
+    ],
+    "text": "## 关闭论坛话题\n\n关闭论坛超级群组中的一个开放话题。对于论坛超级群组，机器人必须是管理员并拥有 `can_manage_topics` 权限；如果机器人本身是该话题的创建者，则无需满足这项管理员权限要求。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `message_thread_id` | Integer | 是 | 目标论坛话题对应消息线程的唯一 ID。 |\n"
+  },
+  "reopenForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "reopen a closed topic",
+      "unless it is the creator"
+    ],
+    "text": "## 重新开启论坛话题\n\n重新开启论坛超级群组中已经关闭的话题。对于论坛超级群组，机器人必须是管理员并拥有 `can_manage_topics` 权限；如果机器人本身是该话题的创建者，则无需满足这项管理员权限要求。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `message_thread_id` | Integer | 是 | 目标论坛话题对应消息线程的唯一 ID。 |\n"
+  },
+  "deleteForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "along with all its messages",
+      "can_delete_messages"
+    ],
+    "text": "## 删除论坛话题及其消息\n\n**删除指定话题及其全部消息**，适用于论坛超级群组和机器人与用户的私聊。在论坛超级群组中，机器人必须是管理员并拥有 `can_delete_messages` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `message_thread_id` | Integer | 是 | 目标论坛话题对应消息线程的唯一 ID。 |\n"
+  },
+  "unpinAllForumTopicMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "pinned messages in a forum topic",
+      "can_pin_messages"
+    ],
+    "text": "## 清除话题内全部置顶消息\n\n清除论坛话题的置顶消息列表，适用于论坛超级群组和机器人私聊。在超级群组中，机器人必须是管理员并拥有 `can_pin_messages` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `message_thread_id` | Integer | 是 | 目标论坛话题对应消息线程的唯一 ID。 |\n"
+  },
+  "editGeneralForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "General",
+      "New topic name"
+    ],
+    "text": "## 重命名常规话题（General）\n\n修改论坛超级群组中「General」（常规）话题的名称。机器人必须是该论坛超级群组的管理员，并具有 `can_manage_topics` 权限。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n| `name` | String | 是 | 新的话题名称，长度 **1–128 个字符**。 |\n"
+  },
+  "closeGeneralForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "close an open",
+      "General"
+    ],
+    "text": "## 关闭常规话题\n\n关闭论坛超级群组中开放的「General」话题。机器人必须是该论坛超级群组的管理员，并具有 `can_manage_topics` 权限。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n"
+  },
+  "reopenGeneralForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "automatically unhidden"
+    ],
+    "text": "## 重新开启常规话题\n\n重新开启论坛超级群组中已经关闭的「General」话题。机器人必须是该论坛超级群组的管理员，并具有 `can_manage_topics` 权限。 **如果该话题原本处于隐藏状态，也会自动取消隐藏。** 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n"
+  },
+  "hideGeneralForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "automatically closed"
+    ],
+    "text": "## 隐藏常规话题\n\n隐藏论坛超级群组的「General」话题。机器人必须是该论坛超级群组的管理员，并具有 `can_manage_topics` 权限。 **如果该话题尚未关闭，也会自动关闭。** 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n"
+  },
+  "unhideGeneralForumTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "unhide the",
+      "General"
+    ],
+    "text": "## 取消隐藏常规话题\n\n取消隐藏论坛超级群组中的「General」话题。机器人必须是该论坛超级群组的管理员，并具有 `can_manage_topics` 权限。 成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n"
+  },
+  "unpinAllGeneralForumTopicMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "pinned messages in a General",
+      "can_pin_messages"
+    ],
+    "text": "## 清除常规话题的所有置顶消息\n\n清除「General」常规话题的置顶消息列表。机器人必须是论坛超级群组管理员，并具有 `can_pin_messages` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组的用户名（`@username`）。 |\n"
+  },
+  "editMessageText": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "rich_message",
+      "business messages",
+      "inline message"
+    ],
+    "text": "## 编辑消息文本或富内容\n\n用于修改文本消息、富内容消息或游戏消息的内容。成功时，若修改的不是内联模式消息，则返回修改后的 [`Message`](#message) 对象；若是内联模式消息，则返回 `True`。对于**不是由机器人发送**且**没有内联键盘**的商家账号消息，只允许在消息发出后的 **48 小时内**编辑。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要编辑的消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `text` | String | 否 | 新消息文本，解析消息实体后长度为 **1–4096 个字符**；未提供 `rich_message` 时必填。 |\n| `parse_mode` | String | 否 | 指定新文本的实体解析格式，详见文本格式选项。 |\n| `entities` | Array of MessageEntity | 否 | 消息文本格式实体的 JSON 数组，可代替 `parse_mode`。 |\n| `link_preview_options` | LinkPreviewOptions | 否 | 消息链接预览选项。 |\n| `rich_message` | InputRichMessage | 否 | 新的富内容消息；未提供 `text` 时必填。**编辑内联消息时，不支持直接上传新文件，也不支持通过 URL 显式上传文件。** |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editMessageCaption": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "show_caption_above_media",
+      "business messages"
+    ],
+    "text": "## 编辑媒体消息说明文字\n\n修改已有消息的说明文字（Caption）。成功时，若修改的不是内联模式消息，则返回修改后的 [`Message`](#message) 对象；若是内联模式消息，则返回 `True`。对于**不是由机器人发送**且**没有内联键盘**的商家账号消息，只允许在消息发出后的 **48 小时内**编辑。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要编辑的消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `caption` | String | 否 | 新的媒体说明文字；解析实体后的长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 否 | 媒体说明文字的格式解析模式。 |\n| `caption_entities` | Array of MessageEntity | 否 | 说明文字格式实体的 JSON 数组，可代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 否 | 传 `True` 时将说明显示在媒体上方，**仅支持动图、图片和视频消息**。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editMessageMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "live photo",
+      "message album",
+      "can't be uploaded"
+    ],
+    "text": "## 替换或编辑消息媒体\n\n编辑动图、音频、文件、实况照片、图片或视频消息，或将文本／富内容消息替换为媒体消息。成功时，若修改的不是内联模式消息，则返回修改后的 [`Message`](#message) 对象；若是内联模式消息，则返回 `True`。对于**不是由机器人发送**且**没有内联键盘**的商家账号消息，只允许在消息发出后的 **48 小时内**编辑。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要编辑的消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `media` | InputMedia | 是 | 新媒体内容，需提供 JSON 序列化的 `InputMedia` 对象。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n\n> **媒体组限制**：音频媒体组中的消息只能改为音频；文件媒体组中的消息只能改为文件；其他媒体组仅能改为图片、实况照片或视频。\n\n> **内联消息限制**：编辑内联消息时不能上传新文件，只能通过已有文件的 `file_id` 或指定 URL 使用媒体。\n"
+  },
+  "editMessageLiveLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "live_period",
+      "0x7FFFFFFF",
+      "90 days"
+    ],
+    "text": "## 更新实时位置消息\n\n更新一条实时位置消息。只能在原 `live_period` 尚未到期、且尚未调用 `stopMessageLiveLocation` 停止更新时使用。成功时，若修改的不是内联模式消息，则返回修改后的 [`Message`](#message) 对象；若是内联模式消息，则返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要编辑的消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `latitude` | Float | 是 | 新的纬度。 |\n| `longitude` | Float | 是 | 新的经度。 |\n| `live_period` | Integer | 否 | 新的实时位置更新有效期，单位为秒，自**消息发送时间**起计算。传 `0x7FFFFFFF` 可持续更新；否则，新值最多只能比当前 `live_period` 延长 **1 天**，而且失效日期必须在未来 **90 天**内。省略时保持原有值。 |\n| `horizontal_accuracy` | Float | 否 | 位置不确定范围半径，单位为米，范围 **0–1500**。 |\n| `heading` | Integer | 否 | 用户移动方向（角度），范围 **1–360**。 |\n| `proximity_alert_radius` | Integer | 否 | 接近其他聊天成员时触发距离提醒的最大距离，单位为米，范围 **1–100000**。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "stopMessageLiveLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "before live_period expires"
+    ],
+    "text": "## 停止实时位置更新\n\n在实时位置的 `live_period` 到期前，主动停止对该位置消息的更新。成功时，如果不是内联模式消息，返回修改后的 [`Message`](#message) 对象；如果是内联消息，则返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要停止更新的实时位置消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editMessageChecklist": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "connected business account",
+      "checklist"
+    ],
+    "text": "## 编辑商家账号待办清单\n\n代表**已连接的 Telegram Business 商家账号**编辑一条待办清单消息。成功返回编辑后的 [`Message`](#message) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 代表其发送／编辑消息的商家账号连接的唯一标识符。 |\n| `chat_id` | Integer or String | 是 | 目标聊天 ID，或目标机器人的用户名（`@username`）。 |\n| `message_id` | Integer | 是 | 目标消息的唯一 ID。 |\n| `checklist` | InputChecklist | 是 | 新的待办清单内容，使用 JSON 序列化的 `InputChecklist` 对象。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editMessageReplyMarkup": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "only the reply markup",
+      "business messages"
+    ],
+    "text": "## 只修改消息的内联键盘\n\n只修改消息的回复标记（Reply Markup），而不改动消息文本或媒体内容。成功时，若修改的不是内联模式消息，则返回修改后的 [`Message`](#message) 对象；若是内联模式消息，则返回 `True`。对于**不是由机器人发送**且**没有内联键盘**的商家账号消息，只允许在消息发出后的 **48 小时内**编辑。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要编辑的消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "stopPoll": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "stop a poll",
+      "business_connection_id"
+    ],
+    "text": "## 停止机器人发起的投票\n\n停止机器人此前发送的一项投票。成功返回已经停止的 [`Poll`](#poll) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 是 | 原投票所在聊天的 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 是 | 包含原始投票的消息 ID。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editEphemeralMessageText": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "ephemeral text or rich",
+      "offline"
+    ],
+    "text": "## 编辑临时消息文本或富内容\n\n修改一条临时可见的文本消息或富内容消息。**注意**：不能保证接收者一定会收到消息已编辑的事件，尤其是用户处于离线状态时。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组用户名（`@username`）。 |\n| `receiver_user_id` | Integer | 是 | 接收了这条临时消息的用户 ID。 |\n| `ephemeral_message_id` | Integer | 是 | 需要编辑的临时消息 ID。 |\n| `text` | String | 否 | 新的文本，解析实体后长度为 **1–4096 个字符**。未提供 `rich_message` 时必填。 |\n| `parse_mode` | String | 否 | 新文本的格式实体解析模式。 |\n| `entities` | Array of MessageEntity | 否 | 新文本实体数组，JSON 序列化，可代替 `parse_mode`。 |\n| `rich_message` | InputRichMessage | 否 | 新的富内容，未提供 `text` 时必填。 |\n| `link_preview_options` | LinkPreviewOptions | 否 | 消息链接预览选项。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editEphemeralMessageMedia": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "edit the media of an ephemeral",
+      "offline"
+    ],
+    "text": "## 编辑临时消息媒体\n\n替换一条临时可见消息中的媒体内容。**注意**：不能保证接收者一定会收到消息已编辑的事件，尤其是用户处于离线状态时。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组用户名（`@username`）。 |\n| `receiver_user_id` | Integer | 是 | 接收了这条临时消息的用户 ID。 |\n| `ephemeral_message_id` | Integer | 是 | 需要编辑的临时消息 ID。 |\n| `media` | InputMedia | 是 | 新的消息媒体，使用 JSON 序列化的 `InputMedia` 对象。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editEphemeralMessageCaption": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "show_caption_above_media",
+      "offline"
+    ],
+    "text": "## 编辑临时消息说明文字\n\n修改临时可见媒体消息的说明文字。**注意**：不能保证接收者一定会收到消息已编辑的事件，尤其是用户处于离线状态时。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组用户名（`@username`）。 |\n| `receiver_user_id` | Integer | 是 | 接收了这条临时消息的用户 ID。 |\n| `ephemeral_message_id` | Integer | 是 | 需要编辑的临时消息 ID。 |\n| `caption` | String | 否 | 新的媒体说明文字，解析消息实体后长度为 **0–1024 个字符**。 |\n| `parse_mode` | String | 否 | 说明文字的格式解析模式。 |\n| `caption_entities` | Array of MessageEntity | 否 | 说明文字的格式实体数组，JSON 序列化，可代替 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 否 | 传 `True` 将说明显示在媒体上方，**仅支持动图、图片和视频**。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
+  },
+  "editEphemeralMessageReplyMarkup": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "only the reply markup of an ephemeral",
+      "offline"
+    ],
+    "text": "## 编辑临时消息内联键盘\n\n只修改临时可见消息的回复标记（内联键盘）。**注意**：不能保证接收者一定会收到消息已编辑的事件，尤其是用户处于离线状态时。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或目标超级群组用户名（`@username`）。 |\n| `receiver_user_id` | Integer | 是 | 接收了这条临时消息的用户 ID。 |\n| `ephemeral_message_id` | Integer | 是 | 需要编辑的临时消息 ID。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
   }
 }

@@ -3569,10 +3569,13 @@
   "Payments": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Your bot can accept payments from Telegram users.",
-      "introduction to payments"
+      "LabeledPrice",
+      "AffiliateInfo",
+      "TransactionPartnerTelegramApi",
+      "StarTransaction",
+      "StarTransactions"
     ],
-    "text": "你的机器人可以接受 Telegram 用户的付款。有关支付流程以及如何为机器人设置支付功能的详细信息，请参阅[支付简介](https://core.telegram.org/bots/payments)。"
+    "text": "此分组包含 Telegram Bot API 中与支付相关的数据类型：\n\n- [LabeledPrice](#labeledprice)：商品或服务价格中的一个组成部分。\n- [Invoice](#invoice)：包含账单的基本信息。\n- [ShippingAddress](#shippingaddress)：收货地址。\n- [OrderInfo](#orderinfo)：订单信息。\n- [ShippingOption](#shippingoption)：一种配送选项。\n- [SuccessfulPayment](#successfulpayment)：包含成功支付的基本信息。\n- [RefundedPayment](#refundedpayment)：包含已退款支付的基本信息。\n- [ShippingQuery](#shippingquery)：包含收到的配送查询信息。\n- [PreCheckoutQuery](#precheckoutquery)：包含收到的预结账查询信息。\n- [PaidMediaPurchased](#paidmediapurchased)：包含付费媒体购买信息。\n- [RevenueWithdrawalState](#revenuewithdrawalstate)：描述收入提现操作的状态。目前可能是以下类型之一：\n  - [RevenueWithdrawalStatePending](#revenuewithdrawalstatepending)：提现正在处理中。\n  - [RevenueWithdrawalStateSucceeded](#revenuewithdrawalstatesucceeded)：提现已成功。\n  - [RevenueWithdrawalStateFailed](#revenuewithdrawalstatefailed)：提现失败，交易款项已退还。\n- [AffiliateInfo](#affiliateinfo)：包含通过此交易获得佣金的联盟成员信息。\n- [TransactionPartner](#transactionpartner)：描述交易的来源，或在出账交易中描述交易的接收方。目前可能是以下类型之一：\n  - [TransactionPartnerUser](#transactionpartneruser)：描述与用户之间的交易。\n  - [TransactionPartnerChat](#transactionpartnerchat)：描述与聊天之间的交易。\n  - [TransactionPartnerAffiliateProgram](#transactionpartneraffiliateprogram)：描述发放本次交易所产生联盟佣金的联盟计划。\n  - [TransactionPartnerFragment](#transactionpartnerfragment)：描述通过 Fragment 进行的提现交易。\n  - [TransactionPartnerTelegramAds](#transactionpartnertelegramads)：描述向 Telegram Ads 平台进行的提现交易。\n  - [TransactionPartnerTelegramApi](#transactionpartnertelegramapi)：描述支付付费广播费用的交易。\n  - [TransactionPartnerOther](#transactionpartnerother)：描述来源或接收方未知的交易。\n- [StarTransaction](#startransaction)：描述一笔 Telegram Stars 交易。\n- [StarTransactions](#startransactions)：包含 Telegram Stars 交易列表。"
   },
   "BackgroundFillGradient": {
     "version": "Bot API 10.3",

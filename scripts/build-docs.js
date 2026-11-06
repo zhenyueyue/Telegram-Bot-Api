@@ -161,7 +161,7 @@ async function main(){
      console.warn('Full translation not applied: official content changed:',s.title,missing);
      continue;
    }
-   if(!entry.text?.trim() || !/\|[^\n]+\|/.test(entry.text)){
+   if(!entry.text?.trim() || (/^\|[^\n]+\|/m.test(s.body) && !/^\|[^\n]+\|/m.test(entry.text))){
      throw new Error('Incomplete full translation structure: '+s.title);
    }
    s.translation={from:'full',text:entry.text.trim(),version:entry.version||null,originalHash:s.hash};

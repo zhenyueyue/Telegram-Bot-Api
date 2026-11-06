@@ -4311,8 +4311,8 @@
   "BotCommandScopeDefault": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the default scope of bot commands.",
-      "Default commands are used if no commands with a narrower scope are specified for the user.",
+      "Represents the default [scope](#botcommandscope) of bot commands.",
+      "Default commands are used if no commands with a [narrower scope]",
       "Scope type, must be *default*"
     ],
     "text": "此对象表示机器人命令的默认适用范围。如果没有为用户指定适用范围更窄的命令，则使用默认命令。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `default`。 |"
@@ -4355,9 +4355,10 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "Describes the connection of the bot with a business account.",
-      "Identifier of a private chat with the user who created the business connection",
-      "at most 52 significant bits",
-      "True, if the connection is active"
+      "Identifier of a private chat with the user who created the business connection.",
+      "But it has at most 52 significant bits",
+      "*Optional*. Rights of the business bot",
+      "*True*, if the connection is active"
     ],
     "text": "此对象描述机器人与 Business 账号之间的连接。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | String | Business 连接的唯一标识符。 |\n| `user` | [User](#user) | 创建此 Business 连接的 Business 账号所属用户。 |\n| `user_chat_id` | Integer | 创建此 Business 连接的用户的私聊标识符。此数字可能超过 32 个有效位，某些编程语言在解析时可能出现困难或静默错误。但它最多只有 52 个有效位，因此使用 64 位整数或双精度浮点数即可安全存储此标识符。 |\n| `date` | Integer | 建立连接的日期，以 Unix 时间表示。 |\n| `rights` | [BusinessBotRights](#businessbotrights) | 可选。Business 机器人的权限。 |\n| `is_enabled` | Boolean | 如果连接处于活动状态，则为 `True`。 |"
   },

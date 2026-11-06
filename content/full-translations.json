@@ -2439,5 +2439,127 @@
       "until_date"
     ],
     "text": "## ChatMemberBanned\n\n表示已在聊天中被封禁、不能重新加入聊天或查看聊天消息的用户。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `status` | String | 成员在聊天中的状态，始终为 `kicked`。 |\n| `user` | [User](#user) | 该用户的信息。 |\n| `until_date` | Integer | 封禁解除的时间，Unix 时间戳。如果值为 `0`，表示该用户被永久封禁。 |\n"
+  },
+  "ChatMemberUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "chat",
+      "old_chat_member",
+      "new_chat_member",
+      "via_chat_folder_invite_link"
+    ],
+    "text": "## ChatMemberUpdated\n\n表示某个聊天成员的状态发生变化。该对象同时提供变更前后的成员信息，因此可以用来判断成员是加入、离开、被限制、被封禁，还是管理员权限发生了变化。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `chat` | [Chat](#chat) | 发生成员状态变化的聊天。 |\n| `from` | [User](#user) | 执行导致此次成员状态变化的操作的用户。 |\n| `date` | Integer | 此次状态变更发生的时间，Unix 时间戳。 |\n| `old_chat_member` | [ChatMember](#chatmember) | 变更前的成员信息。 |\n| `new_chat_member` | [ChatMember](#chatmember) | 变更后的成员信息。 |\n| `invite_link` | [ChatInviteLink](#chatinvitelink) | 可选。用户通过邀请链接加入聊天时，表示其使用的邀请链接；仅适用于通过邀请链接加入的事件。 |\n| `via_join_request` | Boolean | 可选。为 `True` 时，表示用户提交了直接入群申请，并在管理员批准后加入聊天，且加入过程没有使用邀请链接。 |\n| `via_chat_folder_invite_link` | Boolean | 可选。为 `True` 时，表示用户通过聊天文件夹邀请链接加入了聊天。 |\n"
+  },
+  "ChatJoinRequest": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "chat",
+      "user_chat_id",
+      "query_id"
+    ],
+    "text": "## ChatJoinRequest\n\n表示用户提交的聊天加入申请。机器人需要在对应聊天中拥有 `can_invite_users` 管理员权限，才能收到常规的 `chat_join_request` 更新。\n\n> **注意：** `user_chat_id` 的 5 分钟联系窗口与 `query_id` 的 10 秒处理时限是两项不同的限制，不要混为一谈。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `chat` | [Chat](#chat) | 用户申请加入的聊天。 |\n| `from` | [User](#user) | 提交入群申请的用户。 |\n| `user_chat_id` | Integer | 与申请用户私聊对应的唯一标识符。该数字最多有 52 个有效二进制位，建议使用有符号 64 位整数或双精度浮点数存储。机器人可以在申请被处理前的 **5 分钟内**使用此标识符向用户发送消息，前提是没有其他管理员先联系该用户。 |\n| `date` | Integer | 入群申请提交的时间，Unix 时间戳。 |\n| `bio` | String | 可选。申请用户的个人简介。 |\n| `invite_link` | [ChatInviteLink](#chatinvitelink) | 可选。用户提交入群申请时使用的聊天邀请链接。 |\n| `query_id` | String | 可选。入群申请查询的唯一标识符，仅适用于被指定负责处理入群申请查询的机器人。如果提供了此字段，机器人必须在 **10 秒内**调用 `sendChatJoinRequestWebApp`，或直接调用 `answerChatJoinRequestQuery`。 |\n"
+  },
+  "ChatAdministratorRights": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "is_anonymous",
+      "can_manage_chat",
+      "can_manage_direct_messages",
+      "can_send_welcome_messages"
+    ],
+    "text": "## ChatAdministratorRights\n\n表示某个聊天中管理员所拥有的权限集合。该对象用于描述用户或机器人应当具备的管理员权限；不同权限适用于不同类型的聊天，例如频道、群组或超级群组。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `is_anonymous` | Boolean | 为 `True` 时，表示该管理员在聊天中的身份被隐藏。 |\n| `can_manage_chat` | Boolean | 为 `True` 时，表示管理员可以查看聊天事件日志、获取 Boost 列表、查看隐藏的超级群组和频道成员、举报垃圾消息、忽略慢速模式限制，以及无需支付 Telegram Stars 即可向聊天发送消息。授予任何其他管理员权限时，也会隐含授予此权限。 |\n| `can_delete_messages` | Boolean | 为 `True` 时，表示管理员可以删除其他用户发送的消息。 |\n| `can_manage_video_chats` | Boolean | 为 `True` 时，表示管理员可以管理视频聊天。 |\n| `can_restrict_members` | Boolean | 为 `True` 时，表示管理员可以限制、封禁或解除封禁聊天成员，也可以查看超级群组统计数据。 |\n| `can_promote_members` | Boolean | 为 `True` 时，表示管理员可以添加权限不超过自身权限范围的新管理员，也可以降级由自己直接或间接提升的管理员。 |\n| `can_change_info` | Boolean | 为 `True` 时，表示管理员可以修改聊天标题、照片及其他设置。 |\n| `can_invite_users` | Boolean | 为 `True` 时，表示管理员可以邀请新用户加入聊天。 |\n| `can_post_stories` | Boolean | 为 `True` 时，表示管理员可以在聊天中发布故事。 |\n| `can_edit_stories` | Boolean | 为 `True` 时，表示管理员可以编辑其他用户发布的故事、将故事发布到聊天主页、置顶聊天故事，以及访问聊天的故事存档。 |\n| `can_delete_stories` | Boolean | 为 `True` 时，表示管理员可以删除其他用户发布的故事。 |\n| `can_post_messages` | Boolean | 可选。为 `True` 时，表示管理员可以在频道中发布消息、审批建议帖子或查看频道统计数据；仅适用于频道。 |\n| `can_edit_messages` | Boolean | 可选。为 `True` 时，表示管理员可以编辑其他用户发送的消息并置顶消息；仅适用于频道。 |\n| `can_pin_messages` | Boolean | 可选。为 `True` 时，表示管理员可以置顶消息；仅适用于群组和超级群组。 |\n| `can_manage_topics` | Boolean | 可选。为 `True` 时，表示管理员可以创建、重命名、关闭和重新开启论坛话题；仅适用于超级群组。 |\n| `can_manage_direct_messages` | Boolean | 可选。为 `True` 时，表示管理员可以管理频道私信，并拒绝建议帖子；仅适用于频道。 |\n| `can_manage_tags` | Boolean | 可选。为 `True` 时，表示管理员可以编辑普通成员的标签；仅适用于群组和超级群组。 |\n| `can_send_welcome_messages` | Boolean | 为 `True` 时，表示管理员可以管理聊天欢迎消息；对于机器人，还可以直接发送欢迎消息。 |\n"
+  },
+  "ReplyParameters": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "message_id",
+      "ephemeral_message_id",
+      "quote_position",
+      "poll_option_id"
+    ],
+    "text": "## ReplyParameters\n\n描述发送消息时要回复的目标消息及引用内容。可用于指定当前聊天或其他聊天中的消息，也支持回复临时消息、引用原消息的一部分，以及指定清单任务或投票选项。\n\n> **临时消息规则：** `message_id` 与 `ephemeral_message_id` 至少需要提供一个。回复临时消息时，必须在 15 秒窗口内发送另一条临时消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `message_id` | Integer | 可选。要回复的消息标识符，目标消息必须位于当前聊天中；如果同时指定 `chat_id`，则表示该聊天中的消息。如果未指定 `ephemeral_message_id`，此字段为必填。 |\n| `chat_id` | Integer or String | 可选。目标消息位于其他聊天时，填写该聊天的唯一标识符，或机器人、超级群组、频道的用户名（格式为 `@username`）。代表商业账号发送的消息、来自频道私信聊天的消息以及临时消息均不支持此字段。 |\n| `ephemeral_message_id` | Integer | 可选。当前聊天中要回复的入站临时消息的标识符。回复临时消息时，发出的回复本身也必须是临时消息；并且必须在原临时消息发送后的 **15 秒内**回复。如果未指定 `message_id`，此字段为必填。 |\n| `allow_sending_without_reply` | Boolean | 可选。为 `True` 时，即使找不到指定的被回复消息，也尝试发送当前消息。对于回复其他聊天或其他论坛话题中的消息，以及发送临时消息，此值始终为 `False`；对于代表商业账号发送的消息，此值始终为 `True`。 |\n| `quote` | String | 可选。要引用的原消息片段。实体解析后长度为 0–1024 个字符。引用内容必须是原消息中的精确子串，并保留粗体、斜体、下划线、删除线、剧透、自定义 Emoji 和日期时间实体等格式；如果找不到对应内容，发送消息会失败。临时消息不使用此字段。 |\n| `quote_parse_mode` | String | 可选。用于解析引用文本中实体的模式。详情请参阅官方文本格式说明。 |\n| `quote_entities` | Array of [MessageEntity](#messageentity) | 可选。引用文本中包含的特殊实体列表，以 JSON 序列化形式传入。可以用它代替 `quote_parse_mode` 指定实体。 |\n| `quote_position` | Integer | 可选。引用片段在原消息中的位置，单位为 UTF-16 代码单元。 |\n| `checklist_task_id` | Integer | 可选。要回复的具体清单任务的标识符。 |\n| `poll_option_id` | String | 可选。要回复的具体投票选项的持久化标识符。 |\n"
+  },
+  "ExternalReplyInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "origin",
+      "link_preview_options",
+      "live_photo",
+      "checklist",
+      "giveaway_winners",
+      "venue"
+    ],
+    "text": "## ExternalReplyInfo\n\n包含当前消息所回复的原始消息的信息。原始消息可能来自另一个聊天或论坛话题。该对象提供消息来源、原聊天标识，以及在机器人可见时提供原消息的媒体和其他内容信息。\n\n> **注意：** `ExternalReplyInfo` 不等同于完整的 `Message` 对象。原聊天和消息标识符仅在特定聊天类型下提供，其他内容字段也取决于原消息的类型及机器人可见的信息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `origin` | [MessageOrigin](#messageorigin) | 被当前消息回复的原始消息的来源信息。 |\n| `chat` | [Chat](#chat) | 可选。原始消息所属的聊天；仅当原聊天是超级群组或频道时提供。 |\n| `message_id` | Integer | 可选。原始聊天中的唯一消息标识符；仅当原聊天是超级群组或频道时提供。 |\n| `link_preview_options` | [LinkPreviewOptions](#linkpreviewoptions) | 可选。如果原始消息是文本消息，则表示生成其链接预览时使用的选项。 |\n| `animation` | [Animation](#animation) | 可选。表示原始消息是一段动画，并包含动画文件信息。 |\n| `audio` | [Audio](#audio) | 可选。表示原始消息是一个音频文件，并包含文件信息。 |\n| `document` | [Document](#document) | 可选。表示原始消息是一个普通文件，并包含文件信息。 |\n| `live_photo` | [LivePhoto](#livephoto) | 可选。表示原始消息是一张实况照片，并包含实况照片信息。 |\n| `paid_media` | [PaidMediaInfo](#paidmediainfo) | 可选。表示原始消息包含付费媒体，并提供付费媒体信息。 |\n| `photo` | Array of [PhotoSize](#photosize) | 可选。表示原始消息是一张照片，并提供该照片的可用尺寸列表。 |\n| `sticker` | [Sticker](#sticker) | 可选。表示原始消息是一张贴纸，并包含贴纸信息。 |\n| `story` | [Story](#story) | 可选。表示原始消息是一条转发的故事。 |\n| `video` | [Video](#video) | 可选。表示原始消息是一个视频，并包含视频信息。 |\n| `video_note` | [VideoNote](#videonote) | 可选。表示原始消息是一条视频消息（video note），并包含视频消息信息。 |\n| `voice` | [Voice](#voice) | 可选。表示原始消息是一条语音消息，并包含音频文件信息。 |\n| `has_media_spoiler` | True | 可选。为 `True` 时，表示原始消息中的媒体被剧透动画遮罩覆盖。 |\n| `checklist` | [Checklist](#checklist) | 可选。表示原始消息是一份清单。 |\n| `contact` | [Contact](#contact) | 可选。表示原始消息分享了一个联系人，并包含联系人信息。 |\n| `dice` | [Dice](#dice) | 可选。表示原始消息是一个随机骰子结果。 |\n| `game` | [Game](#game) | 可选。表示原始消息是一个游戏，并包含游戏信息。 |\n| `giveaway` | [Giveaway](#giveaway) | 可选。表示原始消息是一条定时发送的赠品抽奖消息。 |\n| `giveaway_winners` | [GiveawayWinners](#giveawaywinners) | 可选。表示原始消息包含已结束的赠品抽奖及其公开获奖者名单。 |\n| `invoice` | [Invoice](#invoice) | 可选。表示原始消息是一张支付账单，并包含账单信息。 |\n| `location` | [Location](#location) | 可选。表示原始消息分享了一个地理位置，并包含位置信息。 |\n| `poll` | [Poll](#poll) | 可选。表示原始消息是一项 Telegram 原生投票，并包含投票信息。 |\n| `venue` | [Venue](#venue) | 可选。表示原始消息分享了一个地点（Venue），并包含地点信息。 |\n"
+  },
+  "TextQuote": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "text",
+      "position",
+      "is_manual"
+    ],
+    "text": "## TextQuote\n\n包含当前消息所回复的原始消息中被引用的文本片段及其格式信息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | String | 被当前消息引用的原始消息文本片段。 |\n| `entities` | Array of [MessageEntity](#messageentity) | 可选。引用文本中保留的特殊实体。目前引用中只保留粗体、斜体、下划线、删除线、剧透、自定义 Emoji 和日期时间实体。 |\n| `position` | Integer | 原消息中引用片段的大致起始位置，单位为 UTF-16 代码单元；该位置由发送方指定。 |\n| `is_manual` | True | 可选。为 `True` 时，表示引用片段由消息发送者手动选择；否则表示引用由 Telegram 服务器自动添加。 |\n"
+  },
+  "ChatInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "invite_link",
+      "creates_join_request",
+      "pending_join_request_count",
+      "subscription_price"
+    ],
+    "text": "## ChatInviteLink\n\n表示一个聊天邀请链接。除了链接本身，还包含创建者、审批要求、有效状态、成员数量限制，以及订阅邀请链接的付款参数。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `invite_link` | String | 邀请链接。如果该链接由其他聊天管理员创建，机器人获取到的链接中间部分会被替换为省略号 `…`。 |\n| `creator` | [User](#user) | 创建此邀请链接的用户。 |\n| `creates_join_request` | Boolean | 为 `True` 时，表示用户通过此链接加入聊天时需要经过聊天管理员批准。 |\n| `is_primary` | Boolean | 为 `True` 时，表示这是聊天的主要邀请链接。 |\n| `is_revoked` | Boolean | 为 `True` 时，表示此邀请链接已被撤销。 |\n| `name` | String | 可选。邀请链接的名称。 |\n| `expire_date` | Integer | 可选。邀请链接的到期时间，或已经过期的时间，Unix 时间戳。 |\n| `member_limit` | Integer | 可选。通过此邀请链接加入聊天后，允许同时成为聊天成员的最大人数，范围为 1–99999。 |\n| `pending_join_request_count` | Integer | 可选。通过此邀请链接创建、目前仍待处理的入群申请数量。 |\n| `subscription_period` | Integer | 可选。订阅有效期，单位为秒；到期后需要进行下一次付款。 |\n| `subscription_price` | Integer | 可选。用户通过此链接加入聊天时首次需要支付、以及之后每个订阅周期需要支付的 Telegram Stars 数量。 |\n"
+  },
+  "EphemeralMessageParameters": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "receiver_user_id",
+      "replace_callback_query_message"
+    ],
+    "text": "## EphemeralMessageParameters\n\n描述发送临时消息时使用的参数。临时消息只对指定接收者和机器人可见；即使发送请求成功，也不保证接收者一定能收到消息，尤其是在接收者离线时。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `receiver_user_id` | Integer | 将要接收此临时消息的用户的唯一标识符。不能保证该用户一定会收到消息，尤其是在用户离线时。 |\n| `callback_query_id` | String | 可选。触发此次临时消息发送的回调查询标识符（如果存在）。 |\n| `replace_callback_query_message` | Boolean | 可选。为 `True` 时，表示临时消息应显示在原回调查询消息的位置，替代原消息。对于来自临时消息的回调查询，此字段必须为 `False`；这类消息应使用常规的 `editEphemeralMessage…` 方法编辑。 |\n"
+  },
+  "MessageOrigin": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "MessageOriginUser",
+      "MessageOriginHiddenUser",
+      "MessageOriginChat",
+      "MessageOriginChannel"
+    ],
+    "text": "## MessageOrigin\n\n描述一条消息最初从何处发出。根据原始发送者及发送方式，此对象可能是以下四种类型之一：\n\n- [MessageOriginUser](#messageoriginuser)：原始发送者是已知用户。\n- [MessageOriginHiddenUser](#messageoriginhiddenuser)：原始发送者的身份未公开。\n- [MessageOriginChat](#messageoriginchat)：原始消息代表某个聊天发送到群组聊天。\n- [MessageOriginChannel](#messageoriginchannel)：原始消息发送到频道聊天。\n\n处理该对象时，应先检查 `type`，再读取对应类型的字段。\n"
+  },
+  "MessageOriginUser": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "sender_user",
+      "always “user”"
+    ],
+    "text": "## MessageOriginUser\n\n表示原始消息由一个已知用户发送。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `user`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_user` | [User](#user) | 最初发送该消息的用户。 |\n"
+  },
+  "MessageOriginHiddenUser": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "sender_user_name",
+      "always “hidden_user”"
+    ],
+    "text": "## MessageOriginHiddenUser\n\n表示原始消息由一个身份未公开的用户发送。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `hidden_user`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_user_name` | String | 最初发送该消息的用户名称。 |\n"
+  },
+  "MessageOriginChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "sender_chat",
+      "author_signature",
+      "always “chat”"
+    ],
+    "text": "## MessageOriginChat\n\n表示原始消息代表某个聊天发送到群组聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `chat`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_chat` | [Chat](#chat) | 最初发送该消息的聊天。 |\n| `author_signature` | String | 可选。原始消息由匿名聊天管理员发送时，表示该消息作者的签名。 |\n"
+  },
+  "MessageOriginChannel": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "message_id",
+      "author_signature",
+      "always “channel”"
+    ],
+    "text": "## MessageOriginChannel\n\n表示原始消息最初发送到某个频道聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `channel`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `chat` | [Chat](#chat) | 最初接收该消息的频道聊天。 |\n| `message_id` | Integer | 该消息在原始聊天中的唯一标识符。 |\n| `author_signature` | String | 可选。原始频道帖子的作者签名。 |\n"
   }
 }

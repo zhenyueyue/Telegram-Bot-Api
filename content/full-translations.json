@@ -3931,5 +3931,79 @@
       "link preview must be shown above the message text"
     ],
     "text": "此对象描述生成链接预览时使用的选项。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `is_disabled` | Boolean | 可选。如果为 `True`，则禁用链接预览。 |\n| `url` | String | 可选。用于生成链接预览的 URL。如果为空，则使用消息文本中找到的第一个 URL。 |\n| `prefer_small_media` | Boolean | 可选。如果为 `True`，则缩小链接预览中的媒体内容；如果未明确指定 URL，或预览不支持更改媒体尺寸，则忽略此设置。 |\n| `prefer_large_media` | Boolean | 可选。如果为 `True`，则放大链接预览中的媒体内容；如果未明确指定 URL，或预览不支持更改媒体尺寸，则忽略此设置。 |\n| `show_above_text` | Boolean | 可选。如果为 `True`，则链接预览显示在消息文本上方；否则，链接预览显示在消息文本下方。 |"
+  },
+  "SuggestedPostPrice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the price of a suggested post.",
+      "Currently, must be one of \"XTR\" for Telegram Stars or \"TON\" for TON grams.",
+      "between 5 and 100000",
+      "between 10000000 and 10000000000000"
+    ],
+    "text": "此对象描述建议帖子的价格。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `currency` | String | 帖子付款所使用的货币。目前必须为以下值之一：`\"XTR\"`（Telegram Stars）或 `\"TON\"`（TON 克）。 |\n| `amount` | Integer | 帖子应支付的货币金额，以该货币的最小单位表示，即 Telegram Stars 或纳克（nanograms）。目前，Telegram Stars 价格必须介于 5 至 100000 之间；以纳克计价的价格必须介于 10000000 至 10000000000000 之间。 |"
+  },
+  "SuggestedPostInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains information about a suggested post.",
+      "\"pending\", \"approved\", \"declined\"",
+      "within 30 days at the sole discretion"
+    ],
+    "text": "此对象包含建议帖子的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `state` | String | 建议帖子的状态。目前可以是以下值之一：`\"pending\"`、`\"approved\"`、`\"declined\"`。 |\n| `price` | [SuggestedPostPrice](#suggestedpostprice) | 可选。帖子提议的价格。如果省略此字段，则表示该帖子不需要付费。 |\n| `send_date` | Integer | 可选。提议的发送日期。如果省略此字段，则批准该帖子的用户或管理员可自行决定在未来 30 天内的任意时间发布该帖子。 |"
+  },
+  "SuggestedPostParameters": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains parameters of a post that is being suggested by the bot.",
+      "between 300 second and 2678400 seconds (30 days)"
+    ],
+    "text": "此对象包含机器人正在提议发布的帖子的参数。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `price` | [SuggestedPostPrice](#suggestedpostprice) | 可选。帖子提议的价格。如果省略此字段，则表示该帖子不需要付费。 |\n| `send_date` | Integer | 可选。提议的发送日期。如果指定，则该日期必须在未来 300 秒至 2678400 秒（30 天）之间。如果省略此字段，则批准该帖子的用户可自行决定在未来 30 天内的任意时间发布该帖子。 |"
+  },
+  "DirectMessagesTopic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a topic of a direct messages chat.",
+      "at most 52 significant bits",
+      "Currently, it is always present."
+    ],
+    "text": "此对象描述私信聊天中的一个话题。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `topic_id` | Integer | 话题的唯一标识符。此数字可能超过 32 个有效位，某些编程语言在解析时可能出现困难或静默错误。但它最多只有 52 个有效位，因此使用 64 位整数或双精度浮点数即可安全存储此标识符。 |\n| `user` | [User](#user) | 可选。创建此话题的用户信息。目前此字段始终存在。 |"
+  },
+  "UserProfilePhotos": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represent a user's profile pictures.",
+      "Requested profile pictures (in up to 4 sizes each)"
+    ],
+    "text": "此对象表示某个用户的个人资料照片。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `total_count` | Integer | 目标用户拥有的个人资料照片总数。 |\n| `photos` | Array of Array of [PhotoSize](#photosize) | 请求获取的个人资料照片；每张照片最多提供 4 种尺寸。 |"
+  },
+  "UserProfileAudios": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the audios displayed on a user's profile.",
+      "Total number of profile audios for the target user",
+      "Requested profile audios"
+    ],
+    "text": "此对象表示显示在某个用户个人资料中的音频。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `total_count` | Integer | 目标用户个人资料中的音频总数。 |\n| `audios` | Array of [Audio](#audio) | 请求获取的个人资料音频列表。 |"
+  },
+  "File": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a file ready to be downloaded.",
+      "valid for at least 1 hour",
+      "maximum file size to download is 20 MB",
+      "at most 52 significant bits",
+      "Can't be used to download or reuse the file."
+    ],
+    "text": "此对象表示一个可供下载的文件。可以通过链接 `https://api.telegram.org/file/bot<token>/<file_path>` 下载该文件。该链接保证至少 1 小时内有效。链接过期后，可以调用 [`getFile`](#getfile) 方法重新获取链接。\n\n> 可下载的文件最大为 20 MB。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 此文件的标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 此文件的唯一标识符，预计在不同时间及不同机器人之间保持不变。不能用于下载或重复使用该文件。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。其数值可能大于 2^31，某些编程语言在解析时可能出现困难或静默错误。但它最多只有 52 个有效位，因此使用有符号 64 位整数或双精度浮点数即可安全存储此值。 |\n| `file_path` | String | 可选。文件路径。使用 `https://api.telegram.org/file/bot<token>/<file_path>` 获取文件。 |"
+  },
+  "KeyboardButtonRequestUsers": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object defines the criteria used to request suitable users.",
+      "Signed 32-bit identifier of the request",
+      "1-10",
+      "If not specified, no additional restrictions are applied."
+    ],
+    "text": "此对象定义请求符合条件的用户时所使用的筛选条件。用户按下相应按钮后，被选中用户的信息将分享给机器人。有关详细信息，请参阅[请求用户](https://core.telegram.org/bots/features.md#chat-and-user-selection)。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的有符号 32 位标识符。此标识符将在 [UsersShared](#usersshared) 对象中返回，并且必须在当前消息中保持唯一。 |\n| `user_is_bot` | Boolean | 可选。传入 `True` 表示请求机器人用户；传入 `False` 表示请求普通用户。如果未指定，则不施加额外限制。 |\n| `user_is_premium` | Boolean | 可选。传入 `True` 表示请求 Premium 用户；传入 `False` 表示请求非 Premium 用户。如果未指定，则不施加额外限制。 |\n| `max_quantity` | Integer | 可选。最多可选择的用户数量，范围为 1–10。默认为 1。 |\n| `request_name` | Boolean | 可选。传入 `True` 表示请求用户的名字和姓氏。 |\n| `request_username` | Boolean | 可选。传入 `True` 表示请求用户的用户名。 |\n| `request_photo` | Boolean | 可选。传入 `True` 表示请求用户的照片。 |"
   }
 }

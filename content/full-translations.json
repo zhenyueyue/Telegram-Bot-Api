@@ -2531,34 +2531,39 @@
   "MessageOriginUser": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "sender_user",
-      "always “user”"
+      "type",
+      "date",
+      "sender_user"
     ],
     "text": "## MessageOriginUser\n\n表示原始消息由一个已知用户发送。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `user`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_user` | [User](#user) | 最初发送该消息的用户。 |\n"
   },
   "MessageOriginHiddenUser": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "sender_user_name",
-      "always “hidden_user”"
+      "type",
+      "date",
+      "sender_user_name"
     ],
     "text": "## MessageOriginHiddenUser\n\n表示原始消息由一个身份未公开的用户发送。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `hidden_user`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_user_name` | String | 最初发送该消息的用户名称。 |\n"
   },
   "MessageOriginChat": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
+      "type",
+      "date",
       "sender_chat",
-      "author_signature",
-      "always “chat”"
+      "author_signature"
     ],
     "text": "## MessageOriginChat\n\n表示原始消息代表某个聊天发送到群组聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `chat`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `sender_chat` | [Chat](#chat) | 最初发送该消息的聊天。 |\n| `author_signature` | String | 可选。原始消息由匿名聊天管理员发送时，表示该消息作者的签名。 |\n"
   },
   "MessageOriginChannel": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
+      "type",
+      "date",
+      "chat",
       "message_id",
-      "author_signature",
-      "always “channel”"
+      "author_signature"
     ],
     "text": "## MessageOriginChannel\n\n表示原始消息最初发送到某个频道聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `channel`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `chat` | [Chat](#chat) | 最初接收该消息的频道聊天。 |\n| `message_id` | Integer | 该消息在原始聊天中的唯一标识符。 |\n| `author_signature` | String | 可选。原始频道帖子的作者签名。 |\n"
   }

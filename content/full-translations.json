@@ -480,5 +480,157 @@
       "disabled button"
     ],
     "text": "## 禁用按钮\n\n表示一个已禁用、点击后不会执行任何操作的按钮。目前这个对象**不包含任何字段**。\n"
+  },
+  "banChatMember": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "until_date",
+      "revoke_messages",
+      "366"
+    ],
+    "text": "## 封禁群组或频道成员\n\n在普通群组、超级群组或频道中封禁用户。在超级群组和频道内，用户被封禁后，除非先解封，否则不能自行通过邀请链接等方式返回。机器人必须是管理员并具有相应权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n| `until_date` | Integer | 否 | 解除封禁的 Unix 时间戳，仅适用于超级群组和频道。若期限距当前超过 **366 天**或不足 **30 秒**，视为永久封禁。 |\n| `revoke_messages` | Boolean | 否 | 设为 `True` 时删除被移除用户在聊天内的所有消息；设为 `False` 时，该用户仍能看到被移除之前群内的消息。在超级群组和频道中此参数**始终为 `True`**。 |\n"
+  },
+  "unbanChatMember": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "only_if_banned"
+    ],
+    "text": "## 解除群组或频道成员封禁\n\n解除先前在超级群组或频道内封禁的用户。用户不会自动重新加入，但可以通过邀请链接重新加入。机器人必须是管理员。**默认行为会确保调用后该用户不属于聊天，因此如果该用户已经是成员，也会被移出**。若不希望影响未被封禁的成员，请使用 `only_if_banned`。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n| `only_if_banned` | Boolean | 否 | 如果用户并未被封禁，则不执行任何操作。 |\n"
+  },
+  "restrictChatMember": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "use_independent_chat_permissions",
+      "until_date"
+    ],
+    "text": "## 限制超级群组成员权限\n\n限制超级群组内指定用户的权限。机器人必须是超级群组管理员并拥有相应权限。将权限对象中的**所有权限都设为 `True`**，可以解除限制。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n| `permissions` | ChatPermissions | 是 | JSON 序列化的 [`ChatPermissions`](#chatpermissions) 对象，定义成员的新权限。 |\n| `use_independent_chat_permissions` | Boolean | 否 | `True` 表示独立设置各项权限；否则 `can_send_other_messages` 与 `can_add_web_page_previews` 会隐含 `can_send_messages`、`can_send_audios`、`can_send_documents`、`can_send_photos`、`can_send_videos`、`can_send_video_notes`、`can_send_voice_notes`；`can_send_polls` 也会隐含 `can_send_messages`。 |\n| `until_date` | Integer | 否 | 解除限制的 Unix 时间戳。若期限距当前超过 **366 天**或不足 **30 秒**，视为永久限制。 |\n"
+  },
+  "createChatInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "creates_join_request",
+      "member_limit"
+    ],
+    "text": "## 创建额外的聊天邀请链接\n\n为聊天创建一条额外的邀请链接。机器人必须是管理员并拥有相应权限。链接可由 `revokeChatInviteLink` 撤销。成功返回新邀请链接的 [`ChatInviteLink`](#chatinvitelink) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `name` | String | 否 | 邀请链接名称，长度 **0–32 字符**。 |\n| `expire_date` | Integer | 否 | 链接到期时间，Unix 时间戳。 |\n| `member_limit` | Integer | 否 | 通过此链接加入且同时留在聊天中的人数上限，范围 **1–99999**。 |\n| `creates_join_request` | Boolean | 否 | 设为 `True` 后，使用该链接入群需要管理员批准；此时**不能同时传入 `member_limit`**。 |\n"
+  },
+  "editChatInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "invite_link",
+      "creates_join_request"
+    ],
+    "text": "## 编辑额外的邀请链接\n\n编辑**由机器人创建的非主邀请链接**。机器人必须是管理员并具备相应权限。成功返回编辑后的 [`ChatInviteLink`](#chatinvitelink) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `invite_link` | String | 是 | 需要编辑的邀请链接。 |\n| `name` | String | 否 | 邀请链接名称，长度 **0–32 字符**。 |\n| `expire_date` | Integer | 否 | 链接到期时间，Unix 时间戳。 |\n| `member_limit` | Integer | 否 | 通过链接加入且同时留在聊天中的人数上限，**1–99999**。 |\n| `creates_join_request` | Boolean | 否 | 设为 `True` 时入群需要管理员审批，此时**不能指定 `member_limit`**。 |\n"
+  },
+  "revokeChatInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "primary",
+      "invite_link"
+    ],
+    "text": "## 撤销聊天邀请链接\n\n撤销机器人创建的邀请链接。如果撤销的是主邀请链接，Telegram 会**自动生成一条新的主链接**。机器人必须是管理员并有相应权限。成功返回被撤销的 [`ChatInviteLink`](#chatinvitelink) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `invite_link` | String | 是 | 需要撤销的邀请链接。 |\n"
+  },
+  "createChatSubscriptionInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "subscription_period",
+      "subscription_price"
+    ],
+    "text": "## 创建频道付费订阅邀请链接\n\n为频道创建按订阅收费的邀请链接。机器人必须拥有 `can_invite_users` 管理员权限。可以使用 `editChatSubscriptionInviteLink` 修改，或通过 `revokeChatInviteLink` 撤销。成功返回 [`ChatInviteLink`](#chatinvitelink) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `name` | String | 否 | 邀请链接名称，长度 **0–32 字符**。 |\n| `subscription_period` | Integer | 是 | 每次付费后的订阅有效期，以秒计。目前**必须为 `2592000` 秒（30 天）**。 |\n| `subscription_price` | Integer | 是 | 首次及每个后续订阅周期需要支付的 Telegram Stars 数量，**1–10000**。 |\n"
+  },
+  "editChatSubscriptionInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "invite_link",
+      "can_invite_users"
+    ],
+    "text": "## 修改频道订阅邀请链接\n\n修改由机器人创建的频道订阅邀请链接。机器人必须具有 `can_invite_users` 管理员权限。成功返回编辑后的 [`ChatInviteLink`](#chatinvitelink) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `invite_link` | String | 是 | 需要修改的订阅邀请链接。 |\n| `name` | String | 否 | 邀请链接的新名称，长度 **0–32 字符**。 |\n"
+  },
+  "approveChatJoinRequest": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_invite_users"
+    ],
+    "text": "## 批准入群申请\n\n批准用户加入聊天的申请。机器人必须是聊天管理员，并拥有 `can_invite_users` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n"
+  },
+  "declineChatJoinRequest": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_invite_users"
+    ],
+    "text": "## 拒绝入群申请\n\n拒绝用户加入聊天的申请。机器人必须是聊天管理员，并拥有 `can_invite_users` 权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一 ID。 |\n"
+  },
+  "answerChatJoinRequestQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "chat_join_request_query_id",
+      "queue"
+    ],
+    "text": "## 处理加入聊天的查询\n\n处理收到的加入聊天请求查询，可以批准、拒绝，或将处理决定留给其他管理员。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_join_request_query_id` | String | 是 | 加入请求查询的唯一 ID。 |\n| `result` | String | 是 | 只能是 `approve`（允许加入）、`decline`（拒绝）或 `queue`（交由其他管理员决定）。 |\n"
+  },
+  "sendChatJoinRequestWebApp": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "web_app_url"
+    ],
+    "text": "## 通过小程序处理入群查询\n\n处理收到的加入请求查询时，先向用户显示 Telegram Mini App。根据用户在小程序中的操作，调用 [`answerChatJoinRequestQuery`](#answerchatjoinrequestquery) 确定最终处理结果。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_join_request_query_id` | String | 是 | 目标加入查询的唯一 ID。 |\n| `web_app_url` | String | 是 | 需要打开的 **HTTPS Web App URL**。该小程序会得到 Web App 初始化文档规定的附加数据。 |\n"
+  },
+  "setChatPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "multipart/form-data"
+    ],
+    "text": "## 设置聊天头像\n\n给聊天设置新头像。**不能修改私聊的头像**。机器人必须是聊天管理员，并有相应权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `photo` | InputFile | 是 | 需要上传的新头像文件，使用 `multipart/form-data` 提交。 |\n"
+  },
+  "deleteChatPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "private chats"
+    ],
+    "text": "## 删除聊天头像\n\n删除当前聊天头像。**不能修改私聊头像**。机器人必须是聊天管理员，并具有相应权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n"
+  },
+  "setChatTitle": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "1-128"
+    ],
+    "text": "## 修改聊天标题\n\n修改聊天标题。**不能修改私聊标题**。机器人必须是该聊天管理员，并有相应权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `title` | String | 是 | 新的聊天标题，长度 **1–128 字符**。 |\n"
+  },
+  "setChatDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "0-255"
+    ],
+    "text": "## 修改群组或频道简介\n\n修改普通群组、超级群组或频道的简介。机器人必须是该聊天管理员，并具备相应权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `description` | String | 否 | 新的聊天简介，长度 **0–255 字符**。 |\n"
+  },
+  "pinChatMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "business_connection_id",
+      "disable_notification"
+    ],
+    "text": "## 置顶一条消息\n\n将消息加入聊天的置顶消息列表。在私聊和频道私信聊天中，可以置顶所有**非服务消息**；在群组和频道中，机器人必须拥有相应管理员权限，分别为 `can_pin_messages` 和 `can_edit_messages`。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 执行置顶操作所代表的 Telegram Business 连接 ID。 |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 是 | 需要置顶的消息 ID。 |\n| `disable_notification` | Boolean | 否 | 设为 `True` 时，不向全体成员发送新置顶通知。在**频道与私聊**中始终不发送此类通知。 |\n"
+  },
+  "unpinChatMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "business_connection_id",
+      "message_id"
+    ],
+    "text": "## 取消单条消息置顶\n\n将消息从聊天的置顶消息列表中移除。私聊和频道私信聊天可以取消全部类型消息的置顶；群组和频道则分别需要 `can_pin_messages`、`can_edit_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 执行操作所代表的 Telegram Business 连接 ID。 |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 否 | 需要取消置顶的消息 ID。传入 `business_connection_id` 时**此字段必填**。否则会取消**发送时间最新**的那条置顶消息。 |\n"
+  },
+  "unpinAllChatMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_pin_messages"
+    ],
+    "text": "## 清空聊天置顶消息\n\n清除一个聊天的置顶消息列表。私聊和频道私信聊天不需要额外权限；在群组、频道中，机器人分别需要 `can_pin_messages`、`can_edit_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一 ID，或超级群组、频道的用户名（格式为 `@username`）。 |\n"
+  },
+  "sendChatAction": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "upload_photo",
+      "message_thread_id"
+    ],
+    "text": "## 发送机器人动作状态\n\n向用户显示机器人正在输入、上传文件等状态。状态最多持续 **5 秒**，而且在机器人真正发送消息后，Telegram 客户端会清除该状态。成功返回 `True`。\n\n例如图片机器人需要时间处理图片时，可以调用 `sendChatAction` 并传入 `upload_photo`，让用户看到“正在发送图片”，不必单独发送“请稍候”消息。**仅建议在响应需要明显等待时使用。**\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 发送聊天动作所代表的 Telegram Business 连接 ID。 |\n| `chat_id` | Integer or String | 是 | 目标聊天 ID，或机器人、超级群组的 `@username`。**不支持频道与频道私信聊天**。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题或消息线程 ID，仅适用于超级群组及开启论坛话题模式的机器人私聊。 |\n| `action` | String | 是 | 动作类型：`typing`（输入文本）、`upload_photo`（上传图片）、`record_video` / `upload_video`（录制/上传视频）、`record_voice` / `upload_voice`（录制/上传语音）、`upload_document`（上传文件）、`choose_sticker`（选择贴纸）、`find_location`（查找位置）、`record_video_note` / `upload_video_note`（录制/上传视频消息）。 |\n"
   }
 }

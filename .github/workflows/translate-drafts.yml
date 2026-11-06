@@ -1,0 +1,41 @@
+name: Offline draft translator (no API key)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/translate-drafts.py
+      - .github/workflows/translate-drafts.yml
+permissions:
+  contents: write
+concurrency:
+  group: bot-api-cn-offline-drafts
+  cancel-in-progress: false
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build official documentation
+        run: node scripts/build-docs.js
+      - name: Install offline translation engine
+        run: python -m pip install argostranslate==1.10.0
+      - name: Translate official Markdown while protecting API names and tables
+        run: python scripts/translate-drafts.py --limit 12
+      - name: Commit draft translations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/draft-translations.json
+          if ! git diff --cached --quiet; then
+            git commit -m "docs(zh): update offline Chinese draft translations"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

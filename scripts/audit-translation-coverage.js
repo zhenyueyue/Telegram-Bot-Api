@@ -21,3 +21,8 @@ for(const s of docs.sections){
 console.log('Full translations audited:',docs.sections.filter(s=>s.translation?.from==='full').length,
             'table field mismatches:',audits.length);
 for(const a of audits)console.log(JSON.stringify(a));
+
+if(audits.length){
+ console.error('Translation completeness check FAILED: source and Chinese field names differ.');
+ process.exitCode=1;
+}

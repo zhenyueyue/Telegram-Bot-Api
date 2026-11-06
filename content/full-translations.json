@@ -4124,9 +4124,8 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "Describes an interval of time during which a business is open.",
-      "starting on Monday",
-      "0 - 7 * 24 * 60",
-      "0 - 8 * 24 * 60"
+      "The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open",
+      "The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open"
     ],
     "text": "此对象描述 Business 营业时间中的一个时间区间。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `opening_minute` | Integer | 一周内的分钟序号，以星期一为起点，表示营业时间区间的开始时刻；范围为 `0` 至 `7 * 24 * 60`。 |\n| `closing_minute` | Integer | 一周内的分钟序号，以星期一为起点，表示营业时间区间的结束时刻；范围为 `0` 至 `8 * 24 * 60`。 |"
   },

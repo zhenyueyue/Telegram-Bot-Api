@@ -4011,8 +4011,8 @@
     "requiredSourceFragments": [
       "This object defines the criteria used to request a suitable chat.",
       "The bot will be granted requested rights in the chat if appropriate.",
-      "rights must be a superset of bot_administrator_rights",
-      "rights must be a subset of user_administrator_rights"
+      "The rights must be a superset of",
+      "The rights must be a subset of"
     ],
     "text": "此对象定义请求符合条件的聊天时所使用的筛选条件。用户按下相应按钮后，被选中聊天的信息将分享给机器人；如果条件适用，机器人还将获得在该聊天中请求的权限。有关详细信息，请参阅[请求聊天](https://core.telegram.org/bots/features.md#chat-and-user-selection)。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的有符号 32 位标识符。此标识符将在 [ChatShared](#chatshared) 对象中返回，并且必须在当前消息中保持唯一。 |\n| `chat_is_channel` | Boolean | 传入 `True` 表示请求频道聊天；传入 `False` 表示请求群组或超级群组聊天。 |\n| `chat_is_forum` | Boolean | 可选。传入 `True` 表示请求论坛超级群组；传入 `False` 表示请求非论坛聊天。如果未指定，则不施加额外限制。 |\n| `chat_has_username` | Boolean | 可选。传入 `True` 表示请求具有用户名的超级群组或频道；传入 `False` 表示请求没有用户名的聊天。如果未指定，则不施加额外限制。 |\n| `chat_is_created` | Boolean | 可选。传入 `True` 表示请求由用户拥有的聊天。否则，不施加额外限制。 |\n| `user_administrator_rights` | [ChatAdministratorRights](#chatadministratorrights) | 可选。JSON 序列化对象，列出用户在该聊天中必须拥有的管理员权限。这些权限必须是 `bot_administrator_rights` 的超集。如果未指定，则不施加额外限制。 |\n| `bot_administrator_rights` | [ChatAdministratorRights](#chatadministratorrights) | 可选。JSON 序列化对象，列出机器人在该聊天中必须拥有的管理员权限。这些权限必须是 `user_administrator_rights` 的子集。如果未指定，则不施加额外限制。 |\n| `bot_is_member` | Boolean | 可选。传入 `True` 表示请求机器人已加入的聊天。否则，不施加额外限制。 |\n| `request_title` | Boolean | 可选。传入 `True` 表示请求聊天标题。 |\n| `request_username` | Boolean | 可选。传入 `True` 表示请求聊天用户名。 |\n| `request_photo` | Boolean | 可选。传入 `True` 表示请求聊天照片。 |"
   },
@@ -4020,17 +4020,17 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "This object defines the parameters for the creation of a managed bot.",
-      "update managed_bot",
-      "managed_bot_created"
+      "the update *managed_bot*",
+      "the field *managed_bot_created*"
     ],
     "text": "此对象定义创建受管理机器人的参数。创建的机器人信息将通过 `managed_bot` 更新，以及包含 `managed_bot_created` 字段的 [Message](#message) 分享给当前机器人。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的有符号 32 位标识符。此标识符必须在当前消息中保持唯一。 |\n| `suggested_name` | String | 可选。建议使用的机器人名称。 |\n| `suggested_username` | String | 可选。建议使用的机器人用户名。 |"
   },
   "KeyboardButtonPollType": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "This object represents type of a poll",
-      "If quiz is passed",
-      "If regular is passed"
+      "This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.",
+      "If *quiz* is passed",
+      "If *regular* is passed"
     ],
     "text": "此对象表示用户按下相应按钮时允许创建并发送的投票类型。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 可选。如果传入 `quiz`，用户将只能创建测验模式的投票；如果传入 `regular`，用户将只能创建普通投票。否则，用户可以创建任意类型的投票。 |"
   },
@@ -4048,9 +4048,9 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "This object represents a parameter of the inline keyboard button used to automatically authorize a user.",
-      "The data added is the same as described in Receiving authorization data.",
-      "You must always check the hash",
-      "The url's domain must be the same as the domain linked with the bot."
+      "The data added is the same as described in",
+      "you **must** always check the hash",
+      "The *url*'s domain must be the same as the domain linked with the bot."
     ],
     "text": "此对象表示内联键盘按钮的一个参数，用于自动授权用户。当用户从 Telegram 进入时，它可以很好地替代 Telegram Login Widget。用户只需点击按钮并确认登录即可。\n\n示例机器人：[@DiscussBot](https://t.me/DiscussBot)\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `url` | String | 按下按钮时打开的 HTTPS URL，系统会将用户授权数据添加到查询字符串中。如果用户拒绝提供授权数据，则打开不包含用户信息的原始 URL。添加的数据与[接收授权数据](https://core.telegram.org/widgets/login#receiving-authorization-data)中描述的数据相同。**注意：** 必须始终按照[验证授权数据](https://core.telegram.org/widgets/login#checking-authorization)中的说明检查收到数据的哈希值，以验证身份认证和数据完整性。 |\n| `forward_text` | String | 可选。消息被转发时按钮显示的新文字。 |\n| `bot_username` | String | 可选。用于用户授权的机器人的用户名。不支持在 `RichMessageButton` 中使用。有关详细信息，请参阅[设置机器人](https://core.telegram.org/bots/features.md#botfather)。如果未指定，则使用当前机器人的用户名。URL 的域名必须与关联到该机器人的域名相同。有关详细信息，请参阅[将域名关联到机器人](https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot)。 |\n| `request_write_access` | Boolean | 可选。传入 `True` 表示请求允许机器人向用户发送消息的权限。 |"
   },
@@ -4066,10 +4066,9 @@
   "ForceReply": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Telegram clients will display a reply interface to the user",
-      "Not supported in channels",
-      "1-64 characters",
-      "without having to sacrifice privacy mode"
+      "Upon receiving a message with this object, Telegram clients will display a reply interface to the user",
+      "This can be extremely useful if you want to create user-friendly step-by-step interfaces",
+      "Not supported in channels and for messages sent on behalf of a user account."
     ],
     "text": "收到包含此对象的消息后，Telegram 客户端将向用户显示回复界面，效果如同用户选中机器人的消息并点击「回复」。这对于创建便于用户使用的分步交互界面非常有用，同时无需牺牲[隐私模式](https://core.telegram.org/bots/features.md#privacy-mode)。不支持在频道中使用，也不支持用于代表用户账号发送的消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `force_reply` | True | 显示回复界面，效果如同用户手动选中机器人的消息并点击「回复」。 |\n| `input_field_placeholder` | String | 可选。回复界面激活时输入框中显示的占位文字，长度为 1–64 个字符。 |\n| `selective` | Boolean | 可选。使用此参数可以仅要求特定用户回复。目标用户包括：1）在 [Message](#message) 对象文本中被 @ 提及的用户；2）如果机器人的消息是对同一聊天、同一论坛话题中某条消息的回复，则目标用户为原消息的发送者。 |\n\n**示例：** 一个群组投票机器人启用了隐私模式（只能接收命令、对自己消息的回复以及提及）。创建新投票有两种方式：\n\n- 告诉用户如何发送带参数的命令，例如 `/newpoll question answer1 answer2`。这种方式可能适合高级用户，但缺乏现代交互体验。\n- 引导用户逐步完成操作，例如先请用户发送问题，再添加第一个答案选项，随后继续添加答案，准备好后发送 `/done`。\n\n如果机器人在提问时使用 `ForceReply`，即使机器人只能接收回复、命令和提及，也能收到用户的回答，而无需用户进行额外操作。"
   },

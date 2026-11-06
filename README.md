@@ -1,51 +1,37 @@
-# Telegram Bot API 中文文档阅读器
+# Telegram Bot API 10.3 简体中文全文翻译
 
-完全静态的 Telegram Bot API 中文/英文开发者参考站，部署在 GitHub Pages，不需要在个人电脑上启动服务或配置 API Key。
+这是 **Telegram Bot API 官方文档的简体中文全文翻译（非官方）**，主要面向希望使用 Telegram 机器人、但阅读英文文档不方便的中文使用者。查参数、了解方法用途，或对照官方说明，都可以直接在线阅读。
 
-**在线阅读：** https://zhenyueyue.github.io/Telegram-Bot-Api/
+**📖 在线阅读：<https://zhenyueyue.github.io/Telegram-Bot-Api/>**
 
-## 翻译质量分级
+## 翻译覆盖范围
 
-项目不会把中文摘要、自动翻译草稿和完整译文混为一谈：
+本项目对应 **Telegram Bot API 10.3**，共 **611 个章节，全部提供全文翻译，并非只翻译重点或制作内容摘要**：
 
-- **完整中文译文**：保留原文的参数表、字段、类型、限制、警告与返回值；术语按中文开发者习惯表达。内容在 `content/full-translations.json`，官方英文更新导致已验证片段失配时会停止套用。
-- **机器译文草稿（待校对）**：可通过 `scripts/translate-drafts.py` 在 GitHub Actions 使用 Argos Translate 离线模型生成。模型与文档在 GitHub 运行器本地处理，**不调用付费翻译 API，不需要 API Key**。尽管会保护代码片段、英文参数名和数值，仍可能出现漏译、误译，因此始终明确标记为未校对，涉及权限、收费、数据删除等功能时应核对英文原文。机器译文使用来源哈希绑定，避免直接应用到新版英语内容。
-- **中文重点摘要**：位于 `content/notes.json`，仅用于快速理解，不是逐段完整翻译。
-- **官方英文原文**：覆盖全部可同步章节，可切换 English 或中英对照。
+- **23 篇指南**：帮助了解 Bot API 的使用方式与相关概念。
+- **185 个 API 方法**：查找机器人可以调用的接口、参数和返回结果。
+- **403 个数据类型**：查看对象、字段、类型及其含义。
 
-中文页面中，摘要及待校对机器译文均提供官方英文原文的展开入口；完成全文译文的章节也可切换中英对照。
+## 怎么使用
 
-## 无密钥自动翻译
+打开[在线文档](https://zhenyueyue.github.io/Telegram-Bot-Api/)，可以根据需要切换阅读方式：
 
-有两条独立的工作流：
+- **中文摘要**：快速了解章节重点，适合先熟悉内容。
+- **中英对照**：同时查看中文译文和英文原文，方便核对术语与细节。
+- **English**：直接阅读官方英文内容。
 
-- `Publish Chinese Bot API reader`：每周同步官方英文内容，并合并已有译文和译稿后发布 GitHub Pages。
-- `Offline draft translator (no API key)`：从当前官方英文生成新的中文**机器草稿**，提交到 `content/draft-translations.json`。这不是人工校对服务，不会被标记为完整译文。
+阅读时还可以：
 
-经过人工校对并保留结构的译文可从草稿迁移到 `content/full-translations.json`，届时对应章节不再展示未经校对的版本。
+- 使用侧边栏或搜索查找指南、API 方法和数据类型。
+- 在每个章节中打开对应的**官方英文原文链接**，核实具体说明。
+- 查看站点标注的**官方文档版本和日期**，了解当前内容所依据的官方资料版本。
 
-## 阅读功能
+## 关于翻译准确性
 
-- 侧边栏中英双语 API 菜单、中文/英文搜索
-- 中英切换和双栏对照，代码与参数名称保持英文
-- 按钮、方法与对象引用跳转，收藏和独立章节链接
-- 参数表格、代码块和警告的 Markdown 排版
-- 个人译文修订存储在当前浏览器的 localStorage 中
+翻译由 AI 生成，并经过抽查核对；但这不代表每一处译文都已经过人工逐句审校。遇到权限、参数限制、收费、数据删除等重要内容，或需要据此编写正式程序时，请以每页链接的 **Telegram 官方英文原文**为准。
 
-## 部署与构建
+本项目由社区维护，与 Telegram 官方无关。它旨在降低中文读者查阅 Bot API 文档的语言门槛，不替代官方文档。
 
-在仓库 **Settings → Pages** 中将 Source 设置为 **GitHub Actions**。合并或推送到 `main` 会触发网站构建。
+---
 
-本地构建使用 Node.js 22：
-
-```sh
-node scripts/build-docs.js
-node scripts/test-menu.js
-node scripts/test-rendering.js
-```
-
-编译结果位于 `dist/`。正式使用请通过静态服务器访问，不能用 `file://` 直接打开（浏览器会限制 Fetch）。
-
-官方文档更新后，如果完整译文的源文校验不通过或草稿哈希失配，将保留官方英文内容，而不会假装译文是最新的。此项目不是 Telegram 官方维护的网站，API 细节始终以 Telegram 官方英文原文为准。
-
-代码采用 MIT License；内置 Markdown 解析器许可证见 `public/vendor/LICENSE-marked.md`。
+*官方文档：<https://core.telegram.org/bots/api> · 本项目：非官方简体中文全文翻译*

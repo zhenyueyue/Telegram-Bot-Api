@@ -4594,5 +4594,76 @@
       "InputPaidMediaLivePhoto"
     ],
     "text": "## 要发送的付费媒体\n\n此对象描述要发送的付费媒体。目前可以是以下类型之一：\n\n- [`InputPaidMediaLivePhoto`](#inputpaidmedialivephoto)\n- [`InputPaidMediaPhoto`](#inputpaidmediaphoto)\n- [`InputPaidMediaVideo`](#inputpaidmediavideo)"
+  },
+  "WebAppInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Initializing Web Apps",
+      "HTTPS URL"
+    ],
+    "text": "## Web App 信息\n\n描述一个 [Web App](https://core.telegram.org/bots/webapps)。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `url` | `String` | 用于打开 Web App 的 **HTTPS URL**。打开时会携带[初始化 Web App](https://core.telegram.org/bots/webapps#initializing-mini-apps)中规定的附加数据。 |\n"
+  },
+  "ReplyKeyboardMarkup": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Not supported in channels",
+      "force_reply",
+      "input_field_placeholder",
+      "same chat and forum topic"
+    ],
+    "text": "## 自定义回复键盘\n\n表示带有回复选项的[自定义键盘](https://core.telegram.org/bots/features#keyboards)（相关说明与示例参见[机器人简介](https://core.telegram.org/bots/features)）。**不支持在频道中使用，也不支持用于代表企业账号发送的消息。**\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `keyboard` | `Array of Array of KeyboardButton` | 按钮行数组。每一行由一个 `KeyboardButton` 对象数组表示。 |\n| `is_persistent` | `Boolean` | 可选。请求客户端在普通键盘隐藏时始终显示自定义键盘。默认为 `False`；此时自定义键盘可隐藏，并可通过键盘图标重新打开。 |\n| `resize_keyboard` | `Boolean` | 可选。请求客户端按内容调整键盘的垂直高度以达到最佳显示效果（例如，只有两行按钮时缩小键盘）。默认为 `False`；此时自定义键盘始终与应用的标准键盘高度相同。 |\n| `one_time_keyboard` | `Boolean` | 可选。请求客户端在用户首次使用键盘后立即将其隐藏。键盘仍然可用，但客户端会自动切回聊天中的普通字母键盘；用户可点击输入框中的专用按钮再次显示自定义键盘。默认为 `False`。 |\n| `input_field_placeholder` | `String` | 可选。自定义键盘启用时显示在输入框中的占位文本，长度 **1–64 个字符**。 |\n| `selective` | `Boolean` | 可选。仅对特定用户显示键盘。作用对象为：① 在 `Message` 对象的文本中被 `@` 提及的用户；② 如果机器人消息回复的是**同一聊天、同一论坛话题**中的另一条消息，则包括被回复消息的发送者。 |\n| `force_reply` | `Boolean` | 可选。传入 `True`，强制向用户显示回复界面，效果与用户手动选中机器人的消息并点击“回复”相同。 |\n\n**示例：** 用户请求更改机器人的语言，机器人回复一条带有新语言选择键盘的消息。群组中的其他用户不会看到此键盘。\n"
+  },
+  "KeyboardButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "icon_custom_emoji_id",
+      "request_managed_bot",
+      "users_shared",
+      "chat_shared",
+      "web_app_data"
+    ],
+    "text": "## 回复键盘按钮\n\n表示回复键盘中的一个按钮。除 `text`、`icon_custom_emoji_id` 和 `style` 外，**最多只能使用一个字段**来指定按钮类型。简单的文本按钮可以直接用 `String` 表示按钮文字，而不必使用此对象。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | `String` | 按钮上显示的文字。如果未设置 `text`、`icon_custom_emoji_id` 和 `style` 之外的其他字段，则用户点击按钮时，按钮文字会作为消息发送。 |\n| `icon_custom_emoji_id` | `String` | 可选。显示在按钮文字前面的自定义表情符号的唯一标识符。仅适用于在 [Fragment](https://fragment.com/) 购买了额外用户名的机器人；或者当机器人所有者拥有 Telegram Premium 订阅时，机器人直接发送到私聊、群组及超级群组的消息。 |\n| `style` | `String` | 可选。按钮样式，必须是 `danger`（红色）、`success`（绿色）或 `primary`（蓝色）之一。省略时采用具体客户端应用的默认样式。 |\n| `request_users` | `KeyboardButtonRequestUsers` | 可选。点击按钮后打开符合条件的用户列表。选中用户的标识符通过 `users_shared` 服务消息发送给机器人。**仅限私聊。** |\n| `request_chat` | `KeyboardButtonRequestChat` | 可选。点击按钮后打开符合条件的聊天列表。选择聊天后，所选聊天的标识符通过 `chat_shared` 服务消息发送给机器人。**仅限私聊。** |\n| `request_managed_bot` | `KeyboardButtonRequestManagedBot` | 可选。点击后请求用户创建并分享一个由当前机器人管理的机器人。仅供已在 [@BotFather](https://t.me/BotFather) Mini App 中启用其他机器人管理功能的机器人使用。**仅限私聊。** |\n| `request_contact` | `Boolean` | 可选。设为 `True` 后，点击按钮会将用户的电话号码作为联系人发送给机器人。**仅限私聊。** |\n| `request_location` | `Boolean` | 可选。设为 `True` 后，点击按钮会发送用户当前所在位置。**仅限私聊。** |\n| `request_poll` | `KeyboardButtonPollType` | 可选。点击按钮后，要求用户创建一项投票并发送给机器人。**仅限私聊。** |\n| `web_app` | `WebAppInfo` | 可选。点击按钮后启动所描述的 Web App。该 Web App 可以发送 `web_app_data` 服务消息。**仅限私聊。** |\n"
+  },
+  "ChatLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Can't be a live location",
+      "1-64 characters"
+    ],
+    "text": "## 聊天关联地点\n\n表示与某个聊天关联的地点。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `location` | `Location` | 与该超级群组关联的地点，**不能是实时位置**。 |\n| `address` | `String` | 地点地址，由聊天所有者定义，长度 **1–64 个字符**。 |\n"
+  },
+  "ReactionType": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "ReactionTypeEmoji",
+      "ReactionTypeCustomEmoji",
+      "ReactionTypePaid"
+    ],
+    "text": "## 消息反应类型\n\n此对象描述消息反应的类型。目前可为以下三种类型之一：\n\n- [`ReactionTypeEmoji`](#reactiontypeemoji)：普通表情符号反应。\n- [`ReactionTypeCustomEmoji`](#reactiontypecustomemoji)：自定义表情符号反应。\n- [`ReactionTypePaid`](#reactiontypepaid)：付费反应。\n"
+  },
+  "ReactionTypeEmoji": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Type of the reaction",
+      "Reaction emoji",
+      "Currently, it can be one of"
+    ],
+    "text": "## 普通表情符号反应\n\n表示基于普通 Emoji 的消息反应。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 反应类型，固定为 `emoji`。 |\n| `emoji` | `String` | 反应所使用的 Emoji，**只能是下方所列的表情符号之一**。 |\n\n当前允许的 `emoji` 值：\n\n❤、👍、👎、🔥、🥰、👏、😁、🤔、🤯、😱、🤬、😢、🎉、🤩、🤮、💩、🙏、👌、🕊、🤡、🥱、🥴、😍、🐳、❤‍🔥、🌚、🌭、💯、🤣、⚡、🍌、🏆、💔、🤨、😐、🍓、🍾、💋、🖕、😈、😴、😭、🤓、👻、👨‍💻、👀、🎃、🙈、😇、😨、🤝、✍、🤗、🫡、🎅、🎄、☃、💅、🤪、🗿、🆒、💘、🙉、🦄、😘、💊、🙊、😎、👾、🤷‍♂、🤷、🤷‍♀、😡。\n"
+  },
+  "ReactionTypeCustomEmoji": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "custom_emoji_id",
+      "custom_emoji"
+    ],
+    "text": "## 自定义表情符号反应\n\n表示基于自定义表情符号的消息反应。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 反应类型，固定为 `custom_emoji`。 |\n| `custom_emoji_id` | `String` | 自定义表情符号的标识符。 |\n"
+  },
+  "ReactionTypePaid": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "reaction is paid",
+      "paid"
+    ],
+    "text": "## 付费反应\n\n表示付费消息反应。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 反应类型，固定为 `paid`。 |\n"
   }
 }

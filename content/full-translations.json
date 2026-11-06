@@ -4807,5 +4807,71 @@
       "next_transfer_date"
     ],
     "text": "## 已拥有的独特礼物\n\n描述用户或聊天收到且拥有的独特礼物。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 礼物类型，始终为 `unique`。 |\n| `gift` | [`UniqueGift`](#uniquegift) | 独特礼物信息。 |\n| `owned_gift_id` | `String` | 可选。机器人所识别的礼物唯一标识符；**仅用于代表企业账号收到的礼物**。 |\n| `sender_user` | [`User`](#user) | 可选。如果发送者已知且为用户，则为该用户的信息。 |\n| `send_date` | `Integer` | 礼物发送日期，采用 Unix 时间戳。 |\n| `is_saved` | `True` | 可选。若礼物显示在账号的个人资料页面上，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `can_be_transferred` | `True` | 可选。若礼物可以转移给另一名所有者，则为 `True`；**仅适用于代表企业账号收到的礼物**。 |\n| `transfer_star_count` | `Integer` | 可选。转让该礼物所需支付的 Telegram Stars 数量；若机器人无法转让该礼物，则省略。 |\n| `next_transfer_date` | `Integer` | 可选。可转让该礼物的时间，采用 Unix 时间戳；若该时间已过去，表示当前即可转让。 |\n"
+  },
+  "MenuButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the bot's menu button in a private chat",
+      "MenuButtonDefault"
+    ],
+    "text": "## 机器人菜单按钮\n\n描述机器人在**私聊**中的菜单按钮。目前可以是下列类型之一：\n\n- [`MenuButtonCommands`](#menubuttoncommands)\n- [`MenuButtonWebApp`](#menubuttonwebapp)\n- [`MenuButtonDefault`](#menubuttondefault)\n\n如果私聊设置了 `MenuButtonDefault` 以外的菜单按钮，该聊天将使用指定的按钮；否则使用默认菜单按钮。**默认情况下，菜单按钮打开机器人的命令列表。**\n"
+  },
+  "MenuButtonCommands": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "opens the bot's list of commands",
+      "must be commands"
+    ],
+    "text": "## 命令列表菜单按钮\n\n表示点击后打开机器人命令列表的菜单按钮。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 按钮类型，必须为 `commands`。 |\n"
+  },
+  "MenuButtonWebApp": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "launches a",
+      "answerWebAppQuery",
+      "t.me"
+    ],
+    "text": "## Web App 菜单按钮\n\n表示点击后启动 [Web App](https://core.telegram.org/bots/webapps) 的菜单按钮。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 按钮类型，必须为 `web_app`。 |\n| `text` | `String` | 按钮上显示的文字。 |\n| `web_app` | [`WebAppInfo`](#webappinfo) | 描述用户点击按钮后要启动的 Web App。Web App 可通过 [`answerWebAppQuery`](#answerwebappquery) 方法**以用户身份发送任意消息**。也可以在该对象中使用指向机器人 Web App 的 `t.me` 链接代替 Web App URL；此时 Web App 将像用户点击了该链接一样打开。 |\n"
+  },
+  "MenuButtonDefault": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "no specific value for the menu button was set"
+    ],
+    "text": "## 默认菜单按钮\n\n表示没有为该菜单按钮设置特定的值。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 按钮类型，必须为 `default`。 |\n"
+  },
+  "InputPaidMediaLivePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media to send is a live photo",
+      "Sending live photos by a URL is currently unsupported"
+    ],
+    "text": "## 待发送的付费实况照片\n\n表示要发送的付费媒体是一张实况照片（Live Photo）。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `live_photo`。 |\n| `media` | `String` | 要发送的实况照片的视频部分。可传入 Telegram 服务器上现有文件的 `file_id`（推荐），或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。**目前不支持通过 URL 发送实况照片。** |\n| `photo` | `String` | 要发送的对应静态照片。可传入 Telegram 服务器上现有文件的 `file_id`（推荐），或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。**目前不支持通过 URL 发送实况照片。** |\n"
+  },
+  "InputPaidMediaPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media to send is a photo",
+      "must be photo"
+    ],
+    "text": "## 待发送的付费照片\n\n表示要发送的付费媒体是一张照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `photo`。 |\n| `media` | `String` | 要发送的照片文件。可传入 Telegram 服务器上现有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n"
+  },
+  "InputPaidMediaVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The paid media to send is a video",
+      "Thumbnails can't be reused",
+      "supports_streaming"
+    ],
+    "text": "## 待发送的付费视频\n\n表示要发送的付费媒体是一段视频。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `video`。 |\n| `media` | `String` | 要发送的视频文件。可传入 Telegram 服务器上现有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n| `thumbnail` | `String` | 可选。要发送文件的缩略图；如果服务器支持自动生成该文件的缩略图，则可忽略。必须使用 **JPEG 格式**，文件大小**小于 200 kB**，宽与高都**不得超过 320**。如果文件不是通过 `multipart/form-data` 上传，此字段会被忽略。缩略图**不能复用**，只能作为新文件上传；如缩略图已通过 `multipart/form-data` 在 `<file_attach_name>` 名下上传，可传入 `attach://<file_attach_name>`。详见[发送文件](#sending-files)。 |\n| `cover` | `String` | 可选。消息中视频的封面。可传入 Telegram 服务器上现有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n| `start_timestamp` | `Integer` | 可选。消息中视频的起始时间戳。 |\n| `width` | `Integer` | 可选。视频宽度。 |\n| `height` | `Integer` | 可选。视频高度。 |\n| `duration` | `Integer` | 可选。视频时长，单位为秒。 |\n| `supports_streaming` | `Boolean` | 可选。上传的视频适合流式播放时，传入 `True`。 |\n"
+  },
+  "InputProfilePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes a profile photo to set",
+      "InputProfilePhotoStatic",
+      "InputProfilePhotoAnimated"
+    ],
+    "text": "## 待设置的个人资料照片\n\n描述要设置的个人资料照片。目前可以是下列类型之一：\n\n- [`InputProfilePhotoStatic`](#inputprofilephotostatic)：静态个人资料照片。\n- [`InputProfilePhotoAnimated`](#inputprofilephotoanimated)：动态个人资料照片。\n"
   }
 }

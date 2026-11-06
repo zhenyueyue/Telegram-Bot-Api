@@ -1585,7 +1585,7 @@
   "RichBlockThinking": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "A block with a “Thinking…” placeholder"
+      "The block may be used only in"
     ],
     "text": "## RichBlockThinking\n\n“正在思考……”占位区块，对应自定义 HTML `<tg-thinking>` 标签。该区块只能用于 `sendRichMessageDraft`，因此不会出现在收到的消息中。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `thinking`。 |\n| `text` | RichText | 占位区块显示的文本。官方建议使用专门的 AI 动作自定义表情，示例见 [AI Actions 表情集](https://t.me/addemoji/AIActions)。 |\n"
   },
@@ -1767,7 +1767,7 @@
   "InputRichBlockThinking": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "A block with a “Thinking…” placeholder"
+      "The block may be used only in"
     ],
     "text": "## InputRichBlockThinking\n\n待发送的“正在思考……”占位区块，对应自定义 HTML `<tg-thinking>` 标签。该区块只能用于 `sendRichMessageDraft`，因此不会出现在收到的消息中。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 区块类型，固定为 `thinking`。 |\n| `text` | RichText | 占位区块显示的文本。官方建议使用专门的 AI 动作自定义表情，示例见 [AI Actions 表情集](https://t.me/addemoji/AIActions)。 |\n"
   },
@@ -1781,7 +1781,7 @@
   "InputRichMessage": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Describes a rich message to be sent. Exactly one of the fields html, markdown, or blocks must be used."
+      "skip_entity_detection"
     ],
     "text": "## InputRichMessage\n\n描述一条准备发送的富内容消息。**`html`、`markdown` 和 `blocks` 三个字段必须且只能使用其中一个。**\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `blocks` | Array of InputRichBlock | 可选。以区块数组的形式描述准备发送的富内容消息。 |\n| `html` | String | 可选。使用 HTML 格式描述准备发送的富内容消息。更多格式规则请参阅富内容消息格式说明；如果 HTML 中引用媒体，需要通过 `media` 字段提供对应媒体。 |\n| `markdown` | String | 可选。使用 Markdown 格式描述准备发送的富内容消息。更多格式规则请参阅富内容消息格式说明；如果 Markdown 中引用媒体，需要通过 `media` 字段提供对应媒体。 |\n| `media` | Array of InputRichMessageMedia | 可选。媒体列表，用于为 `html` 或 `markdown` 字段中通过 `tg://photo?id=`、`tg://video?id=`、`tg://document?id=` 和 `tg://audio?id=` 引用的媒体提供实际文件。 |\n| `is_rtl` | Boolean | 可选。传入 `True` 表示富内容消息应从右向左显示。 |\n| `skip_entity_detection` | Boolean | 可选。传入 `True` 可跳过文本中的实体自动识别，例如 URL、邮箱地址、用户名提及、话题标签、金融代码标签、机器人命令和电话号码。 |\n"
   },
@@ -1795,7 +1795,7 @@
   "InputRichMessageContent": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the content of a rich message to be sent as the result of an inline query."
+      "Only previously uploaded files may be used"
     ],
     "text": "## InputRichMessageContent\n\n表示通过内联查询结果发送的富内容消息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `rich_message` | InputRichMessage | 需要发送的富内容消息。**只能使用此前已经上传到 Telegram 的文件**。 |\n"
   },

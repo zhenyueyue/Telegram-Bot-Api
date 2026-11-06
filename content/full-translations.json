@@ -3411,5 +3411,80 @@
       "Describes a checklist."
     ],
     "text": "此对象描述一个清单。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `title` | String | 清单标题。 |\n| `title_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在清单标题中的特殊实体。 |\n| `tasks` | Array of [ChecklistTask](#checklisttask) | 清单中的任务列表。 |\n| `others_can_add_tasks` | True | 可选。如果清单创建者以外的用户可以添加任务，则为 `True`。 |\n| `others_can_mark_tasks_as_done` | True | 可选。如果清单创建者以外的用户可以将任务标记为已完成或未完成，则为 `True`。 |"
+  },
+  "InputChecklistTask": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a task to add to a checklist.",
+      "must be positive and unique among all task identifiers",
+      "1-100 characters after entities parsing",
+      "only *bold*, *italic*, *underline*, *strikethrough*, *spoiler*, *custom_emoji*, and *date_time* entities are allowed"
+    ],
+    "text": "此对象描述要添加到清单中的一项任务。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | Integer | 任务的唯一标识符；必须为正数，并且在当前清单中已有的所有任务标识符之间保持唯一。 |\n| `text` | String | 任务文本；经过实体解析后，长度必须为 1–100 个字符。 |\n| `parse_mode` | String | 可选。用于解析文本中实体的模式。详情请参阅[文本格式选项](#formatting-options)。 |\n| `text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在文本中的特殊实体列表。可以使用此字段代替 `parse_mode` 指定实体。目前只允许使用 `bold`、`italic`、`underline`、`strikethrough`、`spoiler`、`custom_emoji` 和 `date_time` 实体。 |"
+  },
+  "InputChecklist": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a checklist to create.",
+      "1-255 characters after entities parsing",
+      "List of 1-30 tasks in the checklist",
+      "only *bold*, *italic*, *underline*, *strikethrough*, *spoiler*, *custom_emoji*, and *date_time* entities are allowed"
+    ],
+    "text": "此对象描述要创建的清单。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `title` | String | 清单标题；经过实体解析后，长度必须为 1–255 个字符。 |\n| `parse_mode` | String | 可选。用于解析标题中实体的模式。详情请参阅[文本格式选项](#formatting-options)。 |\n| `title_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在标题中的特殊实体列表。可以使用此字段代替 `parse_mode` 指定实体。目前只允许使用 `bold`、`italic`、`underline`、`strikethrough`、`spoiler`、`custom_emoji` 和 `date_time` 实体。 |\n| `tasks` | Array of [InputChecklistTask](#inputchecklisttask) | 清单中的任务列表，必须包含 1–30 项任务。 |\n| `others_can_add_tasks` | Boolean | 可选。传入 `True` 表示其他用户可以向此清单添加任务。 |\n| `others_can_mark_tasks_as_done` | Boolean | 可选。传入 `True` 表示其他用户可以将此清单中的任务标记为已完成或未完成。 |"
+  },
+  "Location": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a point on the map.",
+      "0-1500",
+      "For active live locations only.",
+      "1-360",
+      "For sent live locations only."
+    ],
+    "text": "此对象表示地图上的一个地理位置点。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `latitude` | Float | 发送者提供的纬度。 |\n| `longitude` | Float | 发送者提供的经度。 |\n| `horizontal_accuracy` | Float | 可选。位置的不确定半径，单位为米；取值范围为 0–1500。 |\n| `live_period` | Integer | 可选。相对于消息发送时间，位置可以持续更新的时长，单位为秒。仅适用于正在更新的实时位置。 |\n| `heading` | Integer | 可选。用户当前移动的方向，以度为单位；取值范围为 1–360。仅适用于正在更新的实时位置。 |\n| `proximity_alert_radius` | Integer | 可选。触发接近聊天中其他成员的提醒时所使用的最大距离，单位为米。仅适用于已发送的实时位置。 |"
+  },
+  "Venue": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a venue.",
+      "Can't be a live location.",
+      "Foursquare identifier of the venue",
+      "Google Places identifier of the venue",
+      "supported_types"
+    ],
+    "text": "此对象表示一个场所。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `location` | [Location](#location) | 场所的位置。不能是实时位置。 |\n| `title` | String | 场所名称。 |\n| `address` | String | 场所地址。 |\n| `foursquare_id` | String | 可选。场所的 Foursquare 标识符。 |\n| `foursquare_type` | String | 可选。场所的 Foursquare 类型。例如：`\"arts_entertainment/default\"`、`\"arts_entertainment/aquarium\"` 或 `\"food/icecream\"`。 |\n| `google_place_id` | String | 可选。场所的 Google Places 标识符。 |\n| `google_place_type` | String | 可选。场所的 Google Places 类型。请参阅 [Google Places 支持的类型](https://developers.google.com/places/web-service/supported_types)。 |"
+  },
+  "WebAppData": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes data sent from a",
+      "A bad client can send arbitrary data in this field."
+    ],
+    "text": "此对象描述从 [Web App](#web-apps) 发送给机器人的数据。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `data` | String | 数据内容。请注意，不可信客户端可以在此字段中发送任意数据。 |\n| `button_text` | String | 打开此 Web App 时所使用的 `web_app` 键盘按钮上的文本。请注意，不可信客户端可以在此字段中发送任意数据。 |"
+  },
+  "ProximityAlertTriggered": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents the content of a service message",
+      "triggers a proximity alert set by another user.",
+      "The distance between the users"
+    ],
+    "text": "此对象表示一条服务消息的内容：当聊天中的某个用户触发了另一位用户设置的接近提醒时，Telegram 会发送此消息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `traveler` | [User](#user) | 触发提醒的用户。 |\n| `watcher` | [User](#user) | 设置此提醒的用户。 |\n| `distance` | Integer | 两位用户之间的距离。 |"
+  },
+  "MessageAutoDeleteTimerChanged": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a change in auto-delete timer settings.",
+      "New auto-delete time for messages in the chat; in seconds"
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的自动删除计时器设置发生了变化。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `message_auto_delete_time` | Integer | 聊天中消息新的自动删除时长，单位为秒。 |"
+  },
+  "ManagedBotCreated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about the bot that was created to be managed by the current bot.",
+      "The bot's token can be fetched using the method"
+    ],
+    "text": "此对象包含由当前机器人创建、并交由当前机器人管理的机器人的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `bot` | [User](#user) | 有关该机器人的信息。可以使用 [`getManagedBotToken`](#getmanagedbottoken) 方法获取此机器人的 Token。 |"
   }
 }

@@ -4820,7 +4820,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "opens the bot's list of commands",
-      "must be commands"
+      "must be *commands*"
     ],
     "text": "## 命令列表菜单按钮\n\n表示点击后打开机器人命令列表的菜单按钮。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 按钮类型，必须为 `commands`。 |\n"
   },
@@ -4852,7 +4852,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "The paid media to send is a photo",
-      "must be photo"
+      "must be *photo*"
     ],
     "text": "## 待发送的付费照片\n\n表示要发送的付费媒体是一张照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 媒体类型，必须为 `photo`。 |\n| `media` | `String` | 要发送的照片文件。可传入 Telegram 服务器上现有文件的 `file_id`（推荐）、供 Telegram 从互联网获取文件的 HTTP URL，或传入 `attach://<file_attach_name>`，使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传新文件。详见[发送文件](#sending-files)。 |\n"
   },

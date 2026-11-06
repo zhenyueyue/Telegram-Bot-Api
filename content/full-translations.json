@@ -4080,5 +4080,84 @@
       "Name of the community"
     ],
     "text": "此对象表示一个社区（由多个聊天组成的群组）。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `id` | Integer | 此社区的唯一标识符。此数字可能超过 32 个有效位，某些编程语言在解析时可能出现困难或静默错误。但它最多只有 52 个有效位，因此使用有符号 64 位整数或双精度浮点数即可安全存储此标识符。 |\n| `name` | String | 社区名称。 |"
+  },
+  "ChatPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a chat photo.",
+      "File identifier of small (160x160) chat photo.",
+      "File identifier of big (640x640) chat photo.",
+      "Can't be used to download or reuse the file."
+    ],
+    "text": "此对象表示聊天头像。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `small_file_id` | String | 小尺寸（160×160）聊天头像的文件标识符。只要头像未发生变化，此 `file_id` 就只能用于下载该照片。 |\n| `small_file_unique_id` | String | 小尺寸（160×160）聊天头像的唯一文件标识符。该标识符预计在不同时间及不同机器人之间保持不变。不能用于下载或重复使用该文件。 |\n| `big_file_id` | String | 大尺寸（640×640）聊天头像的文件标识符。只要头像未发生变化，此 `file_id` 就只能用于下载该照片。 |\n| `big_file_unique_id` | String | 大尺寸（640×640）聊天头像的唯一文件标识符。该标识符预计在不同时间及不同机器人之间保持不变。不能用于下载或重复使用该文件。 |"
+  },
+  "Birthdate": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the birthdate of a user.",
+      "Day of the user's birth; 1-31",
+      "Month of the user's birth; 1-12",
+      "Year of the user's birth"
+    ],
+    "text": "此对象描述用户的出生日期。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `day` | Integer | 用户出生的日期，范围为 1–31。 |\n| `month` | Integer | 用户出生的月份，范围为 1–12。 |\n| `year` | Integer | 可选。用户出生的年份。 |"
+  },
+  "BusinessIntro": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains information about the start page settings of a Telegram Business account.",
+      "Title text of the business intro",
+      "Message text of the business intro",
+      "Sticker of the business intro"
+    ],
+    "text": "此对象包含 Telegram Business 账号起始页面的设置信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `title` | String | 可选。Business 简介的标题文字。 |\n| `message` | String | 可选。Business 简介的消息文字。 |\n| `sticker` | [Sticker](#sticker) | 可选。Business 简介使用的贴纸。 |"
+  },
+  "BusinessLocation": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Contains information about the location of a Telegram Business account.",
+      "Address of the business",
+      "Location of the business"
+    ],
+    "text": "此对象包含 Telegram Business 账号的位置信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `address` | String | Business 的地址。 |\n| `location` | [Location](#location) | 可选。Business 的地理位置。 |"
+  },
+  "BusinessOpeningHoursInterval": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes an interval of time during which a business is open.",
+      "starting on Monday",
+      "0 - 7 * 24 * 60",
+      "0 - 8 * 24 * 60"
+    ],
+    "text": "此对象描述 Business 营业时间中的一个时间区间。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `opening_minute` | Integer | 一周内的分钟序号，以星期一为起点，表示营业时间区间的开始时刻；范围为 `0` 至 `7 * 24 * 60`。 |\n| `closing_minute` | Integer | 一周内的分钟序号，以星期一为起点，表示营业时间区间的结束时刻；范围为 `0` 至 `8 * 24 * 60`。 |"
+  },
+  "BusinessOpeningHours": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the opening hours of a business.",
+      "Unique name of the time zone for which the opening hours are defined",
+      "List of time intervals describing business opening hours"
+    ],
+    "text": "此对象描述 Business 的营业时间。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `time_zone_name` | String | 定义营业时间所使用时区的唯一名称。 |\n| `opening_hours` | Array of [BusinessOpeningHoursInterval](#businessopeninghoursinterval) | 描述营业时间的时间区间列表。 |"
+  },
+  "UserRating": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the rating of a user based on their Telegram Star spendings.",
+      "A higher level suggests a more trustworthy customer",
+      "Numerical value of the user's rating; the higher the rating, the better",
+      "omitted if the maximum level was reached"
+    ],
+    "text": "此对象描述根据用户在 Telegram Stars 上的消费情况计算得出的用户评分。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `level` | Integer | 用户当前的等级，用于表示其购买数字商品和服务时的可信程度。等级越高，表示用户越值得信赖；负数等级可能意味着需要警惕。 |\n| `rating` | Integer | 用户评分的数值。数值越高，评分越好。 |\n| `current_level_rating` | Integer | 达到当前等级所需的评分值。 |\n| `next_level_rating` | Integer | 可选。达到下一个等级所需的评分值；如果已经达到最高等级，则省略此字段。 |"
+  },
+  "StoryAreaPosition": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes the position of a clickable area within a story.",
+      "as a percentage of the media width",
+      "as a percentage of the media height",
+      "clockwise rotation angle",
+      "0-360"
+    ],
+    "text": "此对象描述故事中一个可点击区域的位置。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `x_percentage` | Float | 区域中心点的横坐标，以媒体宽度的百分比表示。 |\n| `y_percentage` | Float | 区域中心点的纵坐标，以媒体高度的百分比表示。 |\n| `width_percentage` | Float | 区域矩形的宽度，以媒体宽度的百分比表示。 |\n| `height_percentage` | Float | 区域矩形的高度，以媒体高度的百分比表示。 |\n| `rotation_angle` | Float | 矩形顺时针旋转的角度，单位为度，范围为 0–360。 |\n| `corner_radius_percentage` | Float | 矩形圆角的半径，以媒体宽度的百分比表示。 |"
   }
 }

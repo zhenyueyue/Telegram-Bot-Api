@@ -4259,32 +4259,32 @@
   "BotCommandScopeAllChatAdministrators": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering all group and supergroup chat administrators.",
-      "Scope type, must be all_chat_administrators"
+      "covering all group and supergroup chat administrators.",
+      "Scope type, must be *all_chat_administrators*"
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖所有群组和超级群组聊天的管理员。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `all_chat_administrators`。 |"
   },
   "BotCommandScopeAllGroupChats": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering all group and supergroup chats.",
-      "Scope type, must be all_group_chats"
+      "covering all group and supergroup chats.",
+      "Scope type, must be *all_group_chats*"
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖所有群组和超级群组聊天。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `all_group_chats`。 |"
   },
   "BotCommandScopeAllPrivateChats": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering all private chats.",
-      "Scope type, must be all_private_chats"
+      "covering all private chats.",
+      "Scope type, must be *all_private_chats*"
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖所有私聊。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `all_private_chats`。 |"
   },
   "BotCommandScopeChat": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering a specific chat.",
-      "Scope type, must be chat",
+      "covering a specific chat.",
+      "Scope type, must be *chat*",
       "Channel direct messages chats and channel chats aren't supported."
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖指定的聊天。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `chat`。 |\n| `chat_id` | Integer or String | 目标聊天的唯一标识符，或目标超级群组的用户名，格式为 `@username`。不支持频道私信聊天和频道聊天。 |"
@@ -4292,8 +4292,8 @@
   "BotCommandScopeChatAdministrators": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering all administrators of a specific group or supergroup chat.",
-      "Scope type, must be chat_administrators",
+      "covering all administrators of a specific group or supergroup chat.",
+      "Scope type, must be *chat_administrators*",
       "Channel direct messages chats and channel chats aren't supported."
     ],
     "text": "此对象表示机器人命令的适用范围，涵盖指定群组或超级群组聊天中的所有管理员。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 范围类型，必须为 `chat_administrators`。 |\n| `chat_id` | Integer or String | 目标聊天的唯一标识符，或目标超级群组的用户名，格式为 `@username`。不支持频道私信聊天和频道聊天。 |"
@@ -4301,8 +4301,8 @@
   "BotCommandScopeChatMember": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Represents the scope of bot commands, covering a specific member of a group or supergroup chat.",
-      "Scope type, must be chat_member",
+      "covering a specific member of a group or supergroup chat.",
+      "Scope type, must be *chat_member*",
       "Unique identifier of the target user",
       "Channel direct messages chats and channel chats aren't supported."
     ],

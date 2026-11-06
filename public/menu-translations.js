@@ -1,0 +1,176 @@
+/* Menu-only Chinese names. API identifiers and official documentation stay unchanged. */
+(function (root) {
+  'use strict';
+
+  const EXACT = {
+    // Specific objects whose meaning is lost with word-by-word translation.
+    StickerSet:'贴纸包', Sticker:'贴纸对象', InputSticker:'待上传贴纸',
+    StickerSetName:'贴纸包名称', ChatPermissions:'聊天权限', ChatAdministratorRights:'聊天管理员权限',
+    ChatFullInfo:'聊天详细信息', ChatMemberOwner:'聊天所有者', ChatMemberAdministrator:'聊天管理员',
+    ChatMemberMember:'普通聊天成员', ChatMemberRestricted:'受限制的成员', ChatMemberLeft:'已退出的成员', ChatMemberBanned:'已封禁的成员',
+    ChatMemberUpdated:'聊天成员状态变更', ChatJoinRequest:'加入聊天请求', ChatBoost:'聊天助力',
+    ChatBoostSourcePremium:'会员助力来源', ChatBoostSourceGiftCode:'礼品码助力来源',
+    ChatBoostSourceGiveaway:'抽奖助力来源', ChatBoostUpdated:'聊天助力更新',
+    MessageOriginUser:'来自用户的消息', MessageOriginHiddenUser:'来自匿名用户的消息',
+    MessageOriginChat:'来自聊天的消息', MessageOriginChannel:'来自频道的消息',
+    ReplyKeyboardRemove:'移除回复键盘', ForceReply:'强制回复', InlineQueryResult:'内联查询结果',
+    InputMedia:'上传媒体对象', InputMediaPhoto:'上传图片', InputMediaVideo:'上传视频',
+    InputMediaAnimation:'上传动图', InputMediaAudio:'上传音频', InputMediaDocument:'上传文件',
+    InputPaidMedia:'待发送付费媒体', InputPaidMediaPhoto:'待发送付费图片',
+    InputPaidMediaVideo:'待发送付费视频', InputFile:'上传文件',
+    KeyboardButtonRequestUsers:'请求选择用户的键盘按钮', KeyboardButtonRequestChat:'请求选择聊天的键盘按钮',
+    KeyboardButtonPollType:'投票键盘按钮类型', ReplyParameters:'回复参数',
+    LinkPreviewOptions:'链接预览选项', CallbackGame:'游戏回调', WebAppData:'小程序提交的数据',
+    BusinessConnection:'商家账号连接', BusinessMessagesDeleted:'商家账号消息被删除',
+    BusinessIntro:'商家账号介绍', BusinessOpeningHours:'商家营业时间',
+    BusinessOpeningHoursInterval:'商家营业时段', BusinessLocation:'商家位置',
+    BusinessBotRights:'商家机器人权限', BusinessChatLink:'商家聊天链接',
+    MessageAutoDeleteTimerChanged:'消息自动删除计时器已更改',
+    PaidMediaPurchased:'付费媒体已购买', PaidMessagePriceChanged:'付费消息价格变更',
+    PreCheckoutQuery:'付款前确认请求', ShippingQuery:'配送信息查询',
+    SuccessfulPayment:'付款成功信息', RefundedPayment:'已退款付款记录',
+    StarTransaction:'星币交易记录', StarTransactions:'星币交易列表',
+    TransactionPartner:'交易对方', RevenueWithdrawalState:'收益提现状态',
+    Giveaway:'抽奖活动', GiveawayCreated:'抽奖已创建', GiveawayCompleted:'抽奖已完成',
+    GiveawayWinners:'抽奖中奖者', GiveawayWinnersCount:'中奖人数',
+    ForumTopic:'论坛话题', ForumTopicCreated:'论坛话题已创建',
+    ForumTopicEdited:'论坛话题已编辑', ForumTopicClosed:'论坛话题已关闭',
+    ForumTopicReopened:'论坛话题已重新开启', GeneralForumTopicHidden:'默认论坛话题已隐藏',
+    GeneralForumTopicUnhidden:'默认论坛话题已取消隐藏',
+    VideoChatScheduled:'视频聊天已安排', VideoChatStarted:'视频聊天已开始',
+    VideoChatEnded:'视频聊天已结束', VideoChatParticipantsInvited:'已邀请视频聊天参与者',
+    PassportData:'Telegram Passport 数据', EncryptedPassportElement:'加密的证件元素',
+    PassportElementError:'证件元素错误', PassportFile:'证件文件',
+    InputMessageContent:'内联结果的消息内容', InputTextMessageContent:'文本消息内容',
+    InputLocationMessageContent:'位置消息内容', InputVenueMessageContent:'地点消息内容',
+    InputContactMessageContent:'联系人消息内容', InputInvoiceMessageContent:'付款账单消息内容',
+    MaskPosition:'贴纸面部遮罩位置', File:'文件信息',
+    UserProfilePhotos:'用户头像列表', PhotoSize:'照片尺寸信息',
+    BotCommand:'机器人命令', BotCommandScope:'机器人命令适用范围',
+    MenuButton:'机器人菜单按钮', MenuButtonCommands:'显示命令列表的菜单按钮',
+    MenuButtonWebApp:'打开小程序的菜单按钮', MenuButtonDefault:'默认菜单按钮',
+    ReactionType:'表态类型', ReactionTypeEmoji:'表情表态',
+    ReactionTypeCustomEmoji:'自定义表情表态', ReactionTypePaid:'付费表态',
+    InlineKeyboardMarkup:'内联键盘', InlineKeyboardButton:'内联按钮',
+    ReplyKeyboardMarkup:'回复键盘', KeyboardButton:'回复键盘按钮',
+    WebAppInfo:'小程序信息', WebApp:'Telegram 小程序',
+    InputPollOption:'投票选项', PollAnswer:'投票回答',
+    'Recent changes':'近期更新', 'Bot API types':'Bot API 数据类型',
+    'Bot API methods':'Bot API 方法', 'Bot API changelog':'Bot API 更新日志',
+  };
+
+  const WORD = {
+    a:'', an:'', the:'', of:'', for:'用于', to:'至', from:'来自', in:'中', on:'上', with:'与', and:'与', by:'通过',
+    get:'获取', set:'设置', send:'发送', edit:'编辑', delete:'删除', remove:'移除', create:'创建',
+    copy:'复制', forward:'转发', stop:'停止', close:'关闭', reopen:'重新开启', open:'开启', re:'重新',
+    answer:'回答', approve:'批准', decline:'拒绝', ban:'封禁', unban:'解除封禁',
+    restrict:'限制', promote:'提升', unpin:'取消置顶', pin:'置顶',
+    revoke:'撤销', export:'导出', log:'登录', out:'退出', leave:'退出',
+    refund:'退款', replace:'替换', transfer:'转让', convert:'转换',
+    upgrade:'升级', verify:'验证', unverify:'取消认证', download:'下载',
+    allow:'允许', disallow:'禁止', enable:'启用', disable:'停用', gift:'礼物', gifts:'礼物',
+    bot:'机器人', bots:'机器人', api:'API', id:'ID', ids:'ID', url:'URL', urls:'URL',
+    user:'用户', users:'用户', me:'机器人自身', my:'我的', self:'自身',
+    chat:'聊天', chats:'聊天', channel:'频道', channels:'频道', group:'群组', groups:'群组',
+    supergroup:'超级群组', member:'成员', members:'成员', administrator:'管理员',
+    admin:'管理员', owner:'所有者', permission:'权限', permissions:'权限', rights:'权限',
+    status:'状态', statuses:'状态', invite:'邀请', invitation:'邀请', link:'链接', links:'链接',
+    request:'请求', requests:'请求', join:'加入', left:'已退出', banned:'已封禁',
+    pending:'待处理', new:'新', old:'旧', hidden:'隐藏', anonymous:'匿名',
+    message:'消息', messages:'消息', text:'文本', caption:'说明', captions:'说明',
+    photo:'图片', photos:'图片', video:'视频', videos:'视频', audio:'音频',
+    voice:'语音', animation:'动图', animations:'动图', document:'文件', documents:'文件',
+    media:'媒体', thumbnail:'缩略图', thumbnails:'缩略图', file:'文件', files:'文件',
+    sticker:'贴纸', stickers:'贴纸', setname:'贴纸包名称',
+    stickerpack:'贴纸包', custom:'自定义', emoji:'表情', emojis:'表情',
+    mask:'面部遮罩', position:'位置', positions:'位置', animated:'动态', static:'静态',
+    input:'输入', output:'输出', paid:'付费', price:'价格', prices:'价格',
+    star:'星币', stars:'星币', balance:'余额', subscription:'订阅', subscriptions:'订阅',
+    premium:'Premium', payment:'付款', payments:'付款', checkout:'结算',
+    invoice:'付款账单', invoices:'付款账单', shipping:'配送', address:'地址',
+    order:'订单', orders:'订单', currency:'货币', currencies:'货币',
+    transaction:'交易', transactions:'交易', partner:'交易对方', revenue:'收益',
+    withdrawal:'提现', refunding:'退款中', successful:'成功', success:'成功',
+    failed:'失败', failure:'失败', pendingpayment:'待付款',
+    webhook:'Webhook', webhooks:'Webhook', update:'更新', updates:'更新',
+    offset:'偏移量', limit:'限制', timeout:'超时', polling:'轮询',
+    inline:'内联', query:'查询', queries:'查询', result:'结果', results:'结果',
+    callback:'回调', button:'按钮', buttons:'按钮', keyboard:'键盘',
+    markup:'标记', reply:'回复', force:'强制', removekeyboard:'移除键盘',
+    commands:'命令', command:'命令', scope:'范围', scopes:'范围',
+    menu:'菜单', default:'默认', description:'描述', short:'简短', name:'名称', names:'名称',
+    title:'标题', titles:'标题', language:'语言', code:'代码',
+    profile:'资料', picture:'图片', pictures:'图片', photoset:'头像集',
+    business:'商家', connection:'连接', connected:'已连接', account:'账号',
+    location:'位置', venue:'地点', contact:'联系人', phone:'电话', number:'号码',
+    opening:'营业', hours:'时间', hour:'小时', interval:'时段', intro:'介绍',
+    website:'网站', web:'网页', app:'小程序', mini:'小型', application:'应用',
+    story:'快拍', stories:'快拍', active:'活跃', view:'查看', views:'浏览量',
+    reaction:'表态', reactions:'表态', type:'类型', types:'类型', entity:'实体',
+    entities:'实体', origin:'来源', source:'来源', sources:'来源',
+    boost:'助力', boosts:'助力', level:'等级', count:'数量', counts:'数量',
+    forum:'论坛', topic:'话题', topics:'话题', general:'默认',
+    poll:'投票', polls:'投票', option:'选项', options:'选项', voter:'投票者',
+    answer:'回答', answers:'回答', quiz:'测验', explanation:'解释',
+    game:'游戏', games:'游戏', score:'分数', scores:'分数', high:'最高',
+    dice:'骰子', contactlist:'联系人列表',
+    giveaway:'抽奖', giveaways:'抽奖', winner:'中奖者', winners:'中奖者',
+    prize:'奖品', prizes:'奖品', completed:'已完成', created:'已创建',
+    edited:'已编辑', deleted:'已删除', changed:'已更改',
+    scheduled:'已安排', started:'已开始', ended:'已结束',
+    participant:'参与者', participants:'参与者', invitees:'被邀请者',
+    videochat:'视频聊天', videochats:'视频聊天', live:'直播', stream:'直播流',
+    background:'背景', color:'颜色', colors:'颜色', fill:'填充', gradient:'渐变',
+    freeform:'自由形式', solid:'纯色', pattern:'图案', dark:'深色',
+    light:'浅色', lightness:'亮度', rotation:'旋转',
+    passport:'Passport 证件', personal:'个人', identity:'身份',
+    data:'数据', encrypted:'加密', decrypt:'解密', element:'元素',
+    elements:'元素', error:'错误', errors:'错误', secure:'安全',
+    credentials:'凭据', hash:'哈希', public:'公开', private:'私密',
+    date:'日期', time:'时间', birth:'出生', age:'年龄', first:'名字', last:'姓氏',
+    gender:'性别', country:'国家', state:'地区', city:'城市',
+    typeset:'类型集合', available:'可用', recent:'近期', changes:'更新',
+    formatting:'格式', format:'格式', guide:'指南', guides:'指南',
+    making:'发起', authorizing:'认证', getting:'获取', using:'使用',
+    local:'本地', server:'服务端', options:'选项', option:'选项',
+    converting:'转换', managing:'管理', working:'使用', handling:'处理',
+    displaying:'显示', linkpreview:'链接预览', preview:'预览',
+    requestor:'请求方', suggested:'建议', chosen:'已选',
+    checklist:'任务清单', task:'任务', tasks:'任务', completion:'完成',
+    giftcode:'礼品码', code:'代码', collectible:'收藏品',
+    unique:'独特', model:'模型', symbol:'符号',
+    upgraded:'已升级', verification:'认证', verified:'已认证',
+    signature:'签名', signatures:'签名', sponsored:'赞助', advertisement:'广告',
+    forumtopic:'论坛话题', localserver:'本地服务端', external:'外部',
+    switch:'切换', switcher:'切换器', point:'点', points:'积分',
+    action:'操作', actions:'操作', activity:'活动', actionbar:'操作栏',
+    privatechat:'私聊', direct:'私信', messagesdeleted:'消息删除',
+    chatboost:'聊天助力', paidmedia:'付费媒体', paidmessage:'付费消息',
+    businessconnection:'商家连接', webapp:'小程序', getupdates:'接收更新'
+  };
+
+  function words(name) {
+    return String(name || '').replace(/([a-z0-9])([A-Z])/g,'$1 $2')
+      .replace(/([A-Z])([A-Z][a-z])/g,'$1 $2')
+      .replace(/[_/:\-–—]+/g,' ')
+      .match(/[A-Za-z]+|\d+|[\u4e00-\u9fff]+/g) || [];
+  }
+
+  function translate(name,kind) {
+    const title = String(name || '').trim();
+    if (!title) return '';
+    if (Object.prototype.hasOwnProperty.call(EXACT,title)) return EXACT[title];
+    const tokens=words(title);
+    if (!tokens.length) return '';
+    const translated=tokens.map(token => Object.prototype.hasOwnProperty.call(WORD,token.toLowerCase()) ? WORD[token.toLowerCase()] : token);
+    let output=translated.join('').replace(/^\s+|\s+$/g,'');
+    // A Chinese gloss can have preserved technical names; never invent a full translation of unknown terminology.
+    if(!/[\u4e00-\u9fff]/.test(output)) return '';
+    if(output===title) return '';
+    return output;
+  }
+
+  const api={translate};
+  root.BotApiMenuCN=api;
+  if(typeof module !== 'undefined' && module.exports) module.exports=api;
+})(typeof globalThis!=='undefined'?globalThis:this);

@@ -2977,5 +2977,33 @@
       "you're welcome to switch to your own at any time."
     ],
     "text": "#### 我是否需要本地 Bot API 服务端？\n\n大多数机器人使用 Telegram 服务器提供的默认配置就足够了。如果你确实需要本地 Bot API 服务端所提供的某项特殊功能，也可以随时切换到自己的服务端。"
+  },
+  "Getting updates": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "There are two mutually exclusive ways of receiving updates for your bot",
+      "they will not be kept longer than 24 hours"
+    ],
+    "text": "## 接收更新\n\n机器人接收更新（updates）有两种互斥的方式：一种是使用 `getUpdates` 方法，另一种是使用 Webhook。**同一个机器人不能同时使用这两种方式接收更新。**\n\n无论采用哪种方式，收到的更新都会暂存在 Telegram 服务器上，直到机器人通过相应方式接收这些更新；但更新在服务器上的保留时间最长不超过 **24 小时**。\n\n无论选择哪种接收方式，机器人最终收到的都是 JSON 序列化的 `Update` 对象。\n\n- **长轮询（Long Polling）**：机器人主动调用 `getUpdates` 获取待处理更新。调用时应正确维护 `offset`，避免重复处理已经接收的更新。\n- **Webhook**：机器人通过 `setWebhook` 指定接收地址，由 Telegram 在有新更新时向该地址发送 HTTPS POST 请求。可使用 `secret_token` 校验请求来源，并通过 `allowed_updates` 指定需要接收的更新类型。\n\n如果需要从 Webhook 切换回长轮询，应先调用 `deleteWebhook`；如果要从长轮询切换为 Webhook，则调用 `setWebhook` 配置新的接收地址。"
+  },
+  "Available types": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "All types used in the Bot API responses are represented as JSON-objects",
+      "It is safe to use 32-bit signed integers for storing all Integer fields",
+      "Optional fields may be not returned when irrelevant"
+    ],
+    "text": "## 可用数据类型\n\nBot API 响应中使用的所有类型均以 JSON 对象表示。\n\n除非另有说明，使用 **32 位有符号整数**存储所有 `Integer` 字段是安全的。\n\n> 当某些可选字段与当前情况无关时，响应中可能不会返回这些字段。因此，解析响应时不应假设所有可选字段始终存在。"
+  },
+  "Formatting options": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The Bot API supports basic formatting for messages",
+      "Message entities can be nested",
+      "tg://user?id=",
+      "Date-time entity formatting is specified by a format string",
+      "r|w?[dD]?[tT]?"
+    ],
+    "text": "## 格式化选项\n\nBot API 支持对消息进行基本格式化。机器人发送的消息可以使用**粗体、斜体、下划线、删除线、剧透文本、块引用、内联链接以及预格式化代码**。Telegram 客户端会相应地渲染这些格式。你可以直接指定文本实体（text entities），也可以使用类似 Markdown 或 HTML 的格式语法。\n\n当用户打开内联链接时，Telegram 客户端会先向用户显示确认提示（例如“打开此链接？”），并同时显示完整 URL。\n\n### 实体嵌套规则\n\n消息实体可以嵌套，但必须遵守以下限制：\n\n- 如果两个实体包含共同字符，其中一个实体必须完全包含在另一个实体内部；不能只部分重叠。\n- `bold`、`italic`、`underline`、`strikethrough` 和 `spoiler` 实体可以包含其他任何实体，也可以被其他实体包含，但 `pre` 和 `code` 除外。\n- `blockquote` 和 `expandable_blockquote` 实体不能相互嵌套，也不能嵌套其他块引用实体。\n- 其他所有实体之间都不能相互包含。\n\n### 通过用户 ID 提及用户\n\n可以使用 `tg://user?id=<user_id>` 链接，通过用户标识符提及用户，而不必使用用户名。请注意：\n\n- 这类链接只有放在内联链接或内联键盘按钮中才有效；直接将其写在普通消息文本中不会生效。\n- 除非被提及的用户是所在聊天的成员，否则只有在该用户过去曾私聊联系过机器人，或曾通过内联按钮向机器人发送过回调查询，并且没有为机器人启用“转发消息隐私”时，才能保证这类提及有效。\n\n支持语法高亮的编程语言和标记语言列表，请参阅官方文档中 `libprisma#supported-languages` 对应的列表。\n\n### 日期时间实体格式\n\n日期时间实体的格式由一个格式字符串指定，该字符串必须符合以下正则表达式：\n\n```text\nr|w?[dD]?[tT]?\n```\n\n如果格式字符串为空，则按原样显示底层文本；不过，用户仍可能收到按其本地格式表示的底层日期。格式字符串非空时，根据其中包含的控制字符决定显示方式：\n\n| 字符 | 含义 |\n| --- | --- |\n| `r` | 显示相对于当前时间的时间。不能与其他任何控制字符组合使用。 |\n| `w` | 使用用户的本地化语言显示星期几。 |\n| `d` | 以短格式显示日期，例如 `17.03.22`。 |\n| `D` | 以长格式显示日期，例如 `March 17, 2022`。 |\n| `t` | 以短格式显示时间，例如 `22:45`。 |\n| `T` | 以长格式显示时间，例如 `22:45:00`。 |\n"
   }
 }

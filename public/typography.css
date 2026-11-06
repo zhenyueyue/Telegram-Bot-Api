@@ -166,3 +166,8 @@ body{font-size:var(--type-body)}
   .nav-item-bilingual{min-height:60px}
   .nav-item-bilingual .nav-name{font-size:13px}
 }
+
+/* Bilingual navigation item spacing: keep each background visually distinct. */
+.nav-group > .nav-item-bilingual + .nav-item-bilingual{margin-top:8px}
+.nav-item-bilingual{border-radius:11px}
+@media(max-width:780px){.nav-group > .nav-item-bilingual + .nav-item-bilingual{margin-top:8px}}

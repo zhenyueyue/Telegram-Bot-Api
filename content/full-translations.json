@@ -446,5 +446,39 @@
       "can_manage_topics"
     ],
     "text": "## 普通聊天成员权限\n\n描述非管理员用户在聊天中被允许执行的操作。以下字段均为可选字段。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `can_send_messages` | Boolean | 允许发送文本消息、富消息、联系人、抽奖及中奖信息、账单、位置和地点。 |\n| `can_send_audios` | Boolean | 允许发送音频。 |\n| `can_send_documents` | Boolean | 允许发送文件。 |\n| `can_send_photos` | Boolean | 允许发送图片。 |\n| `can_send_videos` | Boolean | 允许发送视频。 |\n| `can_send_video_notes` | Boolean | 允许发送视频消息。 |\n| `can_send_voice_notes` | Boolean | 允许发送语音消息。 |\n| `can_send_polls` | Boolean | 允许发送投票和任务清单。 |\n| `can_send_other_messages` | Boolean | 允许发送动图、游戏、贴纸以及使用内联机器人。 |\n| `can_add_web_page_previews` | Boolean | 允许为消息添加网页预览。 |\n| `can_react_to_messages` | Boolean | 允许对消息作出表态。省略时默认使用 `can_send_messages` 的值。 |\n| `can_edit_tag` | Boolean | 允许成员编辑自己的标签。省略时默认使用 `can_pin_messages` 的值。 |\n| `can_change_info` | Boolean | 允许修改聊天标题、头像和其他设置。公开超级群组会忽略此字段。 |\n| `can_invite_users` | Boolean | 允许邀请其他用户加入聊天。 |\n| `can_pin_messages` | Boolean | 允许置顶消息。公开超级群组会忽略此字段。 |\n| `can_manage_topics` | Boolean | 允许创建论坛话题。省略时默认使用 `can_pin_messages` 的值。 |\n"
+  },
+  "sendMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "ephemeral_message_parameters",
+      "suggested_post_parameters",
+      "allow_paid_broadcast",
+      "direct_messages_topic_id"
+    ],
+    "text": "## 发送文本消息\n\n使用此方法向目标聊天发送文本消息。成功时返回已发送的 [`Message`](#message) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家账号连接发送消息的唯一标识符。 |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_thread_id` | Integer | 否 | 目标论坛话题（消息线程）的唯一标识符。仅适用于启用了论坛话题的超级群组和启用了话题模式的机器人私聊。 |\n| `direct_messages_topic_id` | Integer | 否 | 频道私信聊天中目标私信话题的标识符。**向频道私信聊天发送消息时，此参数必填**。 |\n| `ephemeral_message_parameters` | EphemeralMessageParameters | 否 | 描述要发送的临时可见消息的参数，需作为 JSON 序列化对象提供。 |\n| `text` | String | 是 | 要发送的消息文本；解析消息实体后长度为 **1–4096 个字符**。 |\n| `parse_mode` | String | 否 | 解析消息文本中格式实体所用的模式。详见文本格式选项。 |\n| `entities` | Array of MessageEntity | 否 | 消息文本中格式实体的 JSON 序列化数组，可用来代替 `parse_mode`。 |\n| `link_preview_options` | LinkPreviewOptions | 否 | 消息链接预览的生成选项。 |\n| `disable_notification` | Boolean | 否 | 静默发送消息：用户会收到通知，但不播放声音。 |\n| `protect_content` | Boolean | 否 | 保护发送的消息内容，阻止转发和保存。 |\n| `allow_paid_broadcast` | Boolean | 否 | 设为 `True` 时，可在忽略普通广播速率限制的情况下每秒最多发送 **1000 条消息**，但每条消息收取 **0.1 Telegram Stars**，从机器人星币余额中扣除。 |\n| `message_effect_id` | String | 否 | 附加到消息上的特效的唯一标识符，仅适用于私聊。 |\n| `suggested_post_parameters` | SuggestedPostParameters | 否 | 要发送的建议投稿的参数，JSON 序列化对象；仅适用于频道私信聊天。若该消息是对另一条建议投稿的回复，原投稿会被**自动拒绝**。 |\n| `reply_parameters` | ReplyParameters | 否 | 指定要回复的消息及回复选项。 |\n| `reply_markup` | InlineKeyboardMarkup / ReplyKeyboardMarkup / ReplyKeyboardRemove / ForceReply | 否 | 额外的交互界面选项，需以 JSON 序列化对象提交：内联键盘、自定义回复键盘、移除回复键盘或强制用户回复。 |\n\n> **重要**：`chat_id` 和 `text` 始终必填；发送到频道私信聊天时还必须提供 `direct_messages_topic_id`。请勿将 `allow_paid_broadcast` 的收费行为误认为免费速率提升。\n"
+  },
+  "InlineKeyboardButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "icon_custom_emoji_id",
+      "switch_inline_query_chosen_chat",
+      "disabled",
+      "1-64 bytes"
+    ],
+    "text": "## 内联键盘按钮\n\n表示内联键盘中的一个按钮。除 `text`、`icon_custom_emoji_id` 和 `style` 外，**其他用于指定按钮行为的字段必须且只能选择一个**。\n\n### 对象字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | String | 按钮上显示的文字。 |\n| `icon_custom_emoji_id` | String（可选） | 显示在按钮文字前面的自定义表情唯一标识符。只有在 Fragment 购买额外用户名的机器人可以使用；或者机器人所有者订阅了 Telegram Premium、且消息由机器人直接发送到私聊/群组/超级群组时才允许使用。 |\n| `style` | String（可选） | 按钮样式，只能是 `danger`（红色）、`success`（绿色）或 `primary`（蓝色）；省略时由客户端使用默认样式。 |\n| `url` | String（可选） | 点击时打开的 HTTP 或 `tg://` URL。允许符合隐私设置时使用 `tg://user?id=<user_id>` 在没有用户名的情况下提及用户。 |\n| `callback_data` | String（可选） | 按钮被点击后，发给机器人的回调查询数据，长度 **1–64 字节**（注意是字节，不是字符）。 |\n| `web_app` | WebAppInfo（可选） | 要打开的 Web App 信息。Web App 可通过 `answerWebAppQuery` 代表用户发送消息。**仅限用户与机器人的私聊**；不支持代表商家账号发送的消息。 |\n| `login_url` | LoginUrl（可选） | 点击时自动对用户授权的 HTTPS URL，可替代 Telegram Login Widget。**临时可见消息不支持**。 |\n| `switch_inline_query` | String（可选） | 点击后要求用户选择一个聊天，在该聊天的输入框中插入机器人用户名与指定的内联查询。可为空，此时仅插入机器人用户名。不支持频道私信聊天或代表商家账号发送的消息。 |\n| `switch_inline_query_current_chat` | String（可选） | 点击后在当前聊天输入框中插入机器人用户名及指定内联查询。可为空，表示仅插入机器人用户名。适合在当前聊天里调用内联模式；**不支持频道、频道私信聊天或代表商家账号发送的消息**。 |\n| `switch_inline_query_chosen_chat` | SwitchInlineQueryChosenChat（可选） | 点击后要求用户按指定聊天类型选择聊天，再插入机器人用户名和内联查询。不支持频道私信聊天或代表商家账号发送的消息。 |\n| `copy_text` | CopyTextButton（可选） | 定义一个点击后将指定文本复制到剪贴板的按钮。 |\n| `callback_game` | CallbackGame（可选） | 指定点击后启动的游戏。**必须位于第一行第一个按钮**。 |\n| `pay` | Boolean（可选） | 设为 `True` 时显示付款按钮；按钮文本中出现的星币符号及 `XTR` 会替换成 Telegram Stars 图标。**仅限账单消息，并且必须位于第一行第一个按钮**。 |\n| `disabled` | DisabledButton（可选） | 设置后，按钮不可点击，也不会执行任何操作。 |\n\n> **注意**：`callback_data` 限制为 1–64 **字节**，不能误写成 64 个 Unicode 字符。`callback_game` 与 `pay` 有严格的按钮位置限制；`pay` 只能用于账单消息。\n"
+  },
+  "CopyTextButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "1-256 characters"
+    ],
+    "text": "## 复制文字按钮\n\n表示一个内联键盘按钮的“复制到剪贴板”动作。按钮被点击后，会将指定文本复制到用户的剪贴板。\n\n### 对象字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `text` | String | 要复制到剪贴板的文本，长度为 **1–256 个字符**。 |\n"
+  },
+  "DisabledButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "disabled button"
+    ],
+    "text": "## 禁用按钮\n\n表示一个已禁用、点击后不会执行任何操作的按钮。目前这个对象**不包含任何字段**。\n"
   }
 }

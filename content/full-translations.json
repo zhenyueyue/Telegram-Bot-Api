@@ -4414,7 +4414,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "The boost was obtained by the creation of a Telegram Premium or a Telegram Star giveaway.",
-      "prize_star_count / 500",
+      "*prize_star_count* / 500",
       "Identifier of a message in the chat with the giveaway",
       "there was no user to win the prize"
     ],

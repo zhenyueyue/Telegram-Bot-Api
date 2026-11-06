@@ -2966,8 +2966,7 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "The Bot API server source code is available at",
-      "Upload files up to 2000 MB",
-      "Set max_webhook_connections up to"
+      "Upload files up to 2000 MB"
     ],
     "text": "## 使用本地 Bot API 服务端\n\nBot API 服务端的源代码已公开。你可以在本地运行该服务端，并将机器人请求发送到自己的服务器，而不是 `https://api.telegram.org`。\n\n切换到本地 Bot API 服务端后，机器人将获得以下能力：\n\n- 下载文件时不受文件大小限制。\n- 上传最大 **2000 MB** 的文件。\n- 使用本地文件路径以及 `file` URI scheme 上传文件。\n- Webhook 可以使用 HTTP URL，而不必使用 HTTPS URL。\n- Webhook 可以使用任意本地 IP 地址。\n- Webhook 可以使用任意端口。\n- `max_webhook_connections` 可以设置为最高 **100000**。\n- 调用 `getFile` 后，`file_path` 字段可以直接返回文件的绝对本地路径，无需再下载文件。\n\n本地 Bot API 服务端源代码：`telegram-bot-api`。"
   },

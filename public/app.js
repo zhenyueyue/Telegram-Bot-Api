@@ -61,7 +61,7 @@ async function loadStaticDocs(){
 }
 async function api(route){
   if(route==='docs') return loadStaticDocs();
-  throw new Error('GitHub Pages 版本不需要服务器或 API Key');
+  throw new Error('当前站点不支持此服务器接口');
 }
 
 let toastTimer;

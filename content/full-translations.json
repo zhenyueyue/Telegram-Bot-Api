@@ -3021,11 +3021,12 @@
       "There are three ways to send files",
       "5 MB max size for photos and 20 MB max",
       "10 MB max size for photos, 50 MB for other files",
-      "It is not possible to change the file type when resending by file_id",
-      "file_id is unique for each individual bot",
+      "resending by **file_id**",
+      "**file_id** is unique for each individual bot",
       "the target file must have the correct MIME type",
-      "only work for .PDF and .ZIP files",
-      "audio/ogg and be no more than 1MB in size"
+      "only work for **.PDF** and **.ZIP** files",
+      "audio/ogg and be no more than 1MB in size",
+      "Other configurations may work but we can't guarantee that they will"
     ],
     "text": "## 发送文件\n\n发送文件（例如照片、贴纸、音频、媒体等）有三种方式：\n\n1. **使用 `file_id` 发送已存储在 Telegram 服务器上的文件。** 如果文件已经存储在 Telegram 服务器上的某个位置，就不需要重新上传。每个文件对象都有一个 `file_id` 字段，只需将该 `file_id` 作为参数传入即可。通过这种方式发送文件**没有文件大小限制**。\n2. **通过 HTTP URL 发送。** 向 Telegram 提供要发送文件的 HTTP URL，由 Telegram 下载并发送文件。照片的最大大小为 **5 MB**，其他类型内容的最大大小为 **20 MB**。\n3. **通过 `multipart/form-data` 上传。** 按照浏览器上传文件时通常使用的方式，将文件作为 `multipart/form-data` 请求的一部分发送。照片的最大大小为 **10 MB**，其他文件的最大大小为 **50 MB**。\n\n### 通过 file_id 发送\n\n- 通过 `file_id` 重新发送文件时，**不能更改文件类型**。例如，不能将[视频](#video)作为[照片](#sendphoto)发送，也不能将[照片](#photosize)作为[文档](#senddocument)发送。\n- 不能通过这种方式重新发送缩略图。\n- 通过 `file_id` 重新发送照片时，会发送该照片的**所有尺寸版本**。\n- `file_id` 对每个机器人都是唯一的，**不能从一个机器人转移到另一个机器人使用**。\n- `file_id` 可以唯一标识一个文件，但即使是同一个机器人，同一个文件也可能具有多个有效的 `file_id`。\n\n### 通过 URL 发送\n\n- 通过 URL 发送文件时，目标文件必须具有正确的 MIME 类型。例如，使用 `sendAudio` 发送音频时，应提供 `audio/mpeg` 等正确的 MIME 类型。\n- 对于 `sendDocument`，目前通过 URL 发送文件的方式**仅适用于 `.PDF` 和 `.ZIP` 文件**。\n- 使用 `sendVoice` 发送语音消息时，文件必须为 `audio/ogg` 类型，且大小不得超过 **1 MB**。大小在 **1 MB 至 20 MB** 之间的语音文件将作为普通文件发送，而不是语音消息。\n- 其他配置方式可能也能正常工作，但 Telegram **不保证其可用性**。"
   },

@@ -9,5 +9,246 @@
       "MIME type"
     ],
     "text": "## 获取文件信息并准备下载\n\n使用此方法获取文件的基本信息，并为下载做好准备。目前，通过 Telegram 托管的 Bot API，机器人最多可下载 **20 MB** 的文件。\n\n调用成功时，将返回一个 [`File`](#file) 对象。随后可以通过以下链接下载文件：\n\n`https://api.telegram.org/file/bot<token>/<file_path>`\n\n其中，`<file_path>` 取自 API 响应中的 `file_path` 字段。Telegram 保证该下载链接**至少在 1 小时内有效**；链接过期后，可以再次调用 `getFile` 获取新的下载链接。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `file_id` | `String` | 是（Yes） | 需要获取其文件信息的文件标识符。 |\n\n**注意：** 此方法不一定会保留文件的原始名称和 MIME 类型。因此，当收到 `File` 对象时，如果能够取得文件名和 MIME 类型，应及时保存。\n"
+  },
+  "getMe": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "testing your bot"
+    ],
+    "text": "## 获取机器人信息\n\n这是一个用于测试机器人身份验证令牌的简单方法。\n\n**无需任何参数。** 成功时返回一个包含机器人基本信息的 [`User`](#user) 对象。\n"
+  },
+  "logOut": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "cloud Bot API server"
+    ],
+    "text": "## 退出 Telegram 云端 Bot API 服务器\n\n在将机器人切换为本地 Bot API 服务器运行之前，使用此方法让机器人退出 Telegram 云端 Bot API 服务器。必须先退出云端，否则无法保证本地运行的机器人能收到更新。\n\n调用成功后，可以立即在本地服务器登录，但在接下来的 **10 分钟内**无法重新登录云端 Bot API 服务器。\n\n**无需任何参数。成功返回 `True`。\n"
+  },
+  "close": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "moving it from one local server"
+    ],
+    "text": "## 关闭本地服务器上的机器人实例\n\n将机器人从一台本地 Bot API 服务器迁移到另一台之前，使用此方法关闭当前实例。请在调用前先删除 Webhook，以免服务器重启后机器人被再次启动。\n\n机器人启动后的前 **10 分钟**内调用会返回 **429** 错误。\n\n**无需任何参数。成功返回 `True`。\n"
+  },
+  "getUpdates": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "long polling",
+      "allowed_updates",
+      "offset",
+      "timeout"
+    ],
+    "text": "## 通过长轮询接收更新\n\n通过长轮询（long polling）接收机器人收到的新事件。成功时返回一个由 [`Update`](#update) 对象组成的数组。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `offset` | Integer | 否 | 返回的第一条更新的标识符。一般设为上一批收到的最大 `update_id + 1`；默认从最早尚未确认的更新开始返回。当以大于某条更新 `update_id` 的 `offset` 调用本方法时，该条更新即视为已确认。也可传负数，表示从队列末尾倒数第 `-offset` 条更新开始读取；**此前所有更新将被丢弃**。 |\n| `limit` | Integer | 否 | 一次最多获取多少条更新，取值 **1–100**，默认 **100**。 |\n| `timeout` | Integer | 否 | 长轮询的等待超时，单位为秒，默认 **0**（短轮询）。正常使用长轮询时应设为正数；短轮询仅适合测试。 |\n| `allowed_updates` | Array of String | 否 | 需要接收的更新类型列表，以 JSON 序列化形式提交。例如 `[\"message\",\"edited_channel_post\",\"callback_query\"]`。空数组表示接收除 `chat_member`、`message_reaction`、`message_reaction_count` 外的所有类型（默认规则）；不提供时沿用之前的设置。此参数**不会影响调用前已创建的更新**，因此短时间内仍可能收到其他类型。 |\n\n> **注意**：设置了 Webhook 时无法使用 `getUpdates`。\n\n> 为避免重复接收更新，请在每次服务端返回结果之后重新计算 `offset`。\n"
+  },
+  "setWebhook": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "specify a URL",
+      "secret_token",
+      "max_connections",
+      "certificate"
+    ],
+    "text": "## 设置 Webhook 接收更新\n\n指定一个 HTTPS 地址，通过 Webhook 接收机器人更新。每当出现新更新，Telegram 都会向该地址发送包含 JSON 序列化 [`Update`](#update) 对象的 **HTTPS POST** 请求。如果请求失败（响应的 HTTP 状态码不属于 `2xx`），Telegram 会重试，并在多次尝试后停止。\n\n成功返回 `True`。可以通过 `secret_token` 设置校验令牌；设置后 Telegram 会在请求的 `X-Telegram-Bot-Api-Secret-Token` 请求头中携带该令牌。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `url` | String | 是 | 用于接收更新的 **HTTPS URL**。传入空字符串可移除 Webhook 集成。 |\n| `certificate` | InputFile | 否 | 上传公钥证书，供 Webhook 证书校验使用。使用自签名证书时必须以 `InputFile` 上传证书，不能传字符串。 |\n| `ip_address` | String | 否 | 用于发送 Webhook 请求的固定 IP 地址，替代 DNS 解析结果。 |\n| `max_connections` | Integer | 否 | 同时向 Webhook 投递更新时允许的最大 HTTPS 连接数，范围 **1–100**，默认 **40**。可调低以减轻服务器负载，或调高增加吞吐量。 |\n| `allowed_updates` | Array of String | 否 | 以 JSON 序列化的更新类型列表。空数组表示接收除 `chat_member`、`message_reaction`、`message_reaction_count` 外的所有类型；不填写则沿用原有设置。此参数不影响调用之前已产生的更新。 |\n| `drop_pending_updates` | Boolean | 否 | 传 `True` 可丢弃所有待处理的更新。 |\n| `secret_token` | String | 否 | 校验 Webhook 请求的密钥，长度为 **1–256** 个字符，只允许 `A–Z`、`a–z`、`0–9`、`_` 和 `-`。每次请求都会通过 `X-Telegram-Bot-Api-Secret-Token` 请求头传递。 |\n\n> **注意**：设置 Webhook 后，不能同时通过 [`getUpdates`](#getupdates) 获取更新。\n\n> 使用自签名证书时，必须通过 `certificate` 参数上传公钥证书文件。\n\n> Webhook 当前支持端口：**443、80、88、8443**。\n"
+  },
+  "deleteWebhook": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "switch back to"
+    ],
+    "text": "## 删除 Webhook\n\n移除当前的 Webhook 集成，例如在准备切换回 [`getUpdates`](#getupdates) 长轮询时使用。\n\n成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `drop_pending_updates` | Boolean | 否 | 传 `True` 时清除全部尚未处理的更新。 |\n"
+  },
+  "getWebhookInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current webhook status"
+    ],
+    "text": "## 查看 Webhook 状态\n\n获取机器人当前的 Webhook 状态。**无需参数。** 成功时返回 [`WebhookInfo`](#webhookinfo) 对象。如果机器人目前通过 `getUpdates` 轮询接收更新，返回对象中的 `url` 字段为空字符串。\n"
+  },
+  "getChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "up-to-date information about the chat"
+    ],
+    "text": "## 获取聊天详细信息\n\n获取指定聊天的最新详细信息。成功返回 [`ChatFullInfo`](#chatfullinfo) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组/频道的用户名（格式为 `@username`）。 |\n"
+  },
+  "getChatAdministrators": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "return_bots"
+    ],
+    "text": "## 获取聊天管理员列表\n\n获取指定聊天的管理员列表。成功返回 [`ChatMember`](#chatmember) 对象数组。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组/频道的用户名（格式为 `@username`）。 |\n| `return_bots` | Boolean | 否 | 传 `True` 时，同时返回该聊天中的所有机器人管理员。默认不包含当前机器人以外的其他机器人。 |\n"
+  },
+  "getChatMemberCount": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "number of members"
+    ],
+    "text": "## 获取聊天成员数量\n\n获取指定聊天中的成员总数。成功返回 `Integer`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组/频道的用户名（格式为 `@username`）。 |\n"
+  },
+  "getChatMember": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "only guaranteed to work for other users"
+    ],
+    "text": "## 获取指定聊天成员的信息\n\n获取聊天内指定成员的信息。对于**机器人自身以外的用户**，只有机器人是该聊天管理员时，才保证此方法能够正常工作。成功返回 [`ChatMember`](#chatmember) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组/频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n"
+  },
+  "leaveChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "leave a group"
+    ],
+    "text": "## 让机器人退出聊天\n\n使机器人退出群组、超级群组或频道。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 需要退出的聊天 ID，或超级群组、频道用户名（格式为 `@username`）。**不支持直接退出频道的私信聊天**；应改为退出对应频道。 |\n"
+  },
+  "answerCallbackQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "send answers to callback queries",
+      "callback_query_id",
+      "cache_time"
+    ],
+    "text": "## 响应内联键盘按钮回调\n\n回应用户点击内联键盘按钮后产生的回调查询。响应内容会在聊天窗口顶部以短通知显示，也可以显示为弹窗。成功返回 `True`。\n\n也可以把用户引导至指定的游戏 URL；要使用游戏跳转，必须先通过 `@BotFather` 为机器人创建游戏并接受相关条款。其他情况下可以使用 `t.me/your_bot?start=XXXX` 这样的深层链接打开带参数的机器人。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `callback_query_id` | String | 是 | 需要回应的回调查询的唯一标识符。 |\n| `text` | String | 否 | 向用户显示的通知文字，长度 **0–200** 字符。省略时不显示文字。 |\n| `show_alert` | Boolean | 否 | 传 `True` 显示弹窗，而非聊天顶部的通知；默认 `False`。 |\n| `url` | String | 否 | 让客户端打开的 URL。游戏 URL 仅适用于来自 `callback_game` 按钮的查询；也可以使用带 `start` 参数的机器人链接。 |\n| `cache_time` | Integer | 否 | 客户端可缓存此次回调查询结果的最长时间，单位为秒，默认 **0**。 |\n\n> **注意**：用户点击回调按钮后，客户端会持续显示进度提示，直到机器人调用 `answerCallbackQuery`。即使不需要显示文字，也应调用此方法回应。\n"
+  },
+  "deleteMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "48 hours",
+      "dice message",
+      "can_manage_direct_messages"
+    ],
+    "text": "## 删除单条消息\n\n删除一条消息，包括符合条件的服务消息。成功返回 `True`。\n\n**删除限制：**\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 是 | 需要删除的消息标识符。 |\n\n- 消息发送时间必须在 **48 小时以内**。\n\n- **不能删除**创建超级群组、频道或论坛话题的服务消息。\n\n- 私聊中的骰子消息只能在发送 **超过 24 小时后**删除。\n\n- 机器人可以删除自己在私聊、群组及超级群组中发送的消息，也可以删除私聊中收到的消息。\n\n- 拥有 `can_post_messages` 权限的机器人可以删除自己发到频道的消息。\n\n- 机器人是群组管理员时，可以删除该群组内的任意消息。\n\n- 对超级群组或频道而言，机器人拥有 `can_delete_messages` 管理员权限时可以删除其中的任意消息。\n\n- 拥有频道 `can_manage_direct_messages` 管理员权限时，可以删除该频道对应私信聊天中的任意消息。\n"
+  },
+  "deleteMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "multiple messages simultaneously",
+      "1-100"
+    ],
+    "text": "## 批量删除消息\n\n一次删除多条消息。指定的消息中若有找不到的记录，Telegram 会跳过这些消息。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天 ID，或目标机器人、超级群组、频道的用户名（格式为 `@username`）。 |\n| `message_ids` | Array of Integer | 是 | 要删除的消息 ID 数组，必须用 JSON 序列化提交，数量为 **1–100**。每条消息仍受 [`deleteMessage`](#deletemessage) 的删除限制约束。 |\n"
+  },
+  "setChatMemberTag": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_manage_tags",
+      "0-16"
+    ],
+    "text": "## 设置普通群成员标签\n\n为群组或超级群组中的普通成员设置标签。机器人必须是聊天管理员，而且必须拥有 `can_manage_tags` 管理员权限。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `tag` | String | 否 | 新的成员标签，长度 **0–16** 个字符，**不能使用表情符号**。 |\n"
+  },
+  "setChatAdministratorCustomTitle": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "custom title for an administrator",
+      "0-16"
+    ],
+    "text": "## 设置管理员自定义头衔\n\n为由机器人提升为管理员的超级群组管理员设置自定义头衔。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `custom_title` | String | 是 | 新的管理员自定义头衔，长度 **0–16** 个字符，**不得包含表情符号**。 |\n"
+  },
+  "getUserPersonalChatMessages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "last messages from the personal chat",
+      "1-20"
+    ],
+    "text": "## 获取用户个人聊天最近消息\n\n获取某个用户在其个人聊天（即目前显示在该用户资料页上的聊天）中发布的最近消息。成功返回 [`Message`](#message) 对象数组。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n| `limit` | Integer | 是 | 需要返回的消息最大数量，范围为 **1–20**。 |\n"
+  },
+  "getUserChatBoosts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "list of boosts added to a chat"
+    ],
+    "text": "## 获取某用户提供的聊天助力\n\n获取某个用户向指定聊天提供的助力（Boost）列表。需要机器人拥有该聊天的管理员权限。成功返回 `UserChatBoosts` 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名（格式为 `@username`）。 |\n| `user_id` | Integer | 是 | 目标用户的唯一标识符。 |\n"
+  },
+  "getBusinessConnection": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "connection of the bot with a business account"
+    ],
+    "text": "## 查询商家账号连接\n\n获取机器人与某个 Telegram Business 商家账号之间的连接信息。成功返回 [`BusinessConnection`](#businessconnection) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 是 | 商家账号连接的唯一标识符。 |\n"
+  },
+  "getManagedBotToken": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "token of a managed bot"
+    ],
+    "text": "## 获取受管机器人 Token\n\n获取一个受管机器人的访问令牌。成功返回令牌字符串（`String`）。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要获取 Token 的受管机器人的用户标识符。 |\n"
+  },
+  "replaceManagedBotToken": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "revoke the current token"
+    ],
+    "text": "## 更换受管机器人的 Token\n\n撤销受管机器人当前的访问令牌，并为其生成新令牌。成功返回新令牌字符串（`String`）。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要更换 Token 的受管机器人的用户标识符。 |\n"
+  },
+  "getManagedBotAccessSettings": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "access settings of a managed bot"
+    ],
+    "text": "## 获取受管机器人的访问设置\n\n读取指定受管机器人的访问设置。成功返回 [`BotAccessSettings`](#botaccesssettings) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要查询访问设置的受管机器人的用户标识符。 |\n"
+  },
+  "setManagedBotAccessSettings": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "is_access_restricted",
+      "up to 10"
+    ],
+    "text": "## 修改受管机器人的访问设置\n\n修改指定受管机器人的访问控制设置。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `user_id` | Integer | 是 | 需要修改访问设置的受管机器人的用户标识符。 |\n| `is_access_restricted` | Boolean | 是 | 传 `True` 表示只有指定用户能使用此机器人。**机器人所有者始终可以访问。** |\n| `added_user_ids` | Array of Integer | 否 | 以 JSON 序列化的用户标识符列表，最多 **10** 个，表示除机器人所有者外仍允许访问的用户。若 `is_access_restricted=False`，此参数会被忽略。 |\n"
+  },
+  "answerGuestQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "reply to a received guest message"
+    ],
+    "text": "## 回应访客消息查询\n\n回复收到的访客消息。成功返回 [`SentGuestMessage`](#sentguestmessage) 对象。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `guest_query_id` | String | 是 | 需要回应的访客查询的唯一标识符。 |\n| `result` | InlineQueryResult | 是 | 用于描述要发送消息的对象，需以 JSON 形式序列化。 |\n"
+  },
+  "getAvailableGifts": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "list of gifts that can be sent"
+    ],
+    "text": "## 获取可赠送礼物列表\n\n获取机器人目前可以赠送给用户或频道聊天的礼物列表。\n\n**无需参数。** 成功返回 `Gifts` 对象。\n"
+  },
+  "setChatPermissions": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_restrict_members",
+      "use_independent_chat_permissions"
+    ],
+    "text": "## 设置聊天成员默认权限\n\n设置所有成员的默认聊天权限。机器人必须是群组或超级群组的管理员，并拥有 `can_restrict_members` 管理员权限。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名（格式为 `@username`）。 |\n| `permissions` | ChatPermissions | 是 | 以 JSON 序列化的 [`ChatPermissions`](#chatpermissions) 对象，用来指定新的默认权限。 |\n| `use_independent_chat_permissions` | Boolean | 否 | 传 `True` 表示各项聊天权限独立设置；否则，`can_send_other_messages` 和 `can_add_web_page_previews` 会隐含多项媒体及文本发送权限，`can_send_polls` 会隐含 `can_send_messages`。 |\n\n> **权限关联**：不使用独立权限模式时，`can_send_other_messages` 和 `can_add_web_page_previews` 会隐含 `can_send_messages`、`can_send_audios`、`can_send_documents`、`can_send_photos`、`can_send_videos`、`can_send_video_notes`、`can_send_voice_notes`。\n"
+  },
+  "exportChatInviteLink": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "primary invite link",
+      "previously generated"
+    ],
+    "text": "## 重新生成聊天主邀请链接\n\n生成一个新的聊天**主邀请链接**，之前生成的主邀请链接将自动失效。机器人必须是该聊天管理员，且具备相应管理员权限。成功返回新的邀请链接字符串（`String`）。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名（格式为 `@username`）。 |\n\n> **注意**：每位管理员都有自己生成的邀请链接。机器人不能使用其他管理员生成的邀请链接。如需管理邀请链接，机器人应该使用 `exportChatInviteLink` 或通过 `getChat` 获取自己的链接。再次调用本方法会替换之前的主邀请链接。\n"
+  },
+  "setChatStickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "new group sticker set"
+    ],
+    "text": "## 设置超级群组贴纸包\n\n为超级群组设置群组贴纸包。机器人必须是聊天管理员并具备相应权限。可以检查 `getChat` 返回的可选字段 `can_set_sticker_set`，以判断机器人是否能够使用此方法。\n\n成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名（格式为 `@username`）。 |\n| `sticker_set_name` | String | 是 | 要设置为群组贴纸包的贴纸包名称。 |\n"
+  },
+  "deleteChatStickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "delete a group sticker set"
+    ],
+    "text": "## 移除超级群组贴纸包\n\n移除超级群组的群组贴纸包。机器人必须是聊天管理员并具备相应权限。可以检查 `getChat` 返回的可选字段 `can_set_sticker_set` 以确认权限。\n\n成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标超级群组的用户名（格式为 `@username`）。 |\n"
+  },
+  "banChatSenderChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "owner of the banned chat"
+    ],
+    "text": "## 禁止以指定频道身份发言\n\n在超级群组或频道中，封禁一个作为发言身份的频道聊天。解除封禁之前，该聊天的所有者无法以自己的任何频道身份发言。机器人必须是目标超级群组或频道的管理员，并具有相应权限。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名（格式为 `@username`）。 |\n| `sender_chat_id` | Integer | 是 | 需要封禁的发言者聊天的唯一标识符。 |\n"
+  },
+  "unbanChatSenderChat": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "previously banned channel chat"
+    ],
+    "text": "## 解除频道发言身份封禁\n\n在超级群组或频道中，解除之前对某个频道发言身份的封禁。机器人必须是管理员并具备相应权限。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名（格式为 `@username`）。 |\n| `sender_chat_id` | Integer | 是 | 需要解除封禁的发言者聊天的唯一标识符。 |\n"
   }
 }

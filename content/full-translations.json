@@ -774,7 +774,7 @@
   "stopMessageLiveLocation": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "before live_period expires"
+      "stop updating a live location message"
     ],
     "text": "## 停止实时位置更新\n\n在实时位置的 `live_period` 到期前，主动停止对该位置消息的更新。成功时，如果不是内联模式消息，返回修改后的 [`Message`](#message) 对象；如果是内联消息，则返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `business_connection_id` | String | 否 | 代表哪个 Telegram Business 商家连接编辑这条消息的唯一标识符。 |\n| `chat_id` | Integer or String | 否 | 未提供 `inline_message_id` 时必填。目标聊天 ID，或目标机器人、超级群组、频道的用户名（`@username`）。 |\n| `message_id` | Integer | 否 | 未提供 `inline_message_id` 时必填。需要停止更新的实时位置消息 ID。 |\n| `inline_message_id` | String | 否 | 未同时提供 `chat_id` 和 `message_id` 时必填。需要编辑的内联模式消息 ID。 |\n| `reply_markup` | InlineKeyboardMarkup | 否 | JSON 序列化的 [`InlineKeyboardMarkup`](#inlinekeyboardmarkup) 对象，用于设置新的内联键盘。 |\n"
   },

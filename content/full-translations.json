@@ -3062,5 +3062,26 @@
       "On successful call, a JSON-object containing the result will be returned."
     ],
     "text": "## 可用方法\n\nBot API 中的所有方法**均不区分大小写**。请求可以使用 HTTP **GET** 或 **POST** 方法。传递 Bot API 请求参数时，可以使用以下任意一种方式：\n\n- URL 查询字符串（URL query string）\n- `application/json`\n- `application/x-www-form-urlencoded`\n- `multipart/form-data`\n\n成功调用方法后，服务器将返回一个包含调用结果的 JSON 对象。"
+  },
+  "Ephemeral Messages and Commands": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Ephemeral interactions allow a bot and an individual member of a group or supergroup chat to communicate privately"
+    ],
+    "text": "## 临时消息与命令\n\n临时交互（Ephemeral interactions）允许机器人与群组或超级群组中的某一位成员进行私密通信，同时不让聊天中的其他成员看到这些内容，从而避免干扰公共聊天时间线。临时交互可能会在一段时间后自动消失，也可能在应用重新启动时消失。"
+  },
+  "Ephemeral Commands (User to Bot)": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Bots can declare ephemeral commands by setting the is_ephemeral field to True"
+    ],
+    "text": "## 临时命令（用户发送给机器人）\n\n机器人可以通过在 `BotCommand` 对象中将 `is_ephemeral` 字段设置为 `True`，来声明临时命令。\n\n随后，用户可以发送临时命令。目标机器人会收到该命令，但聊天中的所有其他成员（包括其他用户和其他机器人）都无法看到它。"
+  },
+  "Ephemeral Messages": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Bots can send an ephemeral message response back to a specific user designated by the receiver_user_id parameter"
+    ],
+    "text": "## 临时消息\n\n机器人可以通过 `receiver_user_id` 参数指定特定用户，并向该用户发送临时消息作为回复。群组或超级群组中的其他成员不会看到这条消息。\n\n> **注意：** 无法保证临时消息一定能够送达，尤其是在用户处于离线状态时。"
   }
 }

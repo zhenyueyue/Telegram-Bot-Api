@@ -3710,5 +3710,74 @@
       "Currently holds no information."
     ],
     "text": "此对象表示一条服务消息，说明聊天中的一个论坛话题已关闭。目前不包含任何其他信息，也没有字段。"
+  },
+  "ForumTopicEdited": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about an edited forum topic.",
+      "New name of the topic, if it was edited",
+      "an empty string if the icon was removed"
+    ],
+    "text": "此对象表示一条服务消息，说明论坛话题已被编辑。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `name` | String | 可选。话题的新名称；仅当话题名称被修改时提供。 |\n| `icon_custom_emoji_id` | String | 可选。作为话题图标显示的自定义 emoji 的新标识符；仅当话题图标被修改时提供。如果图标已被移除，则此字段为空字符串。 |"
+  },
+  "ForumTopicReopened": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a forum topic reopened in the chat.",
+      "Currently holds no information."
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的一个论坛话题已重新开启。目前不包含任何其他信息，也没有字段。"
+  },
+  "GeneralForumTopicHidden": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about General forum topic hidden in the chat.",
+      "Currently holds no information."
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的 General 论坛话题已隐藏。目前不包含任何其他信息，也没有字段。"
+  },
+  "GeneralForumTopicUnhidden": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about General forum topic unhidden in the chat.",
+      "Currently holds no information."
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的 General 论坛话题已取消隐藏。目前不包含任何其他信息，也没有字段。"
+  },
+  "SharedUser": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUsers button.",
+      "at most 52 significant bits",
+      "The bot may not have access to the user"
+    ],
+    "text": "此对象包含通过 `KeyboardButtonRequestUsers` 按钮分享给机器人的用户信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `user_id` | Integer | 被分享用户的标识符。此数字可能超过 32 位，但最多只有 52 个有效位，因此使用 64 位整数或双精度浮点数即可安全存储。除非机器人通过其他方式（例如该用户此前已为机器人所知）认识此用户，否则机器人可能无权访问该用户，也可能无法使用此标识符。 |\n| `first_name` | String | 可选。如果机器人请求了用户姓名，则为该用户的名字。 |\n| `last_name` | String | 可选。如果机器人请求了用户姓名，则为该用户的姓氏。 |\n| `username` | String | 可选。如果机器人请求了用户名，则为该用户的用户名。 |\n| `photo` | Array of [PhotoSize](#photosize) | 可选。如果机器人请求了用户照片，则为该用户照片的可用尺寸列表。 |"
+  },
+  "UsersShared": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about the users whose identifiers were shared with the bot using a KeyboardButtonRequestUsers button.",
+      "Information about users shared with the bot"
+    ],
+    "text": "此对象包含通过 `KeyboardButtonRequestUsers` 按钮向机器人分享的用户及其标识符信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的标识符。 |\n| `users` | Array of [SharedUser](#shareduser) | 分享给机器人的用户信息。 |"
+  },
+  "ChatShared": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.",
+      "at most 52 significant bits",
+      "The bot may not have access to the chat"
+    ],
+    "text": "此对象包含通过 `KeyboardButtonRequestChat` 按钮分享给机器人的聊天信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `request_id` | Integer | 请求的标识符。 |\n| `chat_id` | Integer | 被分享聊天的标识符。此数字可能超过 32 位，但最多只有 52 个有效位，因此使用 64 位整数或双精度浮点数即可安全存储。除非机器人通过其他方式（例如该聊天此前已为机器人所知）认识此聊天，否则机器人可能无权访问该聊天，也可能无法使用此标识符。 |\n| `title` | String | 可选。如果机器人请求了聊天标题，则为该聊天的标题。 |\n| `username` | String | 可选。如果机器人请求了聊天用户名，且该聊天具有用户名，则为该聊天的用户名。 |\n| `photo` | Array of [PhotoSize](#photosize) | 可选。如果机器人请求了聊天照片，则为该聊天照片的可用尺寸列表。 |"
+  },
+  "WriteAccessAllowed": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a user allowing a bot to write messages",
+      "from_request",
+      "web_app_name",
+      "from_attachment_menu"
+    ],
+    "text": "此对象表示一条服务消息，说明用户已允许机器人向其发送消息。用户可能是在将机器人添加到附件菜单后、通过链接启动 Web App 时，或接受 Web App 使用 `requestWriteAccess` 方法发送的明确请求后授予此权限。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `from_request` | Boolean | 可选。如果为 `True`，表示用户是在接受 Web App 使用 `requestWriteAccess` 方法发送的明确请求后授予访问权限。 |\n| `web_app_name` | String | 可选。如果用户是通过链接启动 Web App 时授予访问权限，则为该 Web App 的名称。 |\n| `from_attachment_menu` | Boolean | 可选。如果为 `True`，表示用户是在将机器人添加到附件菜单或侧边菜单时授予访问权限。 |"
   }
 }

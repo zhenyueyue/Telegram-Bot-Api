@@ -250,5 +250,141 @@
       "previously banned channel chat"
     ],
     "text": "## 解除频道发言身份封禁\n\n在超级群组或频道中，解除之前对某个频道发言身份的封禁。机器人必须是管理员并具备相应权限。成功返回 `True`。\n\n### 参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标聊天的唯一标识符，或目标频道的用户名（格式为 `@username`）。 |\n| `sender_chat_id` | Integer | 是 | 需要解除封禁的发言者聊天的唯一标识符。 |\n"
+  },
+  "setMyCommands": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "At most 100 commands"
+    ],
+    "text": "## 设置机器人命令\n\n修改机器人命令列表。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `commands` | Array of BotCommand | 是 | JSON 序列化的 [`BotCommand`](#botcommand) 命令数组，最多 **100** 条。 |\n| `scope` | BotCommandScope | 否 | JSON 序列化的命令适用范围对象；默认使用 `BotCommandScopeDefault`。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码。为空时，对指定范围内没有专用语言命令的用户生效。 |\n"
+  },
+  "deleteMyCommands": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "higher level commands"
+    ],
+    "text": "## 删除机器人命令\n\n删除指定范围及语言的机器人命令列表。之后，受影响的用户将看到更高层级范围内的命令。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `scope` | BotCommandScope | 否 | JSON 序列化的命令适用范围对象；默认使用 `BotCommandScopeDefault`。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码。为空时，对指定范围内没有专用语言命令的用户生效。 |\n"
+  },
+  "getMyCommands": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current list of the bot"
+    ],
+    "text": "## 获取机器人命令列表\n\n获取指定用户范围及语言的命令列表。成功返回 [`BotCommand`](#botcommand) 对象数组；没有设置命令时返回空数组。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `scope` | BotCommandScope | 否 | JSON 序列化的命令适用范围对象；默认使用 `BotCommandScopeDefault`。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码，也可以传空字符串。 |\n"
+  },
+  "setMyName": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "0-64 characters"
+    ],
+    "text": "## 设置机器人名称\n\n修改机器人的显示名称。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `name` | String | 否 | 新名称，长度 **0–64** 个字符；传空字符串可删除指定语言的专用名称。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码。为空时，将向没有专用语言名称的用户显示该名称。 |\n"
+  },
+  "getMyName": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current bot name"
+    ],
+    "text": "## 获取机器人名称\n\n读取针对指定语言显示的机器人名称。成功返回 `BotName` 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码，也可以传空字符串。 |\n"
+  },
+  "setMyDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "0-512 characters"
+    ],
+    "text": "## 设置机器人简介\n\n修改与机器人聊天尚无消息时显示的简介。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `description` | String | 否 | 新简介，长度 **0–512** 个字符；传空字符串可删除指定语言的专用简介。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码。为空时，该简介对没有专用语言简介的用户生效。 |\n"
+  },
+  "getMyDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current bot description"
+    ],
+    "text": "## 获取机器人简介\n\n读取指定用户语言下的当前机器人简介。成功返回 `BotDescription` 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码，也可以传空字符串。 |\n"
+  },
+  "setMyShortDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "0-120 characters"
+    ],
+    "text": "## 设置机器人简短介绍\n\n修改机器人资料页上显示的简短介绍；用户分享机器人链接时，这段介绍也会随链接一起发送。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `short_description` | String | 否 | 新简短介绍，长度 **0–120** 个字符；传空字符串可删除指定语言的专用介绍。 |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码。为空时，介绍对没有专用语言介绍的用户生效。 |\n"
+  },
+  "getMyShortDescription": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current bot short description"
+    ],
+    "text": "## 获取机器人简短介绍\n\n读取指定用户语言下的简短介绍。成功返回 `BotShortDescription` 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `language_code` | String | 否 | ISO 639-1 双字母语言代码，也可以传空字符串。 |\n"
+  },
+  "setMyProfilePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "profile photo of the bot"
+    ],
+    "text": "## 设置机器人头像\n\n更改机器人的个人资料头像。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `photo` | InputProfilePhoto | 是 | 需要设置的新头像，以 [`InputProfilePhoto`](#inputprofilephoto) 对象表示。 |\n"
+  },
+  "removeMyProfilePhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Removes the profile photo"
+    ],
+    "text": "## 移除机器人头像\n\n删除机器人当前的个人资料头像。\n\n**无需参数。** 成功返回 `True`。\n"
+  },
+  "setChatMenuButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "menu button in a private chat"
+    ],
+    "text": "## 设置机器人菜单按钮\n\n修改机器人在指定私聊中使用的菜单按钮，或修改默认菜单按钮。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer | 否 | 目标私聊的唯一标识符。省略则修改机器人的默认菜单按钮。 |\n| `menu_button` | MenuButton | 否 | JSON 序列化的新菜单按钮对象，默认 `MenuButtonDefault`。 |\n"
+  },
+  "getChatMenuButton": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current value of the bot"
+    ],
+    "text": "## 获取机器人菜单按钮\n\n获取机器人在指定私聊中的菜单按钮，或获取默认菜单按钮。成功返回 `MenuButton` 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer | 否 | 目标私聊的唯一标识符。省略则获取机器人的默认菜单按钮。 |\n"
+  },
+  "setMyDefaultAdministratorRights": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "default administrator rights requested"
+    ],
+    "text": "## 设置默认管理员权限\n\n设置机器人被添加为群组或频道管理员时默认申请的权限。这些权限是向用户提出的建议，用户可以在添加机器人前修改。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `rights` | ChatAdministratorRights | 否 | JSON 序列化的默认管理员权限对象；不提供时会清除默认权限。 |\n| `for_channels` | Boolean | 否 | 传 `True` 修改机器人在频道中申请的默认权限；否则修改在群组和超级群组中申请的默认权限。 |\n"
+  },
+  "getMyDefaultAdministratorRights": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "current default administrator rights"
+    ],
+    "text": "## 获取默认管理员权限\n\n获取机器人的当前默认管理员权限。成功返回 [`ChatAdministratorRights`](#chatadministratorrights) 对象。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `for_channels` | Boolean | 否 | 传 `True` 获取频道的默认权限；否则获取群组和超级群组的默认权限。 |\n"
+  },
+  "deleteEphemeralMessage": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "not guaranteed that the user will receive"
+    ],
+    "text": "## 删除临时可见消息\n\n删除一条临时可见消息。**不能保证用户一定会收到删除事件**，特别是用户离线时。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标超级群组 ID 或用户名（格式为 `@username`）。 |\n| `receiver_user_id` | Integer | 是 | 收到该消息的用户标识符。 |\n| `ephemeral_message_id` | Integer | 是 | 需要删除的临时消息标识符。 |\n"
+  },
+  "deleteMessageReaction": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_delete_messages",
+      "reaction from a message"
+    ],
+    "text": "## 删除消息的表态\n\n在群组或超级群组中移除某条消息上的表态。机器人必须具备 `can_delete_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer or String | 是 | 目标超级群组 ID 或用户名（格式为 `@username`）。 |\n| `message_id` | Integer | 是 | 目标消息标识符。 |\n| `user_id` | Integer | 否 | 若表态由用户添加，可指定需要移除其表态的用户 ID。 |\n"
+  },
+  "approveSuggestedPost": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "approve a suggested post",
+      "2678400 seconds"
+    ],
+    "text": "## 批准建议投稿\n\n批准频道私信聊天中的建议投稿。机器人必须拥有对应频道的 `can_post_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer | 是 | 目标私信聊天的唯一 ID。 |\n| `message_id` | Integer | 是 | 要批准的建议投稿消息 ID。 |\n| `send_date` | Integer | 否 | 预定发布时间，使用 Unix 时间戳。若创建投稿时已提供发布时间，可省略；指定时不得晚于当前时间后 **2,678,400 秒（30 天）**。 |\n"
+  },
+  "declineSuggestedPost": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "can_manage_direct_messages",
+      "0-128 characters"
+    ],
+    "text": "## 拒绝建议投稿\n\n拒绝频道私信聊天中的建议投稿。机器人必须具备对应频道的 `can_manage_direct_messages` 管理员权限。成功返回 `True`。\n\n### 请求参数\n\n| 参数 | 类型 | 必填 | 说明 |\n| --- | --- | --- | --- |\n| `chat_id` | Integer | 是 | 目标私信聊天的唯一 ID。 |\n| `message_id` | Integer | 是 | 要拒绝的建议投稿消息 ID。 |\n| `comment` | String | 否 | 发送给投稿创建者的备注，长度 **0–128** 个字符。 |\n"
   }
 }

@@ -3165,6 +3165,6 @@
       "Photo width",
       "File size in bytes"
     ],
-    "text": "此对象表示照片的一种尺寸，或者文件（[Document](#document）/ 贴纸（[Sticker](#sticker）缩略图。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 照片宽度。 |\n| `height` | Integer | 照片高度。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。 |"
+    "text": "此对象表示照片的一种尺寸，或者文件（[Document](#document)）/ 贴纸（[Sticker](#sticker)）缩略图。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `file_id` | String | 文件标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 唯一文件标识符，理论上对于不同时间及不同机器人都应保持相同。不能用于下载或重复使用该文件。 |\n| `width` | Integer | 照片宽度。 |\n| `height` | Integer | 照片高度。 |\n| `file_size` | Integer | 可选。文件大小，单位为字节。 |"
   }
 }

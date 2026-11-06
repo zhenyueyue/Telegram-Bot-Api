@@ -127,7 +127,11 @@ async function main(){
  for(const s of sections){
    const note=notes[s.title];if(note){s.translation={from:'curated',text:note,originalHash:s.hash};usedNotes.add(s.title)}
  }
- const version=index.match(/Bot\s*API\s*(\d+\.\d+)/i)?.[1]||'未知';
+ let version=index.match(/Bot\\s*API\\s*(\\d+\\.\\d+)/i)?.[1]||'未知';
+ if(version==='未知'){
+   try {const changelog=await fetchMarkdown('/bots/api-changelog.md'); version=changelog.match(/Bot\\s*API\\s*(\\d+\\.\\d+)/i)?.[1]||'未知';}
+   catch(e){console.warn('Version lookup unavailable:',e.message)}
+ }
  const doc={source:baseUrl+rootPath,demo:false,syncTime:new Date().toISOString(),version,sourceHash:digest(index+typesIndex+files.length),sections};
  fs.mkdirSync(path.join(dist,'data'),{recursive:true});
  fs.cpSync(path.join(root,'public'),dist,{recursive:true});

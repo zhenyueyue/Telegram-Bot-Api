@@ -4163,9 +4163,9 @@
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
       "Describes the physical address of a location.",
-      "The two-letter ISO 3166-1 alpha-2 country code",
-      "Optional. State of the location",
-      "Optional. Street address of the location"
+      "two-letter ISO 3166-1 alpha-2 country code",
+      "State of the location",
+      "Street address of the location"
     ],
     "text": "此对象描述一个地点的实际地址。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `country_code` | String | 地点所在国家或地区的两字母 ISO 3166-1 alpha-2 国家代码。 |\n| `state` | String | 可选。地点所在的州或省。 |\n| `city` | String | 可选。地点所在的城市。 |\n| `street` | String | 可选。街道地址。 |"
   },
@@ -4184,8 +4184,8 @@
     "requiredSourceFragments": [
       "Describes a story area pointing to a location.",
       "up to 10 location areas",
-      "Type of the area, always “location”",
-      "Optional. Address of the location"
+      "Location latitude in degrees",
+      "Address of the location"
     ],
     "text": "此对象描述故事中一个指向地点的区域。目前，一条故事最多可以包含 10 个地点区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"location\"`。 |\n| `latitude` | Float | 地点的纬度，单位为度。 |\n| `longitude` | Float | 地点的经度，单位为度。 |\n| `address` | [LocationAddress](#locationaddress) | 可选。地点的地址。 |"
   },
@@ -4194,7 +4194,7 @@
     "requiredSourceFragments": [
       "Describes a story area pointing to a suggested reaction.",
       "up to 5 suggested reaction areas",
-      "Type of the area, always “suggested_reaction”",
+      "Type of the area, always",
       "reaction area corner is flipped"
     ],
     "text": "此对象描述故事中一个指向建议表情回应的区域。目前，一条故事最多可以包含 5 个建议表情回应区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"suggested_reaction\"`。 |\n| `reaction_type` | [ReactionType](#reactiontype) | 表情回应的类型。 |\n| `is_dark` | Boolean | 可选。传入 `True` 表示表情回应区域使用深色背景。 |\n| `is_flipped` | Boolean | 可选。传入 `True` 表示表情回应区域的角标翻转。 |"
@@ -4204,8 +4204,8 @@
     "requiredSourceFragments": [
       "Describes a story area pointing to an HTTP or tg:// link.",
       "up to 3 link areas",
-      "Type of the area, always “link”",
-      "HTTP or tg:// URL to be opened when the area is clicked"
+      "Type of the area, always",
+      "URL to be opened when the area is clicked"
     ],
     "text": "此对象描述故事中一个指向 HTTP 或 `tg://` 链接的区域。目前，一条故事最多可以包含 3 个链接区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"link\"`。 |\n| `url` | String | 用户点击此区域时要打开的 HTTP 或 `tg://` URL。 |"
   },
@@ -4224,7 +4224,7 @@
     "requiredSourceFragments": [
       "Describes a story area pointing to a unique gift.",
       "at most 1 unique gift area",
-      "Type of the area, always “unique_gift”",
+      "Type of the area, always",
       "Unique name of the gift"
     ],
     "text": "此对象描述故事中一个指向独特礼物的区域。目前，一条故事最多只能包含 1 个独特礼物区域。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 区域类型，始终为 `\"unique_gift\"`。 |\n| `name` | String | 礼物的唯一名称。 |"

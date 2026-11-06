@@ -3486,5 +3486,84 @@
       "The bot's token can be fetched using the method"
     ],
     "text": "此对象包含由当前机器人创建、并交由当前机器人管理的机器人的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `bot` | [User](#user) | 有关该机器人的信息。可以使用 [`getManagedBotToken`](#getmanagedbottoken) 方法获取此机器人的 Token。 |"
+  },
+  "ManagedBotUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about the creation, token update, or owner update of a bot that is managed by the current bot.",
+      "User that created the bot",
+      "Token of the bot can be fetched using the method"
+    ],
+    "text": "此对象包含由当前机器人管理的机器人在创建、Token 更新或所有者变更方面的信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `user` | [User](#user) | 创建该机器人的用户。 |\n| `bot` | [User](#user) | 有关该机器人的信息。可以使用 [`getManagedBotToken`](#getmanagedbottoken) 方法获取该机器人的 Token。 |"
+  },
+  "BotSubscriptionUpdated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object contains information about changes to a user payment subscription toward the current bot.",
+      "User who subscribed for payments toward the bot",
+      "canceled",
+      "active",
+      "failed"
+    ],
+    "text": "此对象包含用户向当前机器人订阅付费服务时，订阅状态发生变化的相关信息。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `user` | [User](#user) | 订阅该机器人付费服务的用户。 |\n| `invoice_payload` | String | 由机器人指定的发票载荷。 |\n| `state` | String | 订阅的新状态。目前可能为以下值之一：`\"canceled\"`，表示用户取消了订阅；`\"active\"`，表示用户重新启用了此前已取消的订阅；`\"failed\"`，表示订阅付款失败。 |"
+  },
+  "MessageGenerationStopped": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes an update about a user stopping message generation.",
+      "Chat in which the message is generated",
+      "Unique identifier of the message thread in which the message is generated",
+      "Unique identifier of the message draft which was stopped"
+    ],
+    "text": "此对象描述用户停止消息生成时产生的更新。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `chat` | [Chat](#chat) | 正在生成消息的聊天。 |\n| `message_thread_id` | Integer | 可选。正在生成消息的消息线程的唯一标识符。 |\n| `draft_id` | Integer | 已停止生成的消息草稿的唯一标识符。 |"
+  },
+  "PollOptionAdded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about an option added to a poll.",
+      "Message containing the poll to which the option was added, if known.",
+      "will not contain the *reply_to_message* field",
+      "Unique identifier of the added option",
+      "Special entities that appear in the *option_text*"
+    ],
+    "text": "此对象描述一条服务消息，表示某个投票中新增了一个选项。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `poll_message` | [MaybeInaccessibleMessage](#maybeinaccessiblemessage) | 可选。包含新增选项的投票的消息（如果已知）。请注意，即使此处的 [Message](#message) 对象本身是回复消息，其 `reply_to_message` 字段也不会包含在内。 |\n| `option_persistent_id` | String | 新增选项的唯一标识符。 |\n| `option_text` | String | 选项文本。 |\n| `option_text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在 `option_text` 中的特殊实体。 |"
+  },
+  "PollOptionDeleted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about an option deleted from a poll.",
+      "Message containing the poll from which the option was deleted, if known.",
+      "will not contain the *reply_to_message* field",
+      "Unique identifier of the deleted option",
+      "Special entities that appear in the *option_text*"
+    ],
+    "text": "此对象描述一条服务消息，表示某个投票中删除了一个选项。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `poll_message` | [MaybeInaccessibleMessage](#maybeinaccessiblemessage) | 可选。包含已删除选项的投票的消息（如果已知）。请注意，即使此处的 [Message](#message) 对象本身是回复消息，其 `reply_to_message` 字段也不会包含在内。 |\n| `option_persistent_id` | String | 已删除选项的唯一标识符。 |\n| `option_text` | String | 选项文本。 |\n| `option_text_entities` | Array of [MessageEntity](#messageentity) | 可选。出现在 `option_text` 中的特殊实体。 |"
+  },
+  "ChatBoostAdded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a user boosting a chat.",
+      "Number of boosts added by the user"
+    ],
+    "text": "此对象表示一条服务消息，说明某位用户为聊天增加了 Boost。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `boost_count` | Integer | 该用户增加的 Boost 数量。 |"
+  },
+  "BackgroundFill": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the way a background is filled based on the selected colors.",
+      "BackgroundFillSolid",
+      "BackgroundFillGradient",
+      "BackgroundFillFreeformGradient"
+    ],
+    "text": "此对象描述如何根据所选颜色填充背景。目前可能为以下类型之一：\n\n- [BackgroundFillSolid](#backgroundfillsolid)：使用单一颜色填充背景。\n- [BackgroundFillGradient](#backgroundfillgradient)：使用渐变颜色填充背景。\n- [BackgroundFillFreeformGradient](#backgroundfillfreeformgradient)：使用自由形式渐变填充背景。"
+  },
+  "BackgroundFillSolid": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "The background is filled using the selected color.",
+      "Type of the background fill, always \"solid\"",
+      "The color of the background fill in the RGB24 format"
+    ],
+    "text": "使用所选颜色填充背景。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `type` | String | 背景填充类型，始终为 `\"solid\"`。 |\n| `color` | Integer | 背景填充颜色，采用 RGB24 格式。 |"
   }
 }

@@ -42,7 +42,7 @@ function kindText(k) { return { method:'API 方法', type:'数据类型', guide:
 function kindEN(k) { return { method:'METHOD', type:'OBJECT', guide:'GUIDE' }[k] || 'REFERENCE'; }
 function current() { return S.docs?.sections.find(s => s.id === S.active); }
 function asTime(iso) { if (!iso) return '尚未与官方同步'; try { return new Date(iso).toLocaleString('zh-CN', {hour12:false}); } catch { return iso; } }
-function nameCN(s) { return NAMES[s.title] || window.BotApiMenuCN?.translate(s.title, s.kind) || '中文释义待补充'; }
+function nameCN(s) { return window.BotApiCuratedCN?.translate(s.title) || NAMES[s.title] || window.BotApiMenuCN?.translate(s.title, s.kind) || '中文释义待补充'; }
 function getUrlId() { const hash = decodeURIComponent(location.hash.replace(/^#/,'')); return hash || 'home'; }
 function setHash(id) { history.pushState(null, '', `#${encodeURIComponent(id)}`); }
 
@@ -211,7 +211,7 @@ function renderMd(md, section) {
     gfm:true, breaks:false, headerIds:false, mangle:false, renderer
   });
   const temp = document.createElement('div');
-  temp.innerHTML = markup;
+  temp.innerHTML = window.BotApiMarkdownCleanup?.repair(markup) || markup;
   // Keep semantic table layout and put horizontal scrolling on a wrapper.
   for (const table of temp.querySelectorAll('table')) {
     const wrapper = document.createElement('div');

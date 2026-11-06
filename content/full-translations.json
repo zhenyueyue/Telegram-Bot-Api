@@ -3051,7 +3051,7 @@
   "Inline mode objects": {
     "version": "Bot API 10.3",
     "requiredSourceFragments": [
-      "Objects and methods used in the inline mode are described in the Inline mode section."
+      "Objects and methods used in the inline mode are described in"
     ],
     "text": "## 内联模式对象\n\n内联模式中使用的对象和方法，请参阅“内联模式”章节。"
   },

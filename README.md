@@ -1,34 +1,51 @@
-# Telegram Bot API 中文参考阅读器
+# Telegram Bot API 中文文档阅读器
 
-无需 API Key、Node 后台服务或付费翻译接口。网站通过 GitHub Pages 托管；GitHub Actions 每周一或手动触发时同步一次 Telegram Bot API **英文官方原文**，同时合并项目中人工整理的**中文要点**。
+完全静态的 Telegram Bot API 中文/英文开发者参考站，部署在 GitHub Pages，不需要在个人电脑上启动服务或配置 API Key。
 
-**入口（启用 GitHub Pages 后）：** https://zhenyueyue.github.io/Telegram-Bot-Api/
+**在线阅读：** https://zhenyueyue.github.io/Telegram-Bot-Api/
 
-## 阅读与翻译状态
+## 翻译质量分级
 
-- 每一条 API 原文都可以按「English」切换查看，支持全文查找、双栏对照、锚点分享、收藏。
-- 已有的中文内容是人工整理的**重点说明/简要中文解读**，不是对应英文的逐句、完整译文；包含字段表、权限与边界条件时**请同时参考官方原文**。
-- 尚无中文解读的章节会明确显示「暂无中文解读」，直接查看英文原文即可。不调用 Google 翻译，也不向用户索要 API Key。
-- 文档中的中文译文状态明确展示为「中文要点」，切勿误认为「官方认证翻译」。
-- 最新的中文解读在 `content/notes.json`，可以提交 PR 来补充或修订。
+项目不会把中文摘要、自动翻译草稿和完整译文混为一谈：
 
-## 开启部署（仓库所有者一次性操作）
+- **完整中文译文**：保留原文的参数表、字段、类型、限制、警告与返回值；术语按中文开发者习惯表达。内容在 `content/full-translations.json`，官方英文更新导致已验证片段失配时会停止套用。
+- **机器译文草稿（待校对）**：可通过 `scripts/translate-drafts.py` 在 GitHub Actions 使用 Argos Translate 离线模型生成。模型与文档在 GitHub 运行器本地处理，**不调用付费翻译 API，不需要 API Key**。尽管会保护代码片段、英文参数名和数值，仍可能出现漏译、误译，因此始终明确标记为未校对，涉及权限、收费、数据删除等功能时应核对英文原文。机器译文使用来源哈希绑定，避免直接应用到新版英语内容。
+- **中文重点摘要**：位于 `content/notes.json`，仅用于快速理解，不是逐段完整翻译。
+- **官方英文原文**：覆盖全部可同步章节，可切换 English 或中英对照。
 
-1. 打开 GitHub 仓库 **Settings → Pages**。
-2. 在 **Build and deployment → Source** 选择 **GitHub Actions**。
-3. 在 **Actions** 标签页打开 `Publish Chinese Bot API reader` 并手动运行 **Run workflow**（或推送一次变更）。
-4. 完成后访问上面的 Pages 地址。
+中文页面中，摘要及待校对机器译文均提供官方英文原文的展开入口；完成全文译文的章节也可切换中英对照。
 
-## 自动更新与限制
+## 无密钥自动翻译
 
-- 每周运行一次 `scripts/build-docs.js` 拉取 `https://core.telegram.org/bots/api.md`，构建为 `dist/data/docs.json`，**官方完整英文原文**不存入仓库。
-- 如果官网请求失败，部署会失败而不会用演示数据覆盖旧网站。此时可以在 Actions 查错误，旧站点通常保留已成功部署的版本。
-- 官方文档更新不会自动生成中文解读；中文要点需要人工审阅、更新。该项目不承诺「全文完美翻译」。
-- 「修订中文」功能写入你当前浏览器的 localStorage，仅在此设备生效，不会自动发给仓库。浏览器清理数据会丢失这些本地修订。
-- 项目是独立非官方文档阅读器，不与 Telegram 关联。Telegram Bot API 官方参考及内容版权归其各自权利人所有，页面提供原文跳转。
+有两条独立的工作流：
 
-## 本地验证
+- `Publish Chinese Bot API reader`：每周同步官方英文内容，并合并已有译文和译稿后发布 GitHub Pages。
+- `Offline draft translator (no API key)`：从当前官方英文生成新的中文**机器草稿**，提交到 `content/draft-translations.json`。这不是人工校对服务，不会被标记为完整译文。
 
-GitHub Actions 使用 Node.js 22，没有 npm 依赖。在线环境下运行 `node scripts/build-docs.js`，随后用任意静态服务器服务 `dist/`。使用 `file://` 直接打开不支持 Fetch 数据读取。
+经过人工校对并保留结构的译文可从草稿迁移到 `content/full-translations.json`，届时对应章节不再展示未经校对的版本。
 
-本项目代码使用 MIT License；第三方 `marked.js` 的许可证位于 `public/vendor/LICENSE-marked.md`。
+## 阅读功能
+
+- 侧边栏中英双语 API 菜单、中文/英文搜索
+- 中英切换和双栏对照，代码与参数名称保持英文
+- 按钮、方法与对象引用跳转，收藏和独立章节链接
+- 参数表格、代码块和警告的 Markdown 排版
+- 个人译文修订存储在当前浏览器的 localStorage 中
+
+## 部署与构建
+
+在仓库 **Settings → Pages** 中将 Source 设置为 **GitHub Actions**。合并或推送到 `main` 会触发网站构建。
+
+本地构建使用 Node.js 22：
+
+```sh
+node scripts/build-docs.js
+node scripts/test-menu.js
+node scripts/test-rendering.js
+```
+
+编译结果位于 `dist/`。正式使用请通过静态服务器访问，不能用 `file://` 直接打开（浏览器会限制 Fetch）。
+
+官方文档更新后，如果完整译文的源文校验不通过或草稿哈希失配，将保留官方英文内容，而不会假装译文是最新的。此项目不是 Telegram 官方维护的网站，API 细节始终以 Telegram 官方英文原文为准。
+
+代码采用 MIT License；内置 Markdown 解析器许可证见 `public/vendor/LICENSE-marked.md`。

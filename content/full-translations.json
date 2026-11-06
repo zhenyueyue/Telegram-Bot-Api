@@ -2566,5 +2566,156 @@
       "author_signature"
     ],
     "text": "## MessageOriginChannel\n\n表示原始消息最初发送到某个频道聊天。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 消息来源类型，始终为 `channel`。 |\n| `date` | Integer | 原始消息的发送时间，Unix 时间戳。 |\n| `chat` | [Chat](#chat) | 最初接收该消息的频道聊天。 |\n| `message_id` | Integer | 该消息在原始聊天中的唯一标识符。 |\n| `author_signature` | String | 可选。原始频道帖子的作者签名。 |\n"
+  },
+  "LabeledPrice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "label",
+      "amount"
+    ],
+    "text": "## LabeledPrice\n\n表示商品或服务价格中的一个组成部分。一个账单可以由多个价格项构成，例如商品价格、税费、折扣、配送费、配送税或奖励。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `label` | String | 此价格项的名称或说明。 |\n| `amount` | Integer | 价格项的金额，以对应货币的最小单位表示，必须使用整数，不能使用浮点数。例如，1.45 美元应传入 `145`。不同货币的小数位数请参阅 Telegram 提供的 `currencies.json`。 |\n"
+  },
+  "Invoice": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "title",
+      "description",
+      "start_parameter",
+      "currency",
+      "total_amount"
+    ],
+    "text": "## Invoice\n\n包含一张账单的基本信息。该对象通常作为 `Message` 的 `invoice` 字段返回。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `title` | String | 商品名称。 |\n| `description` | String | 商品描述。 |\n| `start_parameter` | String | 唯一的机器人深层链接参数，可用于生成此账单的链接。 |\n| `currency` | String | 三位字母的 ISO 4217 货币代码；如果使用 Telegram Stars 支付，则填写 `XTR`。 |\n| `total_amount` | Integer | 总金额，以对应货币的最小单位表示，必须使用整数，不能使用浮点数。例如，1.45 美元应传入 `145`。不同货币的小数位数请参阅 `currencies.json`。 |\n"
+  },
+  "ShippingAddress": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "country_code",
+      "state",
+      "city",
+      "street_line1",
+      "street_line2",
+      "post_code"
+    ],
+    "text": "## ShippingAddress\n\n表示用户为订单提供的收货地址。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `country_code` | String | 两位字母的 ISO 3166-1 alpha-2 国家/地区代码。 |\n| `state` | String | 州、省或其他一级行政区；如适用则提供。 |\n| `city` | String | 城市。 |\n| `street_line1` | String | 地址第一行。 |\n| `street_line2` | String | 地址第二行。 |\n| `post_code` | String | 邮政编码。 |\n"
+  },
+  "OrderInfo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "name",
+      "phone_number",
+      "email",
+      "shipping_address"
+    ],
+    "text": "## OrderInfo\n\n包含用户在付款流程中提供的订单信息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `name` | String | 可选。用户姓名。 |\n| `phone_number` | String | 可选。用户电话号码。 |\n| `email` | String | 可选。用户电子邮箱地址。 |\n| `shipping_address` | [ShippingAddress](#shippingaddress) | 可选。用户提供的收货地址。 |\n"
+  },
+  "ShippingOption": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "id",
+      "title",
+      "prices"
+    ],
+    "text": "## ShippingOption\n\n表示一种可供用户选择的配送方式。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 此配送选项的唯一标识符。 |\n| `title` | String | 配送选项的名称。 |\n| `prices` | Array of [LabeledPrice](#labeledprice) | 此配送选项包含的价格组成项列表。 |\n"
+  },
+  "SuccessfulPayment": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "currency",
+      "total_amount",
+      "invoice_payload",
+      "subscription_expiration_date",
+      "is_recurring",
+      "is_first_recurring",
+      "shipping_option_id",
+      "order_info",
+      "telegram_payment_charge_id",
+      "provider_payment_charge_id"
+    ],
+    "text": "## SuccessfulPayment\n\n包含一笔成功付款的基本信息。**注意：** 如果买家在交易完成后向相应的支付服务提供商发起拒付（chargeback），相关资金可能会从你的余额中扣除。这不受 Telegram 控制。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `currency` | String | 三位字母的 ISO 4217 货币代码；如果使用 Telegram Stars 支付，则为 `XTR`。 |\n| `total_amount` | Integer | 总金额，以对应货币的最小单位表示，必须使用整数，不能使用浮点数。例如，1.45 美元应传入 `145`。不同货币的小数位数请参阅 `currencies.json`。 |\n| `invoice_payload` | String | 创建账单时由机器人指定的载荷数据。 |\n| `subscription_expiration_date` | Integer | 可选。订阅到期时间，Unix 时间戳；仅适用于周期性付款。 |\n| `is_recurring` | True | 可选。为 `True` 时，表示这是一笔订阅周期性付款。 |\n| `is_first_recurring` | True | 可选。为 `True` 时，表示这是该订阅的第一笔周期性付款。 |\n| `shipping_option_id` | String | 可选。用户选择的配送选项标识符。 |\n| `order_info` | [OrderInfo](#orderinfo) | 可选。用户提供的订单信息。 |\n| `telegram_payment_charge_id` | String | Telegram 侧的支付交易标识符。 |\n| `provider_payment_charge_id` | String | 支付服务提供商侧的支付交易标识符。 |\n"
+  },
+  "RefundedPayment": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "currency",
+      "total_amount",
+      "invoice_payload",
+      "telegram_payment_charge_id",
+      "provider_payment_charge_id"
+    ],
+    "text": "## RefundedPayment\n\n包含一笔已退款付款的基本信息。该对象用于描述退款结果，而不是原始付款请求。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `currency` | String | 三位字母的 ISO 4217 货币代码；当前始终为 `XTR`，即 Telegram Stars。 |\n| `total_amount` | Integer | 已退款的总金额，以货币最小单位表示，必须使用整数，不能使用浮点数。例如，1.45 美元对应 `145`。当前此对象的货币始终为 `XTR`。 |\n| `invoice_payload` | String | 创建账单时由机器人指定的载荷数据。 |\n| `telegram_payment_charge_id` | String | Telegram 侧的支付交易标识符。 |\n| `provider_payment_charge_id` | String | 可选。支付服务提供商侧的支付交易标识符。 |\n"
+  },
+  "ShippingQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "id",
+      "from",
+      "invoice_payload",
+      "shipping_address"
+    ],
+    "text": "## ShippingQuery\n\n包含一条收到的配送查询的信息。当账单要求用户提供收货地址，且启用了灵活配送价格时，机器人会收到此类查询。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 此次配送查询的唯一标识符。 |\n| `from` | [User](#user) | 发送此次查询的用户。 |\n| `invoice_payload` | String | 创建账单时由机器人指定的载荷数据。 |\n| `shipping_address` | [ShippingAddress](#shippingaddress) | 用户填写的收货地址。 |\n"
+  },
+  "PreCheckoutQuery": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "id",
+      "from",
+      "currency",
+      "total_amount",
+      "invoice_payload",
+      "shipping_option_id",
+      "order_info"
+    ],
+    "text": "## PreCheckoutQuery\n\n包含一条收到的付款预结账查询的信息。用户确认付款及配送信息后，Telegram 会向机器人发送此查询。机器人必须在收到查询后的 **10 秒内**调用 `answerPreCheckoutQuery` 作出响应。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `id` | String | 此次预结账查询的唯一标识符。 |\n| `from` | [User](#user) | 发送此次查询的用户。 |\n| `currency` | String | 三位字母的 ISO 4217 货币代码；如果使用 Telegram Stars 支付，则为 `XTR`。 |\n| `total_amount` | Integer | 总金额，以对应货币的最小单位表示，必须使用整数，不能使用浮点数。例如，1.45 美元应传入 `145`。不同货币的小数位数请参阅 `currencies.json`。 |\n| `invoice_payload` | String | 创建账单时由机器人指定的载荷数据。 |\n| `shipping_option_id` | String | 可选。用户选择的配送选项标识符。 |\n| `order_info` | [OrderInfo](#orderinfo) | 可选。用户提供的订单信息。 |\n"
+  },
+  "PaidMediaPurchased": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "from",
+      "paid_media_payload"
+    ],
+    "text": "## PaidMediaPurchased\n\n包含用户购买付费媒体时产生的信息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `from` | [User](#user) | 购买该媒体的用户。 |\n| `paid_media_payload` | String | 创建付费媒体消息时由机器人指定的载荷数据。 |\n"
+  },
+  "PassportData": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "data",
+      "credentials"
+    ],
+    "text": "## PassportData\n\n描述用户分享给机器人的 Telegram Passport 数据。数据字段经过加密；机器人需要结合相应的加密凭据，才能解密并验证其中的信息。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `data` | Array of [EncryptedPassportElement](#encryptedpassportelement) | 包含用户分享给机器人的证件及其他 Telegram Passport 信息的数组。 |\n| `credentials` | [EncryptedCredentials](#encryptedcredentials) | 用于解密上述数据的加密凭据。 |\n"
+  },
+  "PassportFile": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "file_id",
+      "file_unique_id",
+      "file_size",
+      "file_date"
+    ],
+    "text": "## PassportFile\n\n表示用户上传到 Telegram Passport 的文件。文件解密后目前均为 JPEG 格式，且大小不超过 10 MB。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `file_id` | String | 此文件的标识符，可用于下载或重复使用该文件。 |\n| `file_unique_id` | String | 此文件的唯一标识符；对于不同时间以及不同机器人，该标识符应保持不变。但不能使用它下载或重复使用文件。 |\n| `file_size` | Integer | 文件大小，单位为字节。 |\n| `file_date` | Integer | 文件上传时间，Unix 时间戳。 |\n"
+  },
+  "EncryptedPassportElement": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "type",
+      "data",
+      "phone_number",
+      "email",
+      "files",
+      "front_side",
+      "reverse_side",
+      "selfie",
+      "translation",
+      "hash"
+    ],
+    "text": "## EncryptedPassportElement\n\n描述用户分享给机器人的证件或其他 Telegram Passport 信息。具体字段取决于 `type` 所表示的资料类型。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 资料类型。可能的值包括：`personal_details`（个人详细资料）、`passport`（护照）、`driver_license`（驾驶证）、`identity_card`（身份证件）、`internal_passport`（国内护照）、`address`（地址）、`utility_bill`（公共事业账单）、`bank_statement`（银行对账单）、`rental_agreement`（租赁协议）、`passport_registration`（护照登记证明）、`temporary_registration`（临时居住登记证明）、`phone_number`（电话号码）和 `email`（电子邮箱）。 |\n| `data` | String | 可选。用户提供的 Telegram Passport 资料数据，经过加密并以 Base64 编码。仅当 `type` 为 `personal_details`、`passport`、`driver_license`、`identity_card`、`internal_passport` 或 `address` 时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `phone_number` | String | 可选。用户已验证的电话号码；仅当 `type` 为 `phone_number` 时提供。 |\n| `email` | String | 可选。用户已验证的电子邮箱地址；仅当 `type` 为 `email` 时提供。 |\n| `files` | Array of [PassportFile](#passportfile) | 可选。用户提供的加密证件文件数组。仅当 `type` 为 `utility_bill`、`bank_statement`、`rental_agreement`、`passport_registration` 或 `temporary_registration` 时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `front_side` | [PassportFile](#passportfile) | 可选。证件正面加密文件。仅当 `type` 为 `passport`、`driver_license`、`identity_card` 或 `internal_passport` 时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `reverse_side` | [PassportFile](#passportfile) | 可选。证件反面加密文件。仅当 `type` 为 `driver_license` 或 `identity_card` 时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `selfie` | [PassportFile](#passportfile) | 可选。用户手持证件的自拍加密文件。对于 `passport`、`driver_license`、`identity_card` 和 `internal_passport` 类型，在请求自拍时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `translation` | Array of [PassportFile](#passportfile) | 可选。证件翻译件的加密文件数组。对于 `passport`、`driver_license`、`identity_card`、`internal_passport`、`utility_bill`、`bank_statement`、`rental_agreement`、`passport_registration` 和 `temporary_registration` 类型，在请求翻译件时提供。可使用随附的 `EncryptedCredentials` 解密和验证。 |\n| `hash` | String | 用于 `PassportElementErrorUnspecified` 的资料元素哈希值，采用 Base64 编码。 |\n"
+  },
+  "EncryptedCredentials": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "data",
+      "hash",
+      "secret"
+    ],
+    "text": "## EncryptedCredentials\n\n描述解密和验证 `EncryptedPassportElement` 所需的加密凭据。有关完整的数据解密与身份验证流程，请参阅 Telegram Passport 官方文档。\n\n### 字段\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `data` | String | 经过 Base64 编码的加密 JSON 序列化数据，其中包含用户专属载荷、数据哈希，以及解密和验证 `EncryptedPassportElement` 所需的密钥信息。 |\n| `hash` | String | 用于数据完整性验证的数据哈希值，采用 Base64 编码。 |\n| `secret` | String | 使用机器人的 RSA 公钥加密的密钥，采用 Base64 编码；解密资料数据时需要使用它。 |\n"
   }
 }

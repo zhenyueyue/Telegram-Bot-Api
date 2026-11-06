@@ -3779,5 +3779,76 @@
       "from_attachment_menu"
     ],
     "text": "此对象表示一条服务消息，说明用户已允许机器人向其发送消息。用户可能是在将机器人添加到附件菜单后、通过链接启动 Web App 时，或接受 Web App 使用 `requestWriteAccess` 方法发送的明确请求后授予此权限。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `from_request` | Boolean | 可选。如果为 `True`，表示用户是在接受 Web App 使用 `requestWriteAccess` 方法发送的明确请求后授予访问权限。 |\n| `web_app_name` | String | 可选。如果用户是通过链接启动 Web App 时授予访问权限，则为该 Web App 的名称。 |\n| `from_attachment_menu` | Boolean | 可选。如果为 `True`，表示用户是在将机器人添加到附件菜单或侧边菜单时授予访问权限。 |"
+  },
+  "VideoChatScheduled": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a video chat scheduled in the chat.",
+      "Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator"
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中已安排视频聊天。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `start_date` | Integer | 视频聊天预计开始的时间点，以 Unix 时间戳表示；该时间由聊天管理员安排。 |"
+  },
+  "VideoChatStarted": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a video chat started in the chat.",
+      "Currently holds no information."
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的视频聊天已开始。目前不包含任何其他信息，也没有字段。"
+  },
+  "VideoChatEnded": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about a video chat ended in the chat.",
+      "Video chat duration in seconds"
+    ],
+    "text": "此对象表示一条服务消息，说明聊天中的视频聊天已结束。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `duration` | Integer | 视频聊天的持续时间，单位为秒。 |"
+  },
+  "VideoChatParticipantsInvited": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a service message about new members invited to a video chat.",
+      "New members that were invited to the video chat"
+    ],
+    "text": "此对象表示一条服务消息，说明有新成员被邀请参加视频聊天。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `users` | Array of [User](#user) | 被邀请参加视频聊天的新成员。 |"
+  },
+  "PaidMessagePriceChanged": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a change in the price of paid messages within a chat.",
+      "The new number of Telegram Stars that must be paid by non-administrator users of the supergroup chat for each sent message"
+    ],
+    "text": "此对象描述一条服务消息，说明聊天中付费消息的价格发生了变化。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `paid_message_star_count` | Integer | 超级群组中非管理员用户每发送一条消息必须支付的 Telegram Stars 新数量。 |"
+  },
+  "DirectMessagePriceChanged": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about a change in the price of direct messages sent to a channel chat.",
+      "if direct messages are enabled for the channel chat",
+      "Defaults to 0."
+    ],
+    "text": "此对象描述一条服务消息，说明发送到频道聊天的私信价格发生了变化。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `are_direct_messages_enabled` | Boolean | 如果频道聊天已启用私信，则为 `True`；否则为 `False`。 |\n| `direct_message_star_count` | Integer | 可选。用户每发送一条私信到该频道必须支付的 Telegram Stars 新数量。管理员已为其豁免付费的用户不受此限制。默认为 `0`。 |"
+  },
+  "SuggestedPostApproved": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about the approval of a suggested post.",
+      "Message containing the suggested post.",
+      "will not contain the *reply_to_message* field",
+      "Amount paid for the post",
+      "Date when the post will be published"
+    ],
+    "text": "此对象描述一条服务消息，说明一篇建议发布的帖子已获批准。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含建议发布帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `price` | [SuggestedPostPrice](#suggestedpostprice) | 可选。为该帖子支付的金额。 |\n| `send_date` | Integer | 帖子计划发布的日期。 |"
+  },
+  "SuggestedPostApprovalFailed": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a service message about the failed approval of a suggested post.",
+      "Currently, only caused by insufficient user funds at the time of approval.",
+      "Message containing the suggested post whose approval has failed.",
+      "will not contain the *reply_to_message* field",
+      "Expected price of the post"
+    ],
+    "text": "此对象描述一条服务消息，说明一篇建议发布的帖子未能获批。目前，这种情况仅由批准时用户资金不足导致。\n\n| 字段 | 类型 | 说明 |\n|---|---|---|\n| `suggested_post_message` | [Message](#message) | 可选。包含未能获批的建议帖子的消息。请注意，即使此字段中的 [Message](#message) 对象本身是一条回复消息，也不会包含 `reply_to_message` 字段。 |\n| `price` | [SuggestedPostPrice](#suggestedpostprice) | 该帖子的预期价格。 |"
   }
 }

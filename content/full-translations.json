@@ -3069,7 +3069,7 @@
       "Ephemeral interactions allow a bot and an individual member of a group or supergroup chat to communicate privately",
       "Ephemeral Commands (User to Bot)",
       "Reply Targets and Conditions",
-      "within 15 seconds of the incoming eligible action"
+      "of the incoming eligible action"
     ],
     "text": "## 临时消息与命令\n\n临时交互（Ephemeral interactions）允许机器人与群组或超级群组中的某一位成员在公共聊天时间线上进行私密通信，而不会让聊天中的其他成员看到这些内容，从而避免干扰其他成员。临时交互可能会在一段时间后自动消失，也可能在应用重新启动时消失。\n\n### 临时命令（用户发送给机器人）\n\n机器人可以通过在 `BotCommand` 对象中将 `is_ephemeral` 字段设置为 `True`，来声明临时命令。随后，用户可以发送临时命令。目标机器人会收到该命令，但聊天中的所有成员（包括用户和其他机器人）都无法看到它。\n\n### 临时消息\n\n机器人可以通过 `receiver_user_id` 参数指定特定用户，并向该用户发送临时消息作为回复。群组或超级群组中的其他成员不会看到这条消息。\n\n> 无法保证临时消息一定能够送达，尤其是在用户处于离线状态时。\n\n### 回复目标与发送条件\n\n- 任何机器人都可以在收到符合条件的操作后的 **15 秒内**，向某位用户发送临时消息。该消息将发送到触发此操作的**确切客户端应用**。为此，机器人必须提供以下参数之一：\n  - 从收到的回调查询（callback query）中取得的 `callback_query_id`；\n  - 从收到的临时消息中取得的 `reply_parameters.ephemeral_message_id`。\n- 如果机器人是聊天管理员，则可以随时向聊天中的任何非机器人成员发送临时消息，而无需指定 `callback_query_id` 或 `reply_parameters.ephemeral_message_id`。在这种情况下，消息可能会送达该用户正在使用的多个活跃客户端应用，但仍然**无法保证一定会送达其中任何一个客户端**。"
   },

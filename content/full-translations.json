@@ -2904,5 +2904,42 @@
       "element_hash"
     ],
     "text": "## 未指定位置的 Passport 错误 `PassportElementErrorUnspecified`\n\n表示 Telegram Passport 元素中存在无法明确定位到具体字段或文件的问题。当用户添加新数据时，此错误即视为已解决。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `source` | `String` | 错误来源，必须为 `\"unspecified\"`。 |\n| `type` | `String` | 出现问题的 Telegram Passport 信息类别。 |\n| `element_hash` | `String` | 元素的 Base64 编码哈希值。 |\n| `message` | `String` | 错误说明信息。 |\n"
+  },
+  "Games": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Your bot can offer users HTML5 games to play solo or to compete against each other in groups and one-on-one chats.",
+      "Create games via @BotFather using the /newgame command.",
+      "sendGame method",
+      "first button in the first row must always launch the game",
+      "getGameHighScores"
+    ],
+    "text": "## 游戏\n\n你的机器人可以向用户提供 HTML5 游戏，供用户单独游玩，也可以在群组和一对一聊天中与其他人竞技。使用 `@BotFather` 的 `/newgame` 命令创建游戏。请注意，这类能力也意味着相应的责任：你需要接受机器人将提供的每款游戏所适用的条款。\n\n- 创建游戏后，可以像发送普通消息一样，使用 `sendGame` 方法将游戏发送到聊天中；也可以通过内联模式使用 `InlineQueryResultGame`。\n- 如果发送游戏消息时没有附带任何按钮，Telegram 会自动显示一个“Play 游戏名称”按钮。用户点击该按钮后，机器人会收到一个包含所请求游戏 `game_short_name` 的 `CallbackQuery`。你需要为该用户提供正确的 URL，客户端随后会在应用内浏览器中打开游戏。\n- 你也可以手动为游戏消息添加多个按钮。请注意，第一行中的第一个按钮必须始终用于启动游戏，并且应在 `InlineKeyboardButton` 中使用 `callback_game` 字段。\n- 你可以通过 `@BotFather` 上传一个 GIF 动画，让游戏更具吸引力；该动画可用于向用户演示游戏（例如 Lumberjack）。\n- 游戏消息还会显示当前聊天中的高分榜。使用 `setGameScore` 可以向聊天中的游戏发布分数；添加 `disable_edit_message` 参数可以禁止自动更新游戏消息中的当前排行榜。\n- 你还可以使用 `getGameHighScores` 获取游戏高分榜数据。\n\n有关可实现效果的示例，请参阅 `@gamebot` 和 `@gamee`。"
+  },
+  "Game": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a game.",
+      "0-4096 characters.",
+      "Photo that will be displayed in the game message in chats"
+    ],
+    "text": "## 游戏对象 `Game`\n\n表示一个游戏。使用 `BotFather` 创建和编辑游戏；游戏的短名称将作为其唯一标识符。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `title` | `String` | 游戏标题。 |\n| `description` | `String` | 游戏描述。 |\n| `photo` | `Array of PhotoSize` | 将在聊天中的游戏消息里显示的游戏图片。 |\n| `text` | `String` | 可选。游戏消息中显示的简短说明或高分榜内容。机器人调用 `setGameScore` 时，可以自动编辑该文本以显示当前高分榜；也可以使用 `editMessageText` 手动编辑。长度为 **0–4096 个字符**。 |\n| `text_entities` | `Array of MessageEntity` | 可选。文本中包含的特殊实体，例如用户名、URL、机器人命令等。 |\n| `animation` | `Animation` | 可选。将在聊天中的游戏消息里显示的动画。通过 `BotFather` 上传。 |\n"
+  },
+  "CallbackGame": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A placeholder, currently holds no information.",
+      "Use BotFather to set up the game."
+    ],
+    "text": "## 游戏回调占位对象 `CallbackGame`\n\n这是一个占位对象，目前不包含任何信息。使用 `BotFather` 设置游戏。"
+  },
+  "GameHighScore": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents one row of the high scores table for a game.",
+      "Position in high score table for the game",
+      "Score"
+    ],
+    "text": "## 游戏高分记录 `GameHighScore`\n\n表示游戏高分榜中的一条记录。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `position` | `Integer` | 该用户在游戏高分榜中的排名位置。 |\n| `user` | `User` | 用户信息。 |\n| `score` | `Integer` | 分数。 |\n"
   }
 }

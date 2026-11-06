@@ -4873,5 +4873,84 @@
       "InputProfilePhotoAnimated"
     ],
     "text": "## 待设置的个人资料照片\n\n描述要设置的个人资料照片。目前可以是下列类型之一：\n\n- [`InputProfilePhotoStatic`](#inputprofilephotostatic)：静态个人资料照片。\n- [`InputProfilePhotoAnimated`](#inputprofilephotoanimated)：动态个人资料照片。\n"
+  },
+  "InputProfilePhotoStatic": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "A static profile photo in the .JPG format",
+      "Profile photos can't be reused"
+    ],
+    "text": "## InputProfilePhotoStatic\n\n**.JPG 格式**的静态个人资料照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 个人资料照片类型，必须为 `static`。 |\n| `photo` | `String` | 要设置的静态个人资料照片。照片不能复用，只能通过 `multipart/form-data` 作为新文件上传；在 `<file_attach_name>` 名下上传后，可传入 `attach://<file_attach_name>`。详见[发送文件](#sending-files)。 |"
+  },
+  "InputProfilePhotoAnimated": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "An animated profile photo in the MPEG4 format",
+      "main_frame_timestamp"
+    ],
+    "text": "## InputProfilePhotoAnimated\n\n**MPEG4 格式**的动态个人资料照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 个人资料照片类型，必须为 `animated`。 |\n| `animation` | `String` | 要设置的动态个人资料照片。照片不能复用，只能通过 `multipart/form-data` 作为新文件上传；在 `<file_attach_name>` 名下上传后，可传入 `attach://<file_attach_name>`。详见[发送文件](#sending-files)。 |\n| `main_frame_timestamp` | `Float` | 可选。作为静态个人资料照片使用的视频帧时间戳，单位为秒。默认为 `0.0`。 |"
+  },
+  "InputStoryContent": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the content of a story to post",
+      "InputStoryContentVideo"
+    ],
+    "text": "## InputStoryContent\n\n描述待发布的 Story 内容。目前可以是以下类型之一：\n\n- [`InputStoryContentPhoto`](#inputstorycontentphoto)\n- [`InputStoryContentVideo`](#inputstorycontentvideo)\n\n"
+  },
+  "InputStoryContentPhoto": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a photo to post as a story",
+      "1080x1920",
+      "10 MB"
+    ],
+    "text": "## InputStoryContentPhoto\n\n描述作为 Story 发布的照片。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 内容类型，必须为 `photo`。 |\n| `photo` | `String` | 要发布的照片，尺寸必须为 **1080×1920**，大小不得超过 **10 MB**。该文件不能复用，只能作为新文件上传；可使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传，再传入 `attach://<file_attach_name>`。详见[发送文件](#sending-files)。 |"
+  },
+  "InputStoryContentVideo": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "Describes a video to post as a story",
+      "H.265",
+      "30 MB",
+      "cover_frame_timestamp"
+    ],
+    "text": "## InputStoryContentVideo\n\n描述作为 Story 发布的视频。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | `String` | 内容类型，必须为 `video`。 |\n| `video` | `String` | 要发布的视频，尺寸必须为 **720×1280**，能够流式播放，采用 **H.265 编码**及 **MPEG4 格式**，**每秒加入关键帧**，文件大小不得超过 **30 MB**。该文件不能复用，只能作为新文件上传；可使用 `multipart/form-data` 在 `<file_attach_name>` 名下上传，再传入 `attach://<file_attach_name>`。详见[发送文件](#sending-files)。 |\n| `duration` | `Float` | 可选。视频精确时长，单位为秒，范围 **0–60**。 |\n| `cover_frame_timestamp` | `Float` | 可选。用作 Story 静态封面的视频帧时间戳，单位为秒。默认为 `0.0`。 |\n| `is_animation` | `Boolean` | 可选。若视频无声音，传入 `True`。 |"
+  },
+  "Sticker": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a sticker",
+      "file_unique_id",
+      "needs_repainting"
+    ],
+    "text": "## Sticker\n\n表示一张贴纸。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `file_id` | `String` | 文件标识符，可用于下载或复用文件。 |\n| `file_unique_id` | `String` | 跨时间及跨机器人预期一致的文件唯一标识符；**不能**用于下载或复用文件。 |\n| `type` | `String` | 贴纸类型，目前可为 `regular`、`mask` 或 `custom_emoji`；贴纸类型与格式独立，格式由 `is_animated` 和 `is_video` 决定。 |\n| `width` | `Integer` | 贴纸宽度。 |\n| `height` | `Integer` | 贴纸高度。 |\n| `is_animated` | `Boolean` | 若贴纸为动画贴纸，则为 `True`。 |\n| `is_video` | `Boolean` | 若贴纸为视频贴纸，则为 `True`。 |\n| `thumbnail` | `PhotoSize` | 可选。**.WEBP 或 .JPG** 格式的贴纸缩略图。 |\n| `emoji` | `String` | 可选。与贴纸关联的 Emoji。 |\n| `set_name` | `String` | 可选。贴纸所属贴纸包名称。 |\n| `premium_animation` | `File` | 可选。Premium 普通贴纸附带的 Premium 动画。 |\n| `mask_position` | `MaskPosition` | 可选。面具贴纸应放置的位置。 |\n| `custom_emoji_id` | `String` | 可选。自定义 Emoji 贴纸的唯一标识符。 |\n| `needs_repainting` | `True` | 可选。若贴纸需要按使用情境重新着色则为 `True`：消息中采用文字颜色，Emoji 状态中采用 Telegram Premium 徽章颜色，聊天照片中采用白色，其他场景采用合适的颜色。 |\n| `file_size` | `Integer` | 可选。文件大小，单位为字节。 |"
+  },
+  "StickerSet": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object represents a sticker set",
+      "sticker_type",
+      "thumbnail"
+    ],
+    "text": "## StickerSet\n\n表示一个贴纸包。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `name` | `String` | 贴纸包名称。 |\n| `title` | `String` | 贴纸包标题。 |\n| `sticker_type` | `String` | 包内贴纸类型，目前可为 `regular`、`mask` 或 `custom_emoji`。 |\n| `stickers` | `Array of Sticker` | 贴纸包中的全部贴纸列表。 |\n| `thumbnail` | `PhotoSize` | 可选。贴纸包的 **.WEBP、.TGS 或 .WEBM** 格式缩略图。 |"
+  },
+  "MaskPosition": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes the position on faces",
+      "forehead",
+      "x_shift"
+    ],
+    "text": "## MaskPosition\n\n描述面具贴纸默认放置在人脸上的位置。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `point` | `String` | 面具相对于人脸放置的部位，可为 `forehead`（额头）、`eyes`（眼睛）、`mouth`（嘴巴）或 `chin`（下巴）。 |\n| `x_shift` | `Float` | 沿 X 轴的偏移量，单位为按人脸缩放后的面具宽度，正方向从左向右。例如 `-1.0` 表示位于默认位置正左侧。 |\n| `y_shift` | `Float` | 沿 Y 轴的偏移量，单位为按人脸缩放后的面具高度，正方向从上向下。例如 `1.0` 表示位于默认位置正下方。 |\n| `scale` | `Float` | 面具缩放系数，例如 `2.0` 表示放大两倍。 |"
+  },
+  "InputSticker": {
+    "version": "Bot API 10.3",
+    "requiredSourceFragments": [
+      "This object describes a sticker to be added to a sticker set",
+      "Animated and video stickers can't be uploaded via HTTP URL",
+      "0-20 search keywords"
+    ],
+    "text": "## InputSticker\n\n描述要添加到贴纸包中的一张贴纸。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `sticker` | `String` | 要添加的贴纸。可传入 Telegram 服务器上现有文件的 `file_id`，或传入 HTTP URL 让 Telegram 下载文件，或使用 `attach://<file_attach_name>` 通过 `multipart/form-data` 在相应名称下上传新文件。**动画贴纸和视频贴纸不能通过 HTTP URL 上传。**详见[发送文件](#sending-files)。 |\n| `format` | `String` | 贴纸格式，必须为 `static`（.WEBP 或 .PNG 静态图片）、`animated`（.TGS 动画）或 `video`（.WEBM 视频）之一。 |\n| `emoji_list` | `Array of String` | 与贴纸关联的 **1–20 个 Emoji** 列表。 |\n| `mask_position` | `MaskPosition` | 可选。面具在人脸上的位置，**仅适用于 `mask` 贴纸**。 |\n| `keywords` | `Array of String` | 可选。**0–20 个**搜索关键词，所有关键词**总长度不超过 64 个字符**；**仅适用于 `regular` 和 `custom_emoji` 贴纸**。 |"
   }
 }

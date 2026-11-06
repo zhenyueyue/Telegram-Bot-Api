@@ -3,6 +3,21 @@
   'use strict';
 
   const EXACT = {
+    Introduction:'简介', ResponseParameters:'响应参数',
+    WebhookInfo:'Webhook 信息', ProximityAlertTriggered:'邻近提醒已触发',
+    WriteAccessAllowed:'已允许写入权限', LoginUrl:'登录链接',
+    Community:'社区', Birthdate:'出生日期', AffiliateInfo:'推广联盟信息',
+    RichBlock:'富内容块', RichBlockTableCell:'富内容表格单元格',
+    RichBlockParagraph:'富内容段落', RichBlockSectionHeading:'富内容章节标题',
+    RichBlockPreformatted:'富内容预格式化块', RichBlockFooter:'富内容页脚',
+    RichBlockDivider:'富内容分隔线', RichBlockMathematicalExpression:'富内容数学表达式',
+    RichBlockAnchor:'富内容锚点', RichBlockList:'富内容列表',
+    RichBlockBlockQuotation:'富内容块引用',
+    RichBlockExpandableBlockQuotation:'富内容可展开引用',
+    RichBlockPullQuotation:'富内容摘录引用', RichBlockCollage:'富内容拼贴',
+    RichBlockSlideshow:'富内容幻灯片', RichBlockTable:'富内容表格',
+    RichBlockDetails:'富内容详情', RichBlockMap:'富内容地图',
+    RichBlockThinking:'富内容思考内容', RichBlockListItem:'富内容列表项',
     // Specific objects whose meaning is lost with word-by-word translation.
     StickerSet:'贴纸包', Sticker:'贴纸对象', InputSticker:'待上传贴纸',
     StickerSetName:'贴纸包名称', ChatPermissions:'聊天权限', ChatAdministratorRights:'聊天管理员权限',

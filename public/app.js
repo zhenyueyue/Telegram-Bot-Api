@@ -42,7 +42,7 @@ function kindText(k) { return { method:'API 方法', type:'数据类型', guide:
 function kindEN(k) { return { method:'METHOD', type:'OBJECT', guide:'GUIDE' }[k] || 'REFERENCE'; }
 function current() { return S.docs?.sections.find(s => s.id === S.active); }
 function asTime(iso) { if (!iso) return '尚未与官方同步'; try { return new Date(iso).toLocaleString('zh-CN', {hour12:false}); } catch { return iso; } }
-function nameCN(s) { return NAMES[s.title] || (s.kind === 'method' ? 'API 方法参考' : s.kind === 'type' ? '数据结构定义' : '开发指南'); }
+function nameCN(s) { return NAMES[s.title] || window.BotApiMenuCN?.translate(s.title, s.kind) || '中文释义待补充'; }
 function getUrlId() { const hash = decodeURIComponent(location.hash.replace(/^#/,'')); return hash || 'home'; }
 function setHash(id) { history.pushState(null, '', `#${encodeURIComponent(id)}`); }
 
@@ -121,7 +121,7 @@ function groupsForNav() {
     const fav = items.filter(s => S.favorites.includes(s.id));
     if (fav.length) groups.push({name:'已收藏', items:fav, count:fav.length});
   }
-  for (const [k,label] of [['guide','开发指南'],['method','接口方法'],['type','数据类型']]) {
+  for (const [k,label] of [['guide','开发指南 / Guides'],['method','接口方法 / Methods'],['type','数据类型 / Types']]) {
     const group = items.filter(s => s.kind === k);
     if (group.length) groups.push({name:label,items:group,count:group.length});
   }
@@ -144,7 +144,7 @@ function renderNav() {
     for (const s of items) {
       const active = s.id === S.active;
       const chinese = nameCN(s);
-      html += `<button class="nav-item ${active ? 'active':''}" data-go="${attr(s.id)}" title="${attr(s.title + ' · ' + chinese)}"><span class="nav-index"></span><span class="nav-name">${esc(s.title)}</span>${S.favorites.includes(s.id) ? '<em>★</em>' : ''}</button>`;
+      html += `<button class="nav-item nav-item-bilingual ${active ? 'active':''}" data-go="${attr(s.id)}" title="${attr(s.title + ' · ' + chinese)}" aria-label="${attr(s.title + '，' + chinese)}"><span class="nav-index"></span><span class="nav-labels"><span class="nav-name" lang="en">${esc(s.title)}</span><span class="nav-name-cn" lang="zh-CN">${esc(chinese)}</span></span>${S.favorites.includes(s.id) ? '<em class="nav-bookmark" aria-hidden="true">★</em>' : ''}</button>`;
     }
     html += '</div>';
   }

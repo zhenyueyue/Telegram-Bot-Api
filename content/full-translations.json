@@ -5151,8 +5151,7 @@
   "EmojiTypeEmoji": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "A regular emoji.",
-      "emoji"
+      "A regular emoji."
     ],
     "text": "## EmojiTypeEmoji\n\n此对象表示一个普通 Emoji。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | Emoji 类型，始终为 `emoji`。 |\n| `emoji` | String | Emoji 字符。 |\n"
   },
@@ -5213,8 +5212,7 @@
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
       "An address in the TON blockchain.",
-      "ton_address",
-      "bank_card_number"
+      "address"
     ],
     "text": "## RichTextTonAddress\n\n此对象表示富文本消息中的一个 TON 区块链地址。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，始终为 `ton_address`。 |\n| `text` | RichText | 地址对应的文本。 |\n| `address` | String | TON 区块链地址。 |\n"
   },
@@ -5229,7 +5227,7 @@
   "InputWidgetMessageContent": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "widget_id",
+      "html",
       "allow_queries",
       "public_data"
     ],

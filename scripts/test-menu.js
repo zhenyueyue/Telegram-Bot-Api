@@ -29,8 +29,8 @@ assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
 assert.match(app,/translation-panel/,'Chinese translation should use the unboxed presentation');
 assert.ok(layoutCss.includes('.reader-panel.translation-panel{border:0;background:transparent;border-radius:0;overflow:visible}'),'Translation panel outer border must be removed');
-assert.match(app,/function scrollActiveNavIntoView\\(\\)/,'Initial render must restore active navigation position');
-assert.match(app,/renderAll\\(\\) \\{[^}]*scrollActiveNavIntoView\\(\\)/,'Document load must scroll the active chapter into view');
+assert.ok(app.includes('function scrollActiveNavIntoView()'),'Initial render must restore active navigation position');
+assert.ok(app.includes('function renderAll() { renderMeta(); renderNav(); renderMain(); updateTopbar(); scrollActiveNavIntoView(); }'),'Document load must scroll the active chapter into view');
 for (const obsolete of ['function sync(','syncButton','modalSync','data-sync','dataset.sync']) {
   assert.ok(!app.includes(obsolete),'Obsolete refresh logic remains: '+obsolete);
 }

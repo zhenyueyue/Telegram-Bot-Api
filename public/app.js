@@ -96,7 +96,6 @@ function scrollActiveNavIntoView() {
 }
 function renderMeta() {
   if (!S.docs || !S.meta) return;
-  $('versionTag').textContent = `BOT API ${S.docs.version || '—'}`;
   $('syncLabel').textContent = S.docs.demo ? '内置预览 · 未同步全量' : `官方文档 · Bot API ${S.docs.version || '—'}`;
   document.querySelector('.status-dot').classList.toggle('demo', !!S.docs.demo);
   $('lastSyncText').textContent = asTime(S.docs.syncTime);

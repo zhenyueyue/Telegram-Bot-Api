@@ -28,9 +28,9 @@ assert.match(css,/\.original-reference/);
 new Function(app);
 
 const cleanup=require('../public/markdown-cleanup.js');
-assert.equal(docs.sections.length,611,'No chapters may be removed');
+assert.equal(docs.sections.length,644,'No chapters may be removed');
 const full=docs.sections.filter(s=>s.translation?.from==='full');
-assert.equal(full.length,611,'Every Bot API 10.3 chapter must retain its full translation');
+assert.equal(full.length,644,'Every Bot API 10.4 chapter must retain its full translation');
 const leakedNames=[],repairedNames=[];
 const visibleMarkup=html=>String(html)
   .replace(/<pre\b[^>]*>[\s\S]*?<\/pre>/g,'')
@@ -50,7 +50,7 @@ const ban=full.find(s=>s.title==='banChatMember');
 const sticker=full.find(s=>s.title==='Sticker');
 assert.match(cleanup.repair(marked.parse(ban.translation.text)),/<strong>始终为 <code>True<\/code><\/strong>/);
 assert.match(cleanup.repair(marked.parse(sticker.translation.text)),/<strong>\.WEBP 或 \.JPG<\/strong>/);
-console.log('Markdown emphasis scanned: 611 full chapters; repaired:',repairedNames.length,
+console.log('Markdown emphasis scanned: 644 full chapters; repaired:',repairedNames.length,
             'chapters:',repairedNames.join(', '),'; visible leftovers:',leakedNames.length);
 
 console.log('PASS: Full getFile Chinese translation matches key English requirements.');

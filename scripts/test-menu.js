@@ -29,11 +29,11 @@ assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
 assert.ok(!html.includes('topbar-brand-mark'),'Freeform topbar branding should be reverted');
 assert.ok(html.includes('<span class="crumb-root">Telegram Bot API</span>'),'Flat topbar breadcrumb should be restored');
-assert.ok(layoutCss.includes('.topbar{\n  height:66px;'),'Top navigation should use the lightweight layout');
-assert.ok(layoutCss.includes('.mode-control{gap:5px;padding:0;border:0;border-radius:0;background:transparent}'),'Reading view switch should use flat styling');
-assert.ok(layoutCss.includes('.article-tools .small-action{min-height:29px;'),'Article actions should use flat styling');
-assert.ok(layoutCss.includes('@media(max-width:780px){\n  .topbar{height:60px;'),'Top navigation should adapt on mobile');
-assert.ok(layoutCss.includes('@media(max-width:560px){\n  .topbar{padding:0 11px;'),'Article controls should stack cleanly on narrow screens');
+assert.ok(layoutCss.includes('.topbar{height:72px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 43px;border-bottom:1px solid var(--border);gap:18px}'),'Original topbar dimensions and divider should be restored');
+assert.ok(layoutCss.includes('.mode-control{display:flex;gap:3px;border:1px solid #e9eef4;background:#f5f8fb;border-radius:9px;padding:3px}'),'Original reading view switch should be restored');
+assert.ok(layoutCss.includes('.mode-control button.active{color:#238ad6;background:#fff;box-shadow:0 1px 4px rgba(30,61,95,.09)}'),'Original selected-view treatment should be restored');
+assert.ok(layoutCss.includes('.small-action{display:inline-flex;align-items:center;gap:7px;border:1px solid #e9eef4;background:#fff;'),'Original article action buttons should be restored');
+assert.ok(layoutCss.includes('.topbar{height:60px;padding:0 18px}'),'Original mobile topbar dimensions should be restored');
 
 assert.match(app,/reader-panel/,'All language panels should share the reader panel structure');
 assert.ok(layoutCss.includes('.reader-panel{border:0;background:transparent;border-radius:0;overflow:visible;box-shadow:none}'),'Every reading panel outer border must be removed');

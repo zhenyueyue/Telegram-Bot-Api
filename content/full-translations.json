@@ -5214,7 +5214,7 @@
       "An address in the TON blockchain.",
       "address"
     ],
-    "text": "## RichTextTonAddress\n\n此对象表示富文本消息中的一个 TON 区块链地址。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `address` | String | TON 区块链地址。 |\n"
+    "text": "## RichTextTonAddress\n\n此对象表示富文本消息中的一个 TON 区块链地址。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，始终为 `ton_address`。 |\n| `text` | RichText | 地址对应的文本。 |\n| `address` | String | TON 区块链地址。 |\n"
   },
   "PaidMessagesWaived": {
     "version": "Bot API 10.4",

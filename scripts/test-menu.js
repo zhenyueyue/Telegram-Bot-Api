@@ -47,10 +47,10 @@ if(fs.existsSync(dataFile)){
   assert.ok(namesBlock,'Previous navigation overrides must be readable for comparison');
   const oldNames=vm.runInNewContext('('+namesBlock[1]+')');
   const keys=Object.keys(curated.labels);
-  assert.equal(keys.length,611,'Every documented chapter must have an explicit curated title');
-  assert.equal(docs.sections.length,611,'Expected Bot API 10.3 document coverage');
+  assert.equal(keys.length,644,'Every documented chapter must have an explicit curated title');
+  assert.equal(docs.sections.length,644,'Expected Bot API 10.4 document coverage');
   const seen=new Set(docs.sections.map(s=>s.title));
-  assert.equal(seen.size,611,'Expected unique official chapter titles');
+  assert.equal(seen.size,644,'Expected unique official chapter titles');
   const missing=docs.sections.filter(s=>!curated.translate(s.title));
   const stale=keys.filter(k=>!seen.has(k));
   assert.deepEqual(missing.map(s=>s.title),[],'Missing manually curated labels');
@@ -63,7 +63,7 @@ if(fs.existsSync(dataFile)){
     return old!==curated.translate(s.title);
   });
   const kinds=docs.sections.reduce((m,s)=>(m[s.kind]=(m[s.kind]||0)+1,m),{});
-  assert.equal(kinds.guide,23);assert.equal(kinds.method,185);assert.equal(kinds.type,403);
+  assert.equal(kinds.guide,23);assert.equal(kinds.method,193);assert.equal(kinds.type,428);
   const required={
     'Do I need a Local Bot API Server':'是否需要本地 Bot API 服务端',
     logOut:'登出 / 退出登录',sendLivePhoto:'发送动态照片',
@@ -76,7 +76,7 @@ if(fs.existsSync(dataFile)){
     'Sending files':'发送文件',unpinAllChatMessages:'取消置顶所有聊天消息'
   };
   for(const [key,label] of Object.entries(required))assert.equal(curated.translate(key),label);
-  console.log('Audited chapter headings: 611; curated label changes:',diff.length);
+  console.log('Audited chapter headings: 644; curated label changes:',diff.length);
   console.log('Sample changes:',diff.slice(0,20).map(s=>s.title+': '+(oldNames[s.title]||translate(s.title,s.kind))+' => '+curated.translate(s.title)).join(' | '));
 }
 

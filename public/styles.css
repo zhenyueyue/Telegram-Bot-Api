@@ -135,8 +135,8 @@
 .field input{border-color:#cbd9e5}
 
 
-/* Plain, unboxed presentation for Chinese translation content. */
-.reader-panel.translation-panel{border:0;background:transparent;border-radius:0;overflow:visible}
-.reader-panel.translation-panel .panel-header{height:auto;padding:0 0 12px;border:0;background:transparent}
-.reader-panel.translation-panel .panel-body,
-.reader-columns:not(.compare) .reader-panel.translation-panel .panel-body{padding:0}
+/* All reading panels share one plain, unboxed presentation in every language mode. */
+.reader-panel{border:0;background:transparent;border-radius:0;overflow:visible;box-shadow:none}
+.reader-panel .panel-header{height:auto;padding:0 0 12px;border:0;background:transparent}
+.reader-panel .panel-body,
+.reader-columns:not(.compare) .reader-panel .panel-body{padding:0}

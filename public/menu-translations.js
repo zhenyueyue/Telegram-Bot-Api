@@ -3,6 +3,22 @@
   'use strict';
 
   const EXACT = {
+    sendWidget:'发送网页小组件', sendSharedWidget:'再次发送共享小组件',
+    answerWidgetQuery:'响应小组件查询', editMessageWidgetData:'编辑消息小组件数据',
+    editSharedWidgetData:'编辑共享小组件数据', getChatShareThemeBackdrops:'获取聊天分享主题背景',
+    getUniqueGift:'获取独特礼物信息', deleteBusinessAccountGift:'删除企业账号礼物',
+    Widget:'小组件对象', WidgetQuery:'小组件查询', SharedWidgetQuery:'共享小组件查询',
+    WidgetQueryType:'小组件查询类型', WidgetQueryTypeData:'小组件数据查询',
+    WidgetQueryTypeSignData:'小组件签名数据查询', WidgetQueryTypeSentTransaction:'小组件交易通知查询',
+    WidgetQueryWallet:'小组件查询钱包', InputWidgetMessageContent:'内联小组件消息内容',
+    InputSharedWidgetMessageContent:'内联共享小组件消息内容', TonWalletCard:'通证钱包卡片',
+    TonWalletCardSticker:'通证钱包卡片贴纸', TonNft:'通证非同质化代币',
+    TonNftAttribute:'通证非同质化代币属性', TonWalletTransfer:'通证钱包转账',
+    AreaPosition:'区域位置', ChatShareTheme:'聊天分享主题', ChatShareThemeEmoji:'表情符号分享主题',
+    ChatShareThemeUniqueGift:'独特礼物分享主题', EmojiType:'表情符号类型',
+    EmojiTypeEmoji:'普通表情符号类型', EmojiTypeCustomEmoji:'自定义表情符号类型',
+    ChatShareThemeBackdrop:'聊天分享主题背景', ChatShareThemeBackdrops:'聊天分享主题背景列表',
+    RichTextTonAddress:'富文本通证地址', PaidMessagesWaived:'付费消息豁免事件',
     Introduction:'简介', ResponseParameters:'响应参数',
     WebhookInfo:'Webhook 信息', ProximityAlertTriggered:'邻近提醒已触发',
     WriteAccessAllowed:'已允许写入权限', LoginUrl:'登录链接',

@@ -47,3 +47,12 @@ jobs:
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           timeout: 1200000
+      - name: Smoke test published site
+        shell: bash
+        run: |
+          set -euo pipefail
+          SITE="https://zhenyueyue.github.io/Telegram-Bot-Api"
+          curl -fsSL --retry 12 --retry-delay 5 --retry-all-errors "$SITE/" -o /tmp/site.html
+          curl -fsSL --retry 12 --retry-delay 5 --retry-all-errors "$SITE/app.js?v=guard-removed-topbar-elements-20261110" -o /tmp/site-app.js
+          curl -fsSL --retry 12 --retry-delay 5 --retry-all-errors "$SITE/data/docs.json" -o /tmp/site-docs.json
+          node -e "const fs=require('node:fs');const html=fs.readFileSync('/tmp/site.html','utf8');const app=fs.readFileSync('/tmp/site-app.js','utf8');const docs=JSON.parse(fs.readFileSync('/tmp/site-docs.json','utf8'));const checks=[['homepage HTML',html.includes('id=\"mainContent\"')],['fixed app bundle',!app.includes('versionTag')],['version badge absent',!html.includes('id=\"versionTag\"')],['documents loaded',Array.isArray(docs.sections)&&docs.sections.length===644]];for(const [name,ok] of checks){console.log((ok?'PASS ':'FAIL ')+name);if(!ok)process.exitCode=1;}"

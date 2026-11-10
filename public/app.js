@@ -89,7 +89,11 @@ async function reloadDocs({quiet=false}={}){
   if (!quiet) toast(`已载入 ${docs.sections.length} 个官方章节 · 版本 ${docs.version}`);
 }
 
-function renderAll() { renderMeta(); renderNav(); renderMain(); updateTopbar(); }
+function renderAll() { renderMeta(); renderNav(); renderMain(); updateTopbar(); scrollActiveNavIntoView(); }
+function scrollActiveNavIntoView() {
+  const activeEl = $('navigation').querySelector('.nav-item.active');
+  if (activeEl) activeEl.scrollIntoView({block:'nearest'});
+}
 function renderMeta() {
   if (!S.docs || !S.meta) return;
   $('versionTag').textContent = `BOT API ${S.docs.version || '—'}`;
@@ -165,8 +169,7 @@ function go(id, scroll = true, push = true) {
   }
   renderNav(); renderMain(); updateTopbar(); closeSidebar();
   if (scroll) $('readingArea').scrollTop = 0;
-  const activeEl = $('navigation').querySelector('.nav-item.active');
-  if (activeEl && !S.query) activeEl.scrollIntoView({block:'nearest'});
+  if (!S.query) scrollActiveNavIntoView();
 }
 function updateTopbar() {
   const s = current();
@@ -293,7 +296,7 @@ function panel(s, language) {
   } else {
     body = '<div class="markdown">'+renderMd(data?.text || '',s)+'</div>';
   }
-  return '<section class="reader-panel '+(isSummary ? 'summary-panel':'')+'"><header class="panel-header"><div class="panel-title"><span class="lang-dot '+(cn?'':'en')+'"></span>'+title+'</div><span class="panel-status">'+esc(status)+'</span></header><div class="panel-body">'+body+'</div></section>';
+  return '<section class="reader-panel '+(cn ? 'translation-panel ' : '')+(isSummary ? 'summary-panel':'')+'"><header class="panel-header"><div class="panel-title"><span class="lang-dot '+(cn?'':'en')+'"></span>'+title+'</div><span class="panel-status">'+esc(status)+'</span></header><div class="panel-body">'+body+'</div></section>';
 }
 function article(s) {
   const index = S.docs.sections.indexOf(s);

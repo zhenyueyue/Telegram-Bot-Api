@@ -5008,7 +5008,7 @@
   "deleteBusinessAccountGift": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "Requires the can_convert_gifts_to_stars business bot right",
+      "can_convert_gifts_to_stars",
       "isn't limited",
       "wasn't refunded"
     ],
@@ -5151,8 +5151,8 @@
   "EmojiTypeEmoji": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "A regular emoji",
-      "always “emoji”"
+      "A regular emoji.",
+      "emoji"
     ],
     "text": "## EmojiTypeEmoji\n\n此对象表示一个普通 Emoji。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | Emoji 类型，始终为 `emoji`。 |\n| `emoji` | String | Emoji 字符。 |\n"
   },
@@ -5212,9 +5212,9 @@
   "RichTextTonAddress": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "An address in the TON blockchain",
-      "always “ton_address”",
-      "The address"
+      "An address in the TON blockchain.",
+      "ton_address",
+      "bank_card_number"
     ],
     "text": "## RichTextTonAddress\n\n此对象表示富文本消息中的一个 TON 区块链地址。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `type` | String | 富文本类型，始终为 `ton_address`。 |\n| `text` | RichText | 地址对应的文本。 |\n| `address` | String | TON 区块链地址。 |\n"
   },
@@ -5229,18 +5229,17 @@
   "InputWidgetMessageContent": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "Represents the content of a message with an",
-      "is_shared",
-      "4096 bytes when compressed by zlib"
+      "widget_id",
+      "allow_queries",
+      "public_data"
     ],
     "text": "## InputWidgetMessageContent\n\n此对象表示以内联查询结果发送的 HTML Widget 消息内容。当前生产环境暂不支持通过内联查询结果发送 Widget。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `html` | String | Widget 的 HTML 代码，长度为 1–32768 字节；使用 zlib 最高压缩级别压缩后不得超过 4096 字节。 |\n| `width` | Integer | 可选。Widget 宽度，单位为逻辑像素；省略时占满消息气泡宽度，客户端限制在 200 至气泡最大宽度之间。 |\n| `height` | Integer | 可选。Widget 高度，单位为逻辑像素；省略时高度不固定，客户端限制在 50–600 之间。 |\n| `public_data` | String | 可选。公开数据，长度为 0–1024 字节，在 Widget 的所有展示位置均可用。共享 Widget 的所有消息使用相同的公开数据。 |\n| `chat_data` | String | 可选。当前消息专属数据，长度为 0–1024 字节。 |\n| `caption` | String | 可选。Widget 说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。说明文字的实体解析模式。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表，可替代 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。设为 `True` 时，将说明文字显示在 Widget 上方。 |\n| `allow_queries` | Boolean | 可选。设为 `True` 时允许 Widget 向机器人发送查询。 |\n| `is_shared` | Boolean | 可选。设为 `True` 时创建共享 Widget。每条由该内联结果发送的消息都会创建独立的共享 Widget；其标识符只会在该 Widget 的查询 `widget_id` 字段中返回。要在内联查询结果中再次发送已有共享 Widget，请改用 `InputSharedWidgetMessageContent`。 |\n"
   },
   "InputSharedWidgetMessageContent": {
     "version": "Bot API 10.4",
     "requiredSourceFragments": [
-      "Represents the content of a message with a shared widget",
       "widget_id",
-      "inline query"
+      "show_caption_above_media"
     ],
     "text": "## InputSharedWidgetMessageContent\n\n此对象表示以内联查询结果发送的共享 Widget 消息内容。当前生产环境暂不支持通过内联查询结果发送 Widget。\n\n| 字段 | 类型 | 说明 |\n| --- | --- | --- |\n| `widget_id` | String | 由机器人创建的共享 Widget 的唯一标识符。 |\n| `chat_data` | String | 可选。当前消息专属的 Widget 数据，长度为 0–1024 字节。 |\n| `caption` | String | 可选。Widget 说明文字，实体解析后长度为 0–1024 个字符。 |\n| `parse_mode` | String | 可选。说明文字的实体解析模式。 |\n| `caption_entities` | Array of MessageEntity | 可选。说明文字中的特殊实体列表，可替代 `parse_mode`。 |\n| `show_caption_above_media` | Boolean | 可选。设为 `True` 时，将说明文字显示在 Widget 上方。 |\n"
   }

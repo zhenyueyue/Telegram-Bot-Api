@@ -27,13 +27,8 @@ assert.match(html,/menu-translations\.js/);
 assert.match(app,/nav-name-cn/);
 assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
-assert.ok(html.includes('class="topbar-brand-mark"'),'Topbar brand mark should be present');
-for(const id of ['menuButton','breadcrumb','versionTag','copyLink','favoriteButton','openOfficial']) assert.ok(html.includes('id="'+id+'"'),'Topbar control missing: '+id);
-assert.ok(layoutCss.includes('.topbar{\n  position:relative;isolation:isolate;'),'Signature topbar styling should be present');
-assert.ok(layoutCss.includes('background:\n    radial-gradient(ellipse at 76% -90%'),'Topbar layered background should be present');
-assert.ok(layoutCss.includes('@media(max-width:780px){\n  .topbar{height:82px;'),'Topbar should use a two-row mobile layout');
-assert.ok(layoutCss.includes('@media(max-width:560px){\n  .topbar{height:86px;'),'Topbar should adapt to narrow mobile screens');
-
+assert.ok(!html.includes('topbar-brand-mark'),'Freeform topbar branding should be reverted');
+assert.ok(html.includes('<span class="crumb-root">Telegram Bot API</span>'),'Flat topbar breadcrumb should be restored');
 assert.ok(layoutCss.includes('.topbar{\n  height:66px;'),'Top navigation should use the lightweight layout');
 assert.ok(layoutCss.includes('.mode-control{gap:5px;padding:0;border:0;border-radius:0;background:transparent}'),'Reading view switch should use flat styling');
 assert.ok(layoutCss.includes('.article-tools .small-action{min-height:29px;'),'Article actions should use flat styling');

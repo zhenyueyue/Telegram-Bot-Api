@@ -22,12 +22,13 @@ for(const [en,zh] of Object.entries(cases)){
 const html=fs.readFileSync(path.join(__dirname,'../public/index.html'),'utf8');
 const app=fs.readFileSync(path.join(__dirname,'../public/app.js'),'utf8');
 const css=fs.readFileSync(path.join(__dirname,'../public/typography.css'),'utf8');
+const layoutCss=fs.readFileSync(path.join(__dirname,'../public/styles.css'),'utf8');
 assert.match(html,/menu-translations\.js/);
 assert.match(app,/nav-name-cn/);
 assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
 assert.match(app,/translation-panel/,'Chinese translation should use the unboxed presentation');
-assert.match(css,/\.reader-panel\.translation-panel\\?\{?border:0/,'Translation panel outer border must be removed');
+assert.ok(layoutCss.includes('.reader-panel.translation-panel{border:0;background:transparent;border-radius:0;overflow:visible}'),'Translation panel outer border must be removed');
 assert.match(app,/function scrollActiveNavIntoView\\(\\)/,'Initial render must restore active navigation position');
 assert.match(app,/renderAll\\(\\) \\{[^}]*scrollActiveNavIntoView\\(\\)/,'Document load must scroll the active chapter into view');
 for (const obsolete of ['function sync(','syncButton','modalSync','data-sync','dataset.sync']) {

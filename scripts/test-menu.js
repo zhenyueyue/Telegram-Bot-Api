@@ -26,6 +26,10 @@ assert.match(html,/menu-translations\.js/);
 assert.match(app,/nav-name-cn/);
 assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
+assert.match(app,/translation-panel/,'Chinese translation should use the unboxed presentation');
+assert.match(css,/\.reader-panel\.translation-panel\\?\{?border:0/,'Translation panel outer border must be removed');
+assert.match(app,/function scrollActiveNavIntoView\\(\\)/,'Initial render must restore active navigation position');
+assert.match(app,/renderAll\\(\\) \\{[^}]*scrollActiveNavIntoView\\(\\)/,'Document load must scroll the active chapter into view');
 for (const obsolete of ['function sync(','syncButton','modalSync','data-sync','dataset.sync']) {
   assert.ok(!app.includes(obsolete),'Obsolete refresh logic remains: '+obsolete);
 }

@@ -27,8 +27,10 @@ assert.match(html,/menu-translations\.js/);
 assert.match(app,/nav-name-cn/);
 assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
 assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
-assert.match(app,/translation-panel/,'Chinese translation should use the unboxed presentation');
-assert.ok(layoutCss.includes('.reader-panel.translation-panel{border:0;background:transparent;border-radius:0;overflow:visible}'),'Translation panel outer border must be removed');
+assert.match(app,/reader-panel/,'All language panels should share the reader panel structure');
+assert.ok(layoutCss.includes('.reader-panel{border:0;background:transparent;border-radius:0;overflow:visible;box-shadow:none}'),'Every reading panel outer border must be removed');
+assert.ok(layoutCss.includes('.reader-panel .panel-header{height:auto;padding:0 0 12px;border:0;background:transparent}'),'Every reading panel header must be plain and unboxed');
+assert.ok(layoutCss.includes('.reader-panel .panel-body,\\n.reader-columns:not(.compare) .reader-panel .panel-body{padding:0}') || layoutCss.includes('.reader-panel .panel-body,\n.reader-columns:not(.compare) .reader-panel .panel-body{padding:0}'),'Every reading panel body must be flush with the page');
 assert.ok(app.includes('function scrollActiveNavIntoView()'),'Initial render must restore active navigation position');
 assert.ok(app.includes('function renderAll() { renderMeta(); renderNav(); renderMain(); updateTopbar(); scrollActiveNavIntoView(); }'),'Document load must scroll the active chapter into view');
 for (const obsolete of ['function sync(','syncButton','modalSync','data-sync','dataset.sync']) {

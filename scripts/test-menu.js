@@ -25,6 +25,13 @@ const css=fs.readFileSync(path.join(__dirname,'../public/typography.css'),'utf8'
 assert.match(html,/menu-translations\.js/);
 assert.match(app,/nav-name-cn/);
 assert.match(css,/\.nav-item-bilingual \.nav-name-cn/);
+assert.ok(app.includes("官方文档 · Bot API ${S.docs.version || '—'}"),'Sidebar version must come from generated docs data');
+for (const obsolete of ['function sync(','syncButton','modalSync','data-sync','dataset.sync']) {
+  assert.ok(!app.includes(obsolete),'Obsolete refresh logic remains: '+obsolete);
+}
+for (const obsolete of ['刷新在线文档','id="syncButton"','id="modalSync"','data-sync=']) {
+  assert.ok(!html.includes(obsolete),'Obsolete refresh control remains: '+obsolete);
+}
 const dataFile=path.join(__dirname,'../dist/data/docs.json');
 if(fs.existsSync(dataFile)){
   const docs=JSON.parse(fs.readFileSync(dataFile,'utf8'));

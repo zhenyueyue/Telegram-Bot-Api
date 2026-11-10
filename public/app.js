@@ -7,7 +7,7 @@ const S = {
   lang: localStorage.getItem('botcn-language') || 'zh',
   favorites: readLocal('botcn-favorites', []),
   recent: readLocal('botcn-recent', []),
-  translating: new Set(), errors: {}, sync: false, navLimit: 900,
+  translating: new Set(), errors: {}, navLimit: 900,
   batchPoll: null, baseline: {},
 };
 const NAMES = {
@@ -93,7 +93,7 @@ function renderAll() { renderMeta(); renderNav(); renderMain(); updateTopbar(); 
 function renderMeta() {
   if (!S.docs || !S.meta) return;
   $('versionTag').textContent = `BOT API ${S.docs.version || '—'}`;
-  $('syncLabel').textContent = S.docs.demo ? '内置预览 · 未同步全量' : `官方文档 · ${asTime(S.docs.syncTime).split(' ')[0]}`;
+  $('syncLabel').textContent = S.docs.demo ? '内置预览 · 未同步全量' : `官方文档 · Bot API ${S.docs.version || '—'}`;
   document.querySelector('.status-dot').classList.toggle('demo', !!S.docs.demo);
   $('lastSyncText').textContent = asTime(S.docs.syncTime);
   const completed = S.docs.sections.filter(s => !!s.translation).length;
@@ -317,11 +317,6 @@ async function translate(id){
   S.lang='en';localStorage.setItem('botcn-language',S.lang);renderMain();
   toast('暂未提供此章节的中文要点，已显示官方原文。');
 }
-async function sync(){
-  toast('正在重新加载 GitHub Pages 已发布的文档…');
-  try { await reloadDocs(); toast('已载入线上最新发布的文档。'); }
-  catch(e){toast(e.message,true);}
-}
 function openSettings(){
   $('modalBackdrop').classList.remove('hidden');$('modalBackdrop').setAttribute('aria-hidden','false');
   renderMeta();
@@ -403,10 +398,9 @@ function toggleSidebar(){ $('sidebar').classList.toggle('open');$('sidebarScrim'
 function isHidden(el) { return el.classList.contains('hidden'); }
 
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-go],[data-sync],[data-open-settings],[data-language],[data-translate],[data-issue],[data-load-more]');
+  const b=e.target.closest('[data-go],[data-open-settings],[data-language],[data-translate],[data-issue],[data-load-more]');
   if(!b)return;
   if(b.dataset.go){ e.preventDefault();go(b.dataset.go); }
-  else if(b.dataset.sync){sync();}
   else if(b.dataset.openSettings){openSettings();}
   else if(b.dataset.language){S.lang=b.dataset.language;localStorage.setItem('botcn-language',S.lang);renderMain();}
   else if(b.dataset.translate){translate(b.dataset.translate);}
@@ -415,8 +409,6 @@ document.addEventListener('click',e=>{
 });
 $('searchInput').addEventListener('input', e=>{S.query=e.target.value;renderNav();});
 for(const b of document.querySelectorAll('[data-filter]')) b.addEventListener('click',()=>{S.filter=b.dataset.filter;renderNav();});
-$('syncButton').addEventListener('click',sync);
-$('modalSync').addEventListener('click',sync);
 $('settingsButton').addEventListener('click',openSettings);
 $('closeModal').addEventListener('click',closeSettings);
 $('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeSettings();});
